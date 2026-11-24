@@ -1,12 +1,24 @@
-# Mail Evidence
+<p align="center">
+  <img src="assets/MailViewer.svg" width="96" height="96" alt="Mail Evidence のロゴ">
+</p>
 
-<p align="center"><img src="assets/MailViewer.svg" alt="Mail Evidence のロゴ" width="72"></p>
+<h1 align="center">Mail Evidence</h1>
 
 <h3 align="center">調査の進めやすさを重視したメール分析ツール</h3>
 
-[English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md)
+<p align="center">Mail Evidence は、使い慣れたメール画面で証拠を調べられる Windows アプリです。メールファイルやフォルダーを開いたり、NTFS ディスクイメージからメールを抽出したりできます。添付ファイルをプレビューし、異常が見つかったら根拠となるヘッダーや元のバイト列まで確認できます。</p>
 
-[Windows x64 軽量版](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-compact.zip) · [Windows x64 ランタイム同梱版](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
+<p align="center">
+  <a href="https://github.com/absolroot/Mail-Evidence/releases/latest"><img src="https://badgen.net/github/release/absolroot/Mail-Evidence/latest" alt="最新リリース"></a>
+  <a href="https://github.com/absolroot/Mail-Evidence/actions/workflows/ci.yml"><img src="https://github.com/absolroot/Mail-Evidence/actions/workflows/ci.yml/badge.svg?branch=main&amp;event=push" alt="Windows のビルドとテスト"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/absolroot/Mail-Evidence?color=blue" alt="Apache 2.0 ライセンス"></a>
+</p>
+
+<p align="center"><a href="https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-compact.zip">Windows x64 軽量版</a> · <a href="https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-standalone.zip">Windows x64 ランタイム同梱版</a> · <a href="https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip">Rust CLI 0.4.0</a></p>
+
+<p align="center"><a href="#使い方">使い方</a> · <a href="#調査機能">調査機能</a> · <a href="#対応形式">対応形式</a></p>
+
+<p align="center"><a href="README.md">English</a> · <a href="README.ko.md">한국어</a></p>
 
 ## 調査機能
 
@@ -26,8 +38,6 @@
 3. **すべてのメール**で検索するか、**異常の兆候**に表示されたメールを選びます。[サンプルメール](tests/fixtures/README.md)でも試せます。
 
 HTML 本文では外部画像、スクリプト、リンク先への移動が既定でブロックされます。HTML 表示には [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution) を使います。
-
-**設定 → 表示言語** で、韓国語、英語、日本語、ドイツ語、スペイン語、フランス語、インドネシア語、イタリア語、ポーランド語、ブラジルポルトガル語、トルコ語、ベトナム語、ロシア語、ウクライナ語、中国語（簡体字・繁体字）を選べます。
 
 ## 対応形式
 
@@ -110,3 +120,15 @@ dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-onl
 [CLI のコマンド](docs/rust-mail-cli.md) · [検証用データとテスト手順](tests/fixtures/README.md) · [画面の検証](docs/ui-verification.md) · [EWF DLL のビルド](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [ライセンス](licenses/)
 
 Windows 用の配布ファイルは `tools/publish-mail-evidence.ps1` で作成できます。英語の画面画像と GIF の更新は、Windows で上記の手順に従ってプレビューワーカーをビルドし、Pillow をインストールしてから `python tools/update-readme-media.py` を実行します。
+
+## 表示言語
+
+**表示 → 表示言語**で 16 種類の言語から選べます。変更はすぐに反映されます。
+
+English · 한국어 · 日本語 · Deutsch · Español · Français · Bahasa Indonesia · Italiano · Polski · Português (Brasil) · Türkçe · Tiếng Việt · Русский · Українська · 简体中文 · 繁體中文
+
+## ライセンス
+
+プロジェクト独自のコードは [Apache License 2.0](LICENSE) の下で公開しています。
+
+サードパーティーのコンポーネントには、それぞれのライセンスが適用されます。[ライセンスに関する通知](licenses/)を参照してください。

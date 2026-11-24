@@ -1,12 +1,24 @@
-# Mail Evidence
+<p align="center">
+  <img src="assets/MailViewer.svg" width="96" height="96" alt="Mail Evidence logo">
+</p>
 
-<p align="center"><img src="assets/MailViewer.svg" alt="Mail Evidence logo" width="72"></p>
+<h1 align="center">Mail Evidence</h1>
 
 <h3 align="center">A user-friendly email analysis tool built around the analyst’s workflow</h3>
 
-[English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md)
+<p align="center">Mail Evidence is a Windows tool for examining email in a familiar inbox layout. Open mail files and folders or extract mail from an NTFS disk image. Preview attachments, spot anomalies, and trace findings to the original headers or bytes.</p>
 
-[Windows x64 compact](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-compact.zip) · [Windows x64 with runtime](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
+<p align="center">
+  <a href="https://github.com/absolroot/Mail-Evidence/releases/latest"><img src="https://badgen.net/github/release/absolroot/Mail-Evidence/latest" alt="Latest release"></a>
+  <a href="https://github.com/absolroot/Mail-Evidence/actions/workflows/ci.yml"><img src="https://github.com/absolroot/Mail-Evidence/actions/workflows/ci.yml/badge.svg?branch=main&amp;event=push" alt="Windows build and tests"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/absolroot/Mail-Evidence?color=blue" alt="Apache 2.0 license"></a>
+</p>
+
+<p align="center"><a href="https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-compact.zip">Windows x64 compact</a> · <a href="https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-standalone.zip">Windows x64 with runtime</a> · <a href="https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip">Rust CLI 0.4.0</a></p>
+
+<p align="center"><a href="#quick-start">Quick start</a> · <a href="#investigation-features">Investigation features</a> · <a href="#supported-inputs">Supported inputs</a></p>
+
+<p align="center"><a href="README.ko.md">한국어</a> · <a href="README.ja.md">日本語</a></p>
 
 ## Investigation features
 
@@ -26,8 +38,6 @@ Open the [24-message sample mailbox](tests/fixtures/readme-demo/) to try the ima
 3. Search in **All mail**, or review findings in **Anomalies**. Try the [sample messages](tests/fixtures/README.md) to see the workflow.
 
 HTML messages block external images, scripts, and link navigation by default. HTML rendering uses [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution).
-
-**Settings → Display language** offers Korean, English, Japanese, German, Spanish, French, Indonesian, Italian, Polish, Brazilian Portuguese, Turkish, Vietnamese, Russian, Ukrainian, and Simplified and Traditional Chinese.
 
 ## Supported inputs
 
@@ -110,3 +120,15 @@ dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-onl
 [CLI commands](docs/rust-mail-cli.md) · [Fixtures and test commands](tests/fixtures/README.md) · [UI tests](docs/ui-verification.md) · [Build the EWF DLL](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [Licenses](licenses/)
 
 Use `tools/publish-mail-evidence.ps1` to publish the Windows builds. To refresh the English README media on Windows, build the preview worker as shown above, install Pillow, and run `python tools/update-readme-media.py`.
+
+## Display language
+
+Choose from 16 interface languages under **View → Display language**. Changes apply immediately.
+
+English · 한국어 · 日本語 · Deutsch · Español · Français · Bahasa Indonesia · Italiano · Polski · Português (Brasil) · Türkçe · Tiếng Việt · Русский · Українська · 简体中文 · 繁體中文
+
+## License
+
+Project-owned code is licensed under the [Apache License 2.0](LICENSE).
+
+Third-party components retain their own licenses. See the [third-party license notices](licenses/).

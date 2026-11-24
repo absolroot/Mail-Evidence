@@ -34,6 +34,7 @@
     <EmbeddedResource Include="../../third_party/ntfs-tracer/gui/UiText.ko.resx" Link="UiText.ko.resx" ManifestResourceName="JournalDesk.UiText.ko" />
     <EmbeddedResource Include="Locales/*.json" LogicalName="MailViewer.App.Locale.%(Filename).json" />
     <Resource Include="../../assets/MailViewer.ico" Link="Assets/MailViewer.ico" Condition="Exists('../../assets/MailViewer.ico')"/>
+    <None Include="../../LICENSE" Link="LICENSE" CopyToPublishDirectory="PreserveNewest" />
     <None Include="../../licenses/*.txt" Link="licenses/%(Filename)%(Extension)" CopyToPublishDirectory="PreserveNewest" />
     <EmbeddedResource Include="../../preview/target/release/mail-evidence-preview.exe"
                       LogicalName="MailViewer.App.AttachmentPreviewWorker"
