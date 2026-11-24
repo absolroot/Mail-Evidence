@@ -1,0 +1,13 @@
+From: Review Team <review@example.com>
+To: reviewer@example.org
+Subject: 03 Relay timestamp reversed
+Message-ID: <sample-03-relay-clock@example.org>
+Received:
+ from first.example.org by last.example.org; Tue, 17 Nov 2026 11:58:00 +0000
+Received:
+ from start.example.org by first.example.org; Tue, 17 Nov 2026 12:00:00 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Synthetic local UX fixture. No real incident data.

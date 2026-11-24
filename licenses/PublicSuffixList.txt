@@ -1,0 +1,4 @@
+Public Suffix List
+Mozilla Public License, version 2.0 (a copy is included as OpenMcdf-MPL-2.0.txt).
+Snapshot commit 87a2c1b8de5886a133ff4da21b2aa6fec88d8739.
+Corresponding unmodified source: https://github.com/publicsuffix/list/blob/87a2c1b8de5886a133ff4da21b2aa6fec88d8739/public_suffix_list.dat

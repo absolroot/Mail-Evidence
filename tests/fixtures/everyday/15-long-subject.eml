@@ -1,0 +1,32 @@
+From: =?utf-8?b?7KeA7JetIO2WieyCrCDrsI8g7IOd7ZmcIOusuO2ZlCDtlITroZzqt7jrnqg=?=
+ =?utf-8?q?_?==?utf-8?b?7JWI64K07YyA?= <community-programs@example.test>
+To: =?utf-8?b?7YWM7Iqk7Yq4IOyImOyLoOyekA==?= <customer@example.test>
+Subject: =?utf-8?b?MTHsm5Qg7KO866eQIOyDne2ZnCDrrLjtmZQg7ZSE66Gc6re4656o6rO8?=
+ =?utf-8?b?IOuPhOyEnOq0gCDsnbTsmqkg7Iuc6rCE7J2EIO2VqOq7mCDtmZXsnbjtlZjquLAg?=
+ =?utf-8?b?7JyE7ZWcIOq4tCDsoJzrqqkg7IOY7ZSM?=
+Date: Mon, 23 Nov 2026 11:24:00 +0900
+Message-ID: <everyday-15@example.test>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="mail-viewer-everyday-15-0"
+
+--mail-viewer-everyday-15-0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+행사 안내 내용은 첨부한 텍스트 파일에 정리했습니다.
+
+--mail-viewer-everyday-15-0
+Content-Type: text/plain
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename*0*=utf-8''11%EC%9B%94%20%EC%A3%BC%EB%A7%90%20%EC%83%9D%ED%99%9C%20;
+ filename*1*=%EB%AC%B8%ED%99%94%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8;
+ filename*2*=%EA%B3%BC%20%EB%8F%84%EC%84%9C%EA%B4%80%20%EC%9D%B4%EC%9A%A9%20;
+ filename*3*=%EC%95%88%EB%82%B4%EB%A5%BC%20%ED%95%A8%EA%BB%98%20%EC%A0%95;
+ filename*4*=%EB%A6%AC%ED%95%9C%20%ED%99%95%EC%9D%B8%EC%9A%A9%20%EC%B2%A8;
+ filename*5*=%EB%B6%80%ED%8C%8C%EC%9D%BC.txt
+MIME-Version: 1.0
+
+7KO866eQIO2UhOuhnOq3uOueqOydgCAxMOyLnOu2gO2EsCDsi5zsnpHtlanri4jri6QuCg==
+
+--mail-viewer-everyday-15-0--

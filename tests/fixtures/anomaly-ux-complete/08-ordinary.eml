@@ -1,0 +1,25 @@
+From: Related Team <related@example.net>
+To: reviewer@example.org
+Subject: 08 Related message without findings
+Message-ID: <sample-08-ordinary@example.org>
+Reply-To: related@example.net
+Authentication-Results: mx.example.org; dkim=pass header.d=example.com;
+ spf=fail smtp.mailfrom=example.net
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============5243146180880073871=="
+
+--===============5243146180880073871==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Synthetic local UX fixture. No real incident data.
+
+--===============5243146180880073871==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+<a href="https://www.example.com/review">https://portal.example.com/review</a>
+
+--===============5243146180880073871==--

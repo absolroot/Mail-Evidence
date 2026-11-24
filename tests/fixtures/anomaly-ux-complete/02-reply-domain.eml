@@ -1,0 +1,12 @@
+From: Review Team <review@example.com>
+To: reviewer@example.org
+Subject: 02 Different reply domain
+Message-ID: <sample-02-reply-domain@example.org>
+Reply-To: related@example.net
+In-Reply-To: <sample-08-ordinary@example.org>
+References: <sample-08-ordinary@example.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Synthetic local UX fixture. No real incident data.

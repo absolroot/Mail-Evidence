@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <DefineConstants>$(DefineConstants);MAIL_VIEWER</DefineConstants>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>MailViewer.App</RootNamespace>
+    <AssemblyName>MailEvidence</AssemblyName>
+    <AssemblyTitle>Absolroot Mail Evidence</AssemblyTitle>
+    <Product>Absolroot Mail Evidence</Product>
+    <Version>1.5.6</Version>
+    <ApplicationIcon Condition="Exists('../../assets/MailViewer.ico')">../../assets/MailViewer.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../MailViewer.Core/MailViewer.Core.csproj"/>
+    <ProjectReference Include="../../third_party/ntfs-tracer/modules/EvidenceImage/EvidenceImage.csproj"
+                      AdditionalProperties="EwfRuntimeIdentifier=$(RuntimeIdentifier)" Condition="'$(RuntimeIdentifier)' != ''" />
+    <ProjectReference Include="../../third_party/ntfs-tracer/modules/EvidenceImage/EvidenceImage.csproj"
+                      Condition="'$(RuntimeIdentifier)' == ''" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.13.1" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4314.35" />
+    <Page Include="../../third_party/ntfs-tracer/gui/CompactMenu.xaml" Link="CompactMenu.xaml" />
+    <Page Include="../../third_party/ntfs-tracer/gui/WorkspaceChrome.xaml" Link="WorkspaceChrome.xaml" />
+    <Compile Include="../../third_party/ntfs-tracer/gui/CopyText.cs" Link="CopyText.cs" />
+    <Page Include="../../third_party/ntfs-tracer/gui/TableHeader.xaml" Link="TableHeader.xaml" />
+    <Compile Include="../../third_party/ntfs-tracer/gui/SortCycle.cs" Link="SortCycle.cs" />
+    <Page Include="../../third_party/ntfs-tracer/gui/HexEvidenceView.xaml" Link="HexEvidenceView.xaml" />
+    <Compile Include="../../third_party/ntfs-tracer/gui/HexEvidenceView.xaml.cs" Link="HexEvidenceView.xaml.cs" />
+    <Compile Include="../../third_party/ntfs-tracer/gui/ShellIcons.cs" Link="ShellIcons.cs" />
+    <Compile Include="../../third_party/ntfs-tracer/gui/HexEvidenceField.cs" Link="HexEvidenceField.cs" />
+    <Compile Include="../../third_party/ntfs-tracer/gui/Localization.cs" Link="Localization.cs" />
+    <EmbeddedResource Include="../../third_party/ntfs-tracer/gui/UiText.resx" Link="UiText.resx" ManifestResourceName="JournalDesk.UiText" />
+    <EmbeddedResource Include="../../third_party/ntfs-tracer/gui/UiText.ko.resx" Link="UiText.ko.resx" ManifestResourceName="JournalDesk.UiText.ko" />
+    <Resource Include="../../assets/MailViewer.ico" Link="Assets/MailViewer.ico" Condition="Exists('../../assets/MailViewer.ico')"/>
+    <None Include="../../licenses/*.txt" Link="licenses/%(Filename)%(Extension)" CopyToPublishDirectory="PreserveNewest" />
+    <EmbeddedResource Include="../../preview/target/release/mail-evidence-preview.exe"
+                      LogicalName="MailViewer.App.AttachmentPreviewWorker"
+                      Condition="'$(CompressedAttachmentPreviewWorker)' == '' And Exists('../../preview/target/release/mail-evidence-preview.exe')" />
+    <EmbeddedResource Include="$(CompressedAttachmentPreviewWorker)"
+                      LogicalName="MailViewer.App.AttachmentPreviewWorker.br"
+                      Condition="'$(CompressedAttachmentPreviewWorker)' != ''" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="src/MailViewer.Core/MailViewer.Core.csproj" />
+  <Project Path="src/MailViewer.App/MailViewer.App.csproj" />
+  <Project Path="tests/MailViewer.Verification/MailViewer.Verification.csproj" />
+  <Project Path="tools/FlowSmoke/FlowSmoke.csproj" />
+  <Project Path="third_party/ntfs-tracer/modules/EvidenceImage/EvidenceImage.csproj" />
+</Solution>

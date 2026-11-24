@@ -1,0 +1,16 @@
+**/bin/
+**/obj/
+**/__pycache__/
+/artifacts/
+/engine/target/
+/tests/fixtures/rust-local/
+/preview/target/
+
+/.local/
+/tests/fixtures/external/
+/tests/fixtures/ost/
+/tests/fixtures/pst/
+/third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/build*/
+/third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/*.dll
+/third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/libewf_python-*/
+/third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/zlib-*/

@@ -1,0 +1,9 @@
+# Preserve byte-exact mail fixtures, source archives, and binary assets on every platform.
+*.eml -text
+*.mbox -text
+*.msg -text
+*.pst -text
+*.ost -text
+*.png -text
+*.ico -text
+*.gz -text

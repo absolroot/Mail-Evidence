@@ -1,0 +1,48 @@
+From: fixtures@example.test
+To: analyst@example.test
+Subject: =?utf-8?b?UERG7JmAIFpJUCDsooXro4wg65KkIOuwlOydtO2KuA==?=
+Date: Tue, 24 Nov 2026 09:00:00 +0900
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0680540087195238354=="
+
+--===============0680540087195238354==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Synthetic forensic fixture. Attachments contain harmless verification data.
+
+--===============0680540087195238354==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="pdf-extra.pdf"
+MIME-Version: 1.0
+
+JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2Jq
+CjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9Db3VudCAwIC9LaWRzIFtdID4+CmVuZG9iagp4cmVm
+CjAgMwowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDA1OCAw
+MDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDMgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjExMAol
+JUVPRg0KQkVOSUdOLVRFWFQ=
+
+--===============0680540087195238354==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="zip-extra.zip"
+MIME-Version: 1.0
+
+UEsDBBQAAAAAAABgeF3xmdpAEwAAABMAAAAKAAAAcmVhZG1lLnR4dEJlbmlnbiB0ZXN0IHJlY29y
+ZC5QSwECFAAUAAAAAAAAYHhd8ZnaQBMAAAATAAAACgAAAAAAAAAAAAAAgAEAAAAAcmVhZG1lLnR4
+dFBLBQYAAAAAAQABADgAAAA7AAAARABUZXN0IGFyY2hpdmUgY29tbWVudDsgZW1iZWRkZWQgYnl0
+ZXMgUEsFBiBhcmUgbm90IGFuIGFyY2hpdmUgZW5kaW5nLkJFTklHTi1URVhU
+
+--===============0680540087195238354==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="valid-control.zip"
+MIME-Version: 1.0
+
+UEsDBBQAAAAAAABgeF3xmdpAEwAAABMAAAAKAAAAcmVhZG1lLnR4dEJlbmlnbiB0ZXN0IHJlY29y
+ZC5QSwECFAAUAAAAAAAAYHhd8ZnaQBMAAAATAAAACgAAAAAAAAAAAAAAgAEAAAAAcmVhZG1lLnR4
+dFBLBQYAAAAAAQABADgAAAA7AAAARABUZXN0IGFyY2hpdmUgY29tbWVudDsgZW1iZWRkZWQgYnl0
+ZXMgUEsFBiBhcmUgbm90IGFuIGFyY2hpdmUgZW5kaW5nLg==
+
+--===============0680540087195238354==--

@@ -1,0 +1,25 @@
+From: Review Team <review@example.com>
+To: reviewer@example.org
+Subject: 07 PE header under a PDF name
+Message-ID: <sample-07-pe-header@example.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7444730714791832531=="
+
+--===============7444730714791832531==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Synthetic local UX fixture. No real incident data.
+
+--===============7444730714791832531==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="header-only.pdf"
+MIME-Version: 1.0
+
+TVoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAQAAAAFBFAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAsBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAA==
+
+--===============7444730714791832531==--

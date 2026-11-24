@@ -1,0 +1,39 @@
+From: =?utf-8?b?7J247IeE7IaM?= <print@example.test>
+To: =?utf-8?b?7YWM7Iqk7Yq4IOyImOyLoOyekA==?= <customer@example.test>
+Subject: =?utf-8?b?7J247IeEIOuvuOumrOuztOq4sCDrkZAg7J6lIOyghOuLrA==?=
+Date: Mon, 23 Nov 2026 11:16:00 +0900
+Message-ID: <everyday-14@example.test>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="mail-viewer-everyday-14-0"
+
+--mail-viewer-everyday-14-0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+65GQIOqwgOyngCDrsLDsuZjslYjsnYQg7LKo67aA7ZaI7Iq164uI64ukLiDsoIDsnqXtlaAg65WM
+IOqwmeydgCDsnbTrpoTsnYQg6rWs67aE7ZW07JW8IO2VmOuKlCDqsr3smrDrpbwg7ZmV7J247ZWg
+IOyImCDsnojsirXri4jri6QuDQo=
+
+--mail-viewer-everyday-14-0
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename*0*=utf-8''%EC%9D%B8%EC%87%84%20%EB%AF%B8%EB%A6%AC%EB%B3%B4%EA%B8%B0;
+ filename*1*=.png
+MIME-Version: 1.0
+
+iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAANElEQVR4nGP48PUXTRHDqAWjFtDI
+Ao28VWSgUQtGLRi1YNSCUQtGLRhsFlARjVowagHlCAAqbm9M/En/9AAAAABJRU5ErkJggg==
+
+--mail-viewer-everyday-14-0
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename*0*=utf-8''%EC%9D%B8%EC%87%84%20%EB%AF%B8%EB%A6%AC%EB%B3%B4%EA%B8%B0;
+ filename*1*=.png
+MIME-Version: 1.0
+
+iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAM0lEQVR4nGP4+ukNTRHDqAWjFiAh
+u64ArGjUglELRi0YtWDUglELRi2grwXkoVELRoAFAHAIN7eI5lahAAAAAElFTkSuQmCC
+
+--mail-viewer-everyday-14-0--

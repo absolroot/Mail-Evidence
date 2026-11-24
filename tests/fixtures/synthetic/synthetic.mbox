@@ -1,0 +1,62 @@
+From alice@example.test Mon Nov 23 03:00:00 2026
+Received: from relay-b.example.test by collector.example.test;
+ Mon, 23 Nov 2026 12:01:03 +0900
+Received: from relay-a.example.test by relay-b.example.test;
+ Mon, 23 Nov 2026 03:00:59 +0000
+From: Alice <alice@example.test>
+To: Bob <bob@example.test>
+Cc: Casey <casey@example.test>
+Date: Mon, 23 Nov 2026 12:00:00 +0900
+Message-ID: <fixture-a@example.test>
+Subject: =?UTF-8?B?7IKs6rG0IOuplOydvCBB?=
+X-Case-Marker: FIRST
+X-Case-Marker: SECOND
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="case-mixed"
+
+--case-mixed
+Content-Type: multipart/alternative; boundary="case-alt"
+
+--case-alt
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+BODY_ONLY_4C7F
+>From line-in-body, not a separator
+--case-alt
+Content-Type: text/html; charset="UTF-8"
+
+<p>HTML_ONLY_63DE</p><img src="https://image.example.test/pixel.png" alt="Fixture only">
+--case-alt--
+--case-mixed
+Content-Type: application/octet-stream; name*=utf-8''%EC%A6%9D%EA%B1%B0.bin
+Content-Disposition: attachment; filename*=utf-8''%EC%A6%9D%EA%B1%B0.bin
+Content-Transfer-Encoding: base64
+
+AAECf4D/DQo=
+--case-mixed--
+
+From bob@example.test Mon Nov 23 03:02:00 2026
+From: Bob <bob@example.test>
+To: Alice <alice@example.test>
+Date: Mon, 23 Nov 2026 03:02:00 +0000
+Subject: Re: case fixture
+Message-ID: <fixture-b@example.test>
+In-Reply-To: <fixture-a@example.test>
+References: <fixture-a@example.test>
+Content-Type: text/plain; charset=UTF-8
+
+SECOND_MAIL_1A06
+
+From bob@example.test Mon Nov 23 03:03:00 2026
+From: Bob <bob@example.test>
+To: Alice <alice@example.test>
+Date: Mon, 23 Nov 2026 03:02:00 +0000
+Subject: Re: case fixture
+Message-ID: <fixture-b@example.test>
+In-Reply-To: <fixture-a@example.test>
+References: <fixture-a@example.test>
+Content-Type: text/plain; charset=UTF-8
+
+SAME_ID_DIFFERENT_BODY_2A01
+

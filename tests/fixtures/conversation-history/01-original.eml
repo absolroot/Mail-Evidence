@@ -1,0 +1,10 @@
+From: Accounts <accounts@example.com>
+To: Customer <customer@example.net>
+Reply-To: case+original@example.com
+Date: 12 Jan 2026 09:00:00 +0900
+Message-ID: <payment-original@example.com>
+Subject: [01] Payment instructions
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+Synthetic fixture for Mail Evidence.

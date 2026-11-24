@@ -1,0 +1,3905 @@
+{
+  "parser": "libpff-python",
+  "parserVersion": "20261030",
+  "primary": {
+    "file": "pstextractortestpdf.ost",
+    "url": "https://raw.githubusercontent.com/epfromer/pst-extractor/7d08ef9bc7112c23275fa948306c76bba6e24fba/example/testdata/pstextractortestpdf%40outlook.com.ost",
+    "clientMagic": "SO",
+    "version": 36,
+    "encoding": 0,
+    "length": 16818176,
+    "sha256": "c914f1f9eea55da0eb3884d063acf18a109fcb34cdd7dda623770f117ff63918",
+    "folders": [
+      {
+        "nid": 290,
+        "parentNid": null,
+        "name": null,
+        "itemCount": 0
+      },
+      {
+        "nid": 8194,
+        "parentNid": 290,
+        "name": "Root - Public",
+        "itemCount": 0
+      },
+      {
+        "nid": 8226,
+        "parentNid": 8194,
+        "name": "IPM_SUBTREE",
+        "itemCount": 0
+      },
+      {
+        "nid": 8258,
+        "parentNid": 8194,
+        "name": "NON_IPM_SUBTREE",
+        "itemCount": 0
+      },
+      {
+        "nid": 8290,
+        "parentNid": 8258,
+        "name": "EFORMS REGISTRY",
+        "itemCount": 0
+      },
+      {
+        "nid": 8322,
+        "parentNid": 8290,
+        "name": "Organization Forms",
+        "itemCount": 0
+      },
+      {
+        "nid": 8354,
+        "parentNid": 290,
+        "name": "Root - Mailbox",
+        "itemCount": 0
+      },
+      {
+        "nid": 8386,
+        "parentNid": 8354,
+        "name": "Common Views",
+        "itemCount": 0
+      },
+      {
+        "nid": 8418,
+        "parentNid": 8354,
+        "name": "Finder",
+        "itemCount": 0
+      },
+      {
+        "nid": 8450,
+        "parentNid": 8354,
+        "name": "Shortcuts",
+        "itemCount": 0
+      },
+      {
+        "nid": 8482,
+        "parentNid": 8354,
+        "name": "Views",
+        "itemCount": 0
+      },
+      {
+        "nid": 8514,
+        "parentNid": 8354,
+        "name": "IPM_SUBTREE",
+        "itemCount": 0
+      },
+      {
+        "nid": 8546,
+        "parentNid": 8514,
+        "name": "Deleted Items",
+        "itemCount": 0
+      },
+      {
+        "nid": 8578,
+        "parentNid": 8514,
+        "name": "Inbox",
+        "itemCount": 2
+      },
+      {
+        "nid": 8610,
+        "parentNid": 8514,
+        "name": "Outbox",
+        "itemCount": 0
+      },
+      {
+        "nid": 8642,
+        "parentNid": 8514,
+        "name": "Sent Items",
+        "itemCount": 0
+      },
+      {
+        "nid": 32802,
+        "parentNid": 8514,
+        "name": "Archive",
+        "itemCount": 0
+      },
+      {
+        "nid": 32834,
+        "parentNid": 8514,
+        "name": "Yammer Root",
+        "itemCount": 0
+      },
+      {
+        "nid": 33346,
+        "parentNid": 32834,
+        "name": "Inbound",
+        "itemCount": 0
+      },
+      {
+        "nid": 33378,
+        "parentNid": 32834,
+        "name": "Outbound",
+        "itemCount": 0
+      },
+      {
+        "nid": 33410,
+        "parentNid": 32834,
+        "name": "Feeds",
+        "itemCount": 0
+      },
+      {
+        "nid": 32866,
+        "parentNid": 8514,
+        "name": "Conversation History",
+        "itemCount": 0
+      },
+      {
+        "nid": 33314,
+        "parentNid": 32866,
+        "name": "Team Chat",
+        "itemCount": 0
+      },
+      {
+        "nid": 32898,
+        "parentNid": 8514,
+        "name": "Files",
+        "itemCount": 0
+      },
+      {
+        "nid": 32930,
+        "parentNid": 8514,
+        "name": "Conversation Action Settings",
+        "itemCount": 0
+      },
+      {
+        "nid": 32962,
+        "parentNid": 8514,
+        "name": "Junk Email",
+        "itemCount": 0
+      },
+      {
+        "nid": 32994,
+        "parentNid": 8514,
+        "name": "ExternalContacts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33026,
+        "parentNid": 8514,
+        "name": "Journal",
+        "itemCount": 0
+      },
+      {
+        "nid": 33058,
+        "parentNid": 8514,
+        "name": "Notes",
+        "itemCount": 0
+      },
+      {
+        "nid": 33090,
+        "parentNid": 8514,
+        "name": "Calendar",
+        "itemCount": 0
+      },
+      {
+        "nid": 33442,
+        "parentNid": 33090,
+        "name": "Birthdays",
+        "itemCount": 0
+      },
+      {
+        "nid": 33570,
+        "parentNid": 33090,
+        "name": "United States holidays",
+        "itemCount": 160
+      },
+      {
+        "nid": 33122,
+        "parentNid": 8514,
+        "name": "Contacts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33218,
+        "parentNid": 33122,
+        "name": "GAL Contacts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33250,
+        "parentNid": 33122,
+        "name": "{06967759-274D-40B2-A3EB-D7F9E73727D7}",
+        "itemCount": 0
+      },
+      {
+        "nid": 33282,
+        "parentNid": 33122,
+        "name": "Recipient Cache",
+        "itemCount": 0
+      },
+      {
+        "nid": 33474,
+        "parentNid": 33122,
+        "name": "PeopleCentricConversation Buddies",
+        "itemCount": 0
+      },
+      {
+        "nid": 33506,
+        "parentNid": 33122,
+        "name": "Organizational Contacts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33538,
+        "parentNid": 33122,
+        "name": "Companies",
+        "itemCount": 0
+      },
+      {
+        "nid": 33602,
+        "parentNid": 33122,
+        "name": "{A9E2BC46-B3A0-4243-B315-60D991004455}",
+        "itemCount": 0
+      },
+      {
+        "nid": 33154,
+        "parentNid": 8514,
+        "name": "Drafts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33186,
+        "parentNid": 8514,
+        "name": "Tasks",
+        "itemCount": 0
+      },
+      {
+        "nid": 33634,
+        "parentNid": 8514,
+        "name": "Sync Issues",
+        "itemCount": 0
+      },
+      {
+        "nid": 33666,
+        "parentNid": 33634,
+        "name": "Conflicts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33698,
+        "parentNid": 33634,
+        "name": "Local Failures",
+        "itemCount": 0
+      },
+      {
+        "nid": 33730,
+        "parentNid": 33634,
+        "name": "Server Failures",
+        "itemCount": 0
+      },
+      {
+        "nid": 33762,
+        "parentNid": 8514,
+        "name": "Quick Step Settings",
+        "itemCount": 0
+      },
+      {
+        "nid": 8674,
+        "parentNid": 8354,
+        "name": "~MAPISP(Internal)",
+        "itemCount": 0
+      },
+      {
+        "nid": 8706,
+        "parentNid": 8354,
+        "name": "Drizzle",
+        "itemCount": 0
+      },
+      {
+        "nid": 8770,
+        "parentNid": 8354,
+        "name": "Shared Data",
+        "itemCount": 0
+      }
+    ],
+    "messages": [
+      {
+        "messageNid": 2097380,
+        "folderNid": 8578,
+        "subject": "single PDF",
+        "messageClass": "IPM.Note",
+        "header": {
+          "tag": 8192031,
+          "length": 16316,
+          "sha256": "fc4da0fae4936696edfdca53c43bc3ff0cad9eb3861e6bf5d2cdd77b8306d12f",
+          "fields": [
+            {
+              "name": "Received",
+              "offset": 0,
+              "length": 336,
+              "sha256": "fe15f295633f0b6dacde6cdb0a82e682b47b647bbcc6d18c7530fee5bc0882a3"
+            },
+            {
+              "name": "Received",
+              "offset": 336,
+              "length": 586,
+              "sha256": "41dac11035fd0d826e69ff74e9c582fabd772fc8b066c018a6c927da79cb257d"
+            },
+            {
+              "name": "Received",
+              "offset": 922,
+              "length": 664,
+              "sha256": "f7e935790fc5074e43b82ed16236f0b9d8c33d9063d1cd1a3cc4de1bf385d761"
+            },
+            {
+              "name": "Authentication-Results",
+              "offset": 1586,
+              "length": 490,
+              "sha256": "842df370748f9991fb4abd93eed05734ada11370e7b6b3d298b34bb9478e449b"
+            },
+            {
+              "name": "Received-SPF",
+              "offset": 2076,
+              "length": 412,
+              "sha256": "f5fd51b2198528dc74db9b267bb77c602fb1a818297d135cc4b4e162fdfadf8b"
+            },
+            {
+              "name": "Received",
+              "offset": 2488,
+              "length": 574,
+              "sha256": "fd09c8943a50bc11465368b1bcebf5cd894f72c3712d296d6d4adb65e517cd1c"
+            },
+            {
+              "name": "X-IncomingTopHeaderMarker",
+              "offset": 3062,
+              "length": 450,
+              "sha256": "dbc94d2216ee8b365836994d1c6bde834fb7298e0f5e74c26c1a7fe4080fd1f5"
+            },
+            {
+              "name": "Received",
+              "offset": 3512,
+              "length": 316,
+              "sha256": "a07375a9c5a1b20008f8285dc821ce36ac066053bd00be545020c2b7e3c1ddaa"
+            },
+            {
+              "name": "DKIM-Signature",
+              "offset": 3828,
+              "length": 1256,
+              "sha256": "2b9b5654411c29774b56858142bad6328d0d80dabc64da2e38ef9118cfcbc8fb"
+            },
+            {
+              "name": "X-Google-DKIM-Signature",
+              "offset": 5084,
+              "length": 1334,
+              "sha256": "af53c2442840d9e6a9a846e01f6713de3bb75e49821524202d9cc893c3a3f097"
+            },
+            {
+              "name": "X-Gm-Message-State",
+              "offset": 6418,
+              "length": 234,
+              "sha256": "5213a6130985ed25ec6886a23ebb87bdf87885a7fcbc3a6298caafdf2424bbc8"
+            },
+            {
+              "name": "X-Google-Smtp-Source",
+              "offset": 6652,
+              "length": 208,
+              "sha256": "be540278d7c8b29a94108f04142c07c3900c6feb7f4fc90bdd838d966ca1b429"
+            },
+            {
+              "name": "X-Received",
+              "offset": 6860,
+              "length": 252,
+              "sha256": "6add8793d3773f3d02f66f7c0a437bf9b4f5fac7b6d40729cd425f8843827048"
+            },
+            {
+              "name": "Return-Path",
+              "offset": 7112,
+              "length": 66,
+              "sha256": "93653185cb1bb586ccbdbb145c77e09817d6a804e06a50702f910c197fb67f7d"
+            },
+            {
+              "name": "Received",
+              "offset": 7178,
+              "length": 654,
+              "sha256": "a67efac666eb05b7fd1c555478b54c29090d3b300280dec2c8cd0414fe6a5a73"
+            },
+            {
+              "name": "MIME-Version",
+              "offset": 7832,
+              "length": 38,
+              "sha256": "29b3ff1c09ef3f6a0537f018b0dc64fc6595882bc2ef9ec26dee67ad163f8685"
+            },
+            {
+              "name": "Date",
+              "offset": 7870,
+              "length": 78,
+              "sha256": "b0739239e1f2a700e146eedc274e4d5cd6fb33baa47da55625720aab8e177a2e"
+            },
+            {
+              "name": "From",
+              "offset": 7948,
+              "length": 62,
+              "sha256": "5dd35eae9ca18063af7d9856999d541cc8e295937375cc3426eb45418adabf12"
+            },
+            {
+              "name": "Subject",
+              "offset": 8010,
+              "length": 42,
+              "sha256": "1053ddd44b76123847b8bf5ca8bccd9c6c17b4a36c32ef1bb29f72fab38e1578"
+            },
+            {
+              "name": "Thread-Topic",
+              "offset": 8052,
+              "length": 52,
+              "sha256": "f0747d71ee3981fa0157c97ca5e841390c0196ab33f7ca1bb5eb3412784488a3"
+            },
+            {
+              "name": "Message-ID",
+              "offset": 8104,
+              "length": 124,
+              "sha256": "166e5a82ffbc0cea2c8c2afcb8e153847743e26d58f1420f73da8045acfe3b15"
+            },
+            {
+              "name": "To",
+              "offset": 8228,
+              "length": 154,
+              "sha256": "f28b8704eea40036111c9a441e15f6851ad15c50294328d942074fd21f6c4705"
+            },
+            {
+              "name": "Content-Type",
+              "offset": 8382,
+              "length": 168,
+              "sha256": "a951d37fcb2a3c844f43e1fe7f4c461c06eadb29b7c77feadd0a17b3836532db"
+            },
+            {
+              "name": "X-IncomingHeaderCount",
+              "offset": 8550,
+              "length": 54,
+              "sha256": "614a1040f87093720e1b28076d85015f5640e4c5b022c4996b72091e2dffa5f8"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTime",
+              "offset": 8604,
+              "length": 166,
+              "sha256": "14eb7d73b80d70629bc7f8aa775b9316a9fa8be3fa68e04472acc0c6a4895d85"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTimeReason",
+              "offset": 8770,
+              "length": 140,
+              "sha256": "d5db94d9df0d44ad163a3525926729832ca0a9ae899d76f66ad04b7c6b00ba79"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationInterval",
+              "offset": 8910,
+              "length": 134,
+              "sha256": "9a3dff382e0eb90cbd833af3b887d3996cc92fee11461cdd994bcc06ee8eef94"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationIntervalReason",
+              "offset": 9044,
+              "length": 138,
+              "sha256": "0f0d2695c677f05148c86c8886e4135dc6b8c94f74ffb0e420c9c5f8fa2a54c5"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-Network-Message-Id",
+              "offset": 9182,
+              "length": 174,
+              "sha256": "0015bc83493f0c24462a71b0bfe7593f0af65f583567190c45aca9645cad693a"
+            },
+            {
+              "name": "X-EOPAttributedMessage",
+              "offset": 9356,
+              "length": 54,
+              "sha256": "2d73525205a646ce08e15bb6d6e284e5f62500fad7d36b7be0d3e51b12df3fc6"
+            },
+            {
+              "name": "X-EOPTenantAttributedMessage",
+              "offset": 9410,
+              "length": 140,
+              "sha256": "e04cf0c9af74f99852e0b61206bd88d09f580ac9e9aaa2cf02bed4ade3e0d793"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-MessageDirectionality",
+              "offset": 9550,
+              "length": 120,
+              "sha256": "6b7b8ec5a346b2b98424daa80804e021342dc4b9645c69ad4a4c1911ee3bed38"
+            },
+            {
+              "name": "X-MS-PublicTrafficType",
+              "offset": 9670,
+              "length": 62,
+              "sha256": "1616f8803f23a2a241161a1e8a8c34c02a5b51d56139ba761763b878951b251c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthSource",
+              "offset": 9732,
+              "length": 190,
+              "sha256": "84ced55c339a1cf83191270c26c34fac2fd88a1564d62a0bd1fc8f44e183ffdc"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthAs",
+              "offset": 9922,
+              "length": 92,
+              "sha256": "bb56d63a67648c16f1b59998930784a9bfaaf853a4205f2d0a90dcba59fc324a"
+            },
+            {
+              "name": "X-MS-UserLastLogonTime",
+              "offset": 10014,
+              "length": 92,
+              "sha256": "ab170965019faa700d02d8bc937b97db71c7efff031dd8f0e14ed688c5298594"
+            },
+            {
+              "name": "X-MS-Office365-Filtering-Correlation-Id",
+              "offset": 10106,
+              "length": 158,
+              "sha256": "e25b12b399473243e920fa9c2cb7aa3ec9af3e65f7875958226b939a12f13967"
+            },
+            {
+              "name": "X-MS-TrafficTypeDiagnostic",
+              "offset": 10264,
+              "length": 88,
+              "sha256": "5ab296193c39bf9243b2df8da090075b12d2f4729860f837281003ddfea17199"
+            },
+            {
+              "name": "X-MS-Exchange-EOPDirect",
+              "offset": 10352,
+              "length": 62,
+              "sha256": "4334518100735a5a355ea441fe2184d70e971006d44e40f988067a76edb0525a"
+            },
+            {
+              "name": "X-Sender-IP",
+              "offset": 10414,
+              "length": 58,
+              "sha256": "f25c03b302ca0afd148dcf76143903612de3b02ae2f8b31331ee5316cc35abd0"
+            },
+            {
+              "name": "X-SID-PRA",
+              "offset": 10472,
+              "length": 62,
+              "sha256": "c030acc0527f43041c788c323a8519eb6d156558a3b12e0498abf57751e34180"
+            },
+            {
+              "name": "X-SID-Result",
+              "offset": 10534,
+              "length": 40,
+              "sha256": "fa30844f503d9efea6987b23cdafcff7548d3d6b3c8ba258e441ed386f2c5bfd"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-PCL",
+              "offset": 10574,
+              "length": 70,
+              "sha256": "c84a41324fee4eb2e380bf749bdf68492b6152e99210af369256774950d2e62c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-SCL",
+              "offset": 10644,
+              "length": 70,
+              "sha256": "6426c731bed5f46f59cced892f72b332bbf0061b47cdca4f74d4384e9f8d0b2b"
+            },
+            {
+              "name": "X-Microsoft-Antispam",
+              "offset": 10714,
+              "length": 60,
+              "sha256": "b8052b3c8fb352b46f8cab6bbf53b35e001f0caaac4523fed99d37e4083c3831"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-OriginalArrivalTime",
+              "offset": 10774,
+              "length": 164,
+              "sha256": "d5362cb2fe6261a118d11f9e47098952c25692f3d0aaea412c770155ffb7f68b"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Network-Message-Id",
+              "offset": 10938,
+              "length": 168,
+              "sha256": "1ba4d7986afb2c8e2f0e4af24bb7a5b822a103b6d3377bff8bbb83c5840a81d3"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Id",
+              "offset": 11106,
+              "length": 136,
+              "sha256": "674f7aaaf6aa569594228d7f0c91cb5605aa07f9f401532618454ec26dd6e458"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthSource",
+              "offset": 11242,
+              "length": 188,
+              "sha256": "a1086e814c0cec560eedea6682b97a61f9ecfcade83ccd7cb424069357360a3a"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthAs",
+              "offset": 11430,
+              "length": 90,
+              "sha256": "f8021f9730b6c4d4a611f5fba8cc9b44ffe7d42170500640689865905966d261"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-FromEntityHeader",
+              "offset": 11520,
+              "length": 108,
+              "sha256": "a0e1ee304814357c6c606edf96d9b331752dabb03522e7a3fa9e73a7af3c55b9"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg",
+              "offset": 11628,
+              "length": 184,
+              "sha256": "166f6d67d25682fa6eecfb1fe0d9800239672bb682917a23483cf83dabcc484e"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-CrossTenantHeadersStamped",
+              "offset": 11812,
+              "length": 132,
+              "sha256": "c79ee19462240847b3770df50e045db134b3398adc254b943d07298191821622"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-EndToEndLatency",
+              "offset": 11944,
+              "length": 118,
+              "sha256": "add3d4462f1530953d841cd0e0da7acb446a45cc526b1e675fb8270a0dd91a55"
+            },
+            {
+              "name": "X-MS-Exchange-Processed-By-BccFoldering",
+              "offset": 12062,
+              "length": 114,
+              "sha256": "08ead2cd12f3f53522467254de2b550361917b63005bb905c7fe28b1090ff7b2"
+            },
+            {
+              "name": "X-Message-Info",
+              "offset": 12176,
+              "length": 472,
+              "sha256": "01fbefc646282f5078599607d69c6eb6b762d6704819cc73f343ee68b5bd05f6"
+            },
+            {
+              "name": "X-Message-Delivery",
+              "offset": 12648,
+              "length": 132,
+              "sha256": "447737330d62290c1c4d20a4a83536aefe13eb5110d179c36b84936a4d481f72"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Mailbox-Delivery",
+              "offset": 12780,
+              "length": 604,
+              "sha256": "71b1a45bc2bd91a4288937c16b8bfb389133b13f020d01a195428ae60aff1200"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Message-Info",
+              "offset": 13384,
+              "length": 2932,
+              "sha256": "217767fa4a1541120bfaa42db2469648a489df3be9db17f2931721e7f373c520"
+            }
+          ]
+        },
+        "attachments": [
+          {
+            "index": 0,
+            "attachmentNid": 32805,
+            "name": "Clinometer Usage.pdf",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 87069,
+              "sha256": "36a917a48e7b93f5226a082529e6c3ec663f083d4f9387551303d82379e2e445",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "0a68f7a8e751840fa203a2f7f0e71aaf209a190edfbf94277d8b2fc917aec7c6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "d01aa2b5cb4db80916fad316d6cb74d0fd7d71aa7fbc5db05adbedc30019122b"
+                },
+                {
+                  "offset": 65504,
+                  "length": 64,
+                  "sha256": "3ea7c4ac7f61088b8f8deccc77674a0f2c00e6f1589a3d778808dcdb64ca7334"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "messageNid": 2097412,
+        "folderNid": 8578,
+        "subject": "Welcome to your new Outlook.com account",
+        "messageClass": "IPM.Note",
+        "header": null,
+        "attachments": [
+          {
+            "index": 0,
+            "attachmentNid": 32837,
+            "name": "colors.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 5306,
+              "sha256": "f7c84a9569ffec90c4f96ff2158d8f5061c2b827e0bbe4fd5ac5fff43357e528",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "4fd4484e51ffc260cf75b654c5352daa8f1fde86caa1b528255fdca9be46edd0"
+                }
+              ]
+            }
+          },
+          {
+            "index": 1,
+            "attachmentNid": 32869,
+            "name": "colors-top.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 4130,
+              "sha256": "456a4ef033a40b9e2f6eded03f94e8b0cb70849b6dd3a3c9cf66c8f1835ff010",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "9900f1d10e09828e84ae7c69f46886a116134ffb01a555955a47cf30942c8650"
+                }
+              ]
+            }
+          },
+          {
+            "index": 2,
+            "attachmentNid": 32901,
+            "name": "devices.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 94183,
+              "sha256": "962637a8fe3c1e6691d17b8e769cd8956a0604cbd9d7d39f54b73a33bfbd14b9",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "1e198401a834ea153b1da4c4edec528c2d1292697c745f29cb8d1839b99b34a9"
+                },
+                {
+                  "offset": 65504,
+                  "length": 64,
+                  "sha256": "3ab463e2f7b8c9efe85d50a1ba73da4acd57eb1b6ab26601339bdc1b46237aa0"
+                }
+              ]
+            }
+          },
+          {
+            "index": 3,
+            "attachmentNid": 32933,
+            "name": "feature-attachments.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 7586,
+              "sha256": "f9d66e057be68c7f8d41f13cfff1f18e48a37ca2dd337ebd52a1b63f6ee6e9e1",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "d21bf6619f3ae0b9ca7ed021fca8f5a4ad2f1516431c62bd5106c7dfff7404f2"
+                }
+              ]
+            }
+          },
+          {
+            "index": 4,
+            "attachmentNid": 32965,
+            "name": "feature-calendars.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 6419,
+              "sha256": "d06c6d3c3e7238e1b0d6e24ca7675a82dfb8bf8cf8ee72e2a95cd553cb0e8a07",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "46b92657c4dcc5ea413718207862eedb0f0faa3662acbff0ba17a3a809d9ac4b"
+                }
+              ]
+            }
+          },
+          {
+            "index": 5,
+            "attachmentNid": 32997,
+            "name": "feature-integrations.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 8252,
+              "sha256": "65f59f56b99ee25cd68579971be408bc98b5ca96a449b4b486436f90e63973a8",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "e36814c751e9cc982ac66c3a61541e9e32a9758c6c96cfca65a4471cdf7b3433"
+                }
+              ]
+            }
+          },
+          {
+            "index": 6,
+            "attachmentNid": 33029,
+            "name": "feature-office.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 12226,
+              "sha256": "d17ad62c5986b19a929c28bf3c049217aedcbd0d949a05a5222dcbe2fac7f1ce",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "ba079b2006675122c27b7b285b0a0895bb2d505aea5a5e2f6bf7005ae9803a38"
+                }
+              ]
+            }
+          },
+          {
+            "index": 7,
+            "attachmentNid": 33061,
+            "name": "landing-appstore.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 2395,
+              "sha256": "f73499dee6ac3206490e0031b57fac6f7b1788014ea66f4513f07a49abc8af50",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                }
+              ]
+            }
+          },
+          {
+            "index": 8,
+            "attachmentNid": 33093,
+            "name": "landing-playstore.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 3383,
+              "sha256": "7df23e0a51c3c74aca231458aba29b680717a7ec43dbf7a4bce924de6cf03b76",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                }
+              ]
+            }
+          },
+          {
+            "index": 9,
+            "attachmentNid": 33125,
+            "name": "landing-winstore.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 4498,
+              "sha256": "74b7b9c5b36f502f2c5a2e75283a936d370a1befc2f36b531958d07e50a3aeba",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "51bab48435468828df9f8c36a8f26713eeb4704381fe5292579e0ef0947b3f67"
+                }
+              ]
+            }
+          },
+          {
+            "index": 10,
+            "attachmentNid": 33157,
+            "name": "microsoft-logo.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 2446,
+              "sha256": "a4e3abc6bf3ee4596151abb8d336f883860703e8ea297eb77181189a36813626",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "secondary": {
+    "file": "pstextractortest.ost",
+    "url": "https://raw.githubusercontent.com/epfromer/pst-extractor/7d08ef9bc7112c23275fa948306c76bba6e24fba/example/testdata/pstextractortest%40outlook.com.ost",
+    "clientMagic": "SO",
+    "version": 36,
+    "encoding": 0,
+    "length": 16818176,
+    "sha256": "daacd8d441428634e103b7c1e37fe1e5909256cc917551667049b5e84dfcf5f0",
+    "folders": [
+      {
+        "nid": 290,
+        "parentNid": null,
+        "name": null,
+        "itemCount": 0
+      },
+      {
+        "nid": 8194,
+        "parentNid": 290,
+        "name": "Root - Public",
+        "itemCount": 0
+      },
+      {
+        "nid": 8226,
+        "parentNid": 8194,
+        "name": "IPM_SUBTREE",
+        "itemCount": 0
+      },
+      {
+        "nid": 8258,
+        "parentNid": 8194,
+        "name": "NON_IPM_SUBTREE",
+        "itemCount": 0
+      },
+      {
+        "nid": 8290,
+        "parentNid": 8258,
+        "name": "EFORMS REGISTRY",
+        "itemCount": 0
+      },
+      {
+        "nid": 8322,
+        "parentNid": 8290,
+        "name": "Organization Forms",
+        "itemCount": 0
+      },
+      {
+        "nid": 8354,
+        "parentNid": 290,
+        "name": "Root - Mailbox",
+        "itemCount": 0
+      },
+      {
+        "nid": 8386,
+        "parentNid": 8354,
+        "name": "Common Views",
+        "itemCount": 0
+      },
+      {
+        "nid": 8418,
+        "parentNid": 8354,
+        "name": "Finder",
+        "itemCount": 0
+      },
+      {
+        "nid": 8450,
+        "parentNid": 8354,
+        "name": "Shortcuts",
+        "itemCount": 0
+      },
+      {
+        "nid": 8482,
+        "parentNid": 8354,
+        "name": "Views",
+        "itemCount": 0
+      },
+      {
+        "nid": 8514,
+        "parentNid": 8354,
+        "name": "IPM_SUBTREE",
+        "itemCount": 0
+      },
+      {
+        "nid": 8546,
+        "parentNid": 8514,
+        "name": "Deleted Items",
+        "itemCount": 1
+      },
+      {
+        "nid": 8578,
+        "parentNid": 8514,
+        "name": "Inbox",
+        "itemCount": 10
+      },
+      {
+        "nid": 8610,
+        "parentNid": 8514,
+        "name": "Outbox",
+        "itemCount": 0
+      },
+      {
+        "nid": 8642,
+        "parentNid": 8514,
+        "name": "Sent Items",
+        "itemCount": 2
+      },
+      {
+        "nid": 32802,
+        "parentNid": 8514,
+        "name": "Archive",
+        "itemCount": 0
+      },
+      {
+        "nid": 32834,
+        "parentNid": 8514,
+        "name": "Yammer Root",
+        "itemCount": 0
+      },
+      {
+        "nid": 33378,
+        "parentNid": 32834,
+        "name": "Inbound",
+        "itemCount": 0
+      },
+      {
+        "nid": 33410,
+        "parentNid": 32834,
+        "name": "Outbound",
+        "itemCount": 0
+      },
+      {
+        "nid": 33570,
+        "parentNid": 32834,
+        "name": "Feeds",
+        "itemCount": 0
+      },
+      {
+        "nid": 32866,
+        "parentNid": 8514,
+        "name": "Conversation History",
+        "itemCount": 0
+      },
+      {
+        "nid": 33442,
+        "parentNid": 32866,
+        "name": "Team Chat",
+        "itemCount": 0
+      },
+      {
+        "nid": 32898,
+        "parentNid": 8514,
+        "name": "Files",
+        "itemCount": 0
+      },
+      {
+        "nid": 32930,
+        "parentNid": 8514,
+        "name": "Conversation Action Settings",
+        "itemCount": 0
+      },
+      {
+        "nid": 32962,
+        "parentNid": 8514,
+        "name": "Junk Email",
+        "itemCount": 0
+      },
+      {
+        "nid": 32994,
+        "parentNid": 8514,
+        "name": "ExternalContacts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33026,
+        "parentNid": 8514,
+        "name": "Journal",
+        "itemCount": 0
+      },
+      {
+        "nid": 33058,
+        "parentNid": 8514,
+        "name": "Tasks",
+        "itemCount": 0
+      },
+      {
+        "nid": 33090,
+        "parentNid": 8514,
+        "name": "Drafts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33122,
+        "parentNid": 8514,
+        "name": "Contacts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33282,
+        "parentNid": 33122,
+        "name": "Companies",
+        "itemCount": 0
+      },
+      {
+        "nid": 33314,
+        "parentNid": 33122,
+        "name": "Organizational Contacts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33346,
+        "parentNid": 33122,
+        "name": "PeopleCentricConversation Buddies",
+        "itemCount": 0
+      },
+      {
+        "nid": 33474,
+        "parentNid": 33122,
+        "name": "GAL Contacts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33506,
+        "parentNid": 33122,
+        "name": "{06967759-274D-40B2-A3EB-D7F9E73727D7}",
+        "itemCount": 0
+      },
+      {
+        "nid": 33538,
+        "parentNid": 33122,
+        "name": "Recipient Cache",
+        "itemCount": 0
+      },
+      {
+        "nid": 33602,
+        "parentNid": 33122,
+        "name": "{A9E2BC46-B3A0-4243-B315-60D991004455}",
+        "itemCount": 0
+      },
+      {
+        "nid": 33154,
+        "parentNid": 8514,
+        "name": "Calendar",
+        "itemCount": 9
+      },
+      {
+        "nid": 33218,
+        "parentNid": 33154,
+        "name": "United States holidays",
+        "itemCount": 160
+      },
+      {
+        "nid": 33250,
+        "parentNid": 33154,
+        "name": "Birthdays",
+        "itemCount": 0
+      },
+      {
+        "nid": 33186,
+        "parentNid": 8514,
+        "name": "Notes",
+        "itemCount": 0
+      },
+      {
+        "nid": 33634,
+        "parentNid": 8514,
+        "name": "Sync Issues",
+        "itemCount": 1
+      },
+      {
+        "nid": 33666,
+        "parentNid": 33634,
+        "name": "Conflicts",
+        "itemCount": 0
+      },
+      {
+        "nid": 33698,
+        "parentNid": 33634,
+        "name": "Local Failures",
+        "itemCount": 0
+      },
+      {
+        "nid": 33730,
+        "parentNid": 33634,
+        "name": "Server Failures",
+        "itemCount": 0
+      },
+      {
+        "nid": 33762,
+        "parentNid": 8514,
+        "name": "RSS Feeds",
+        "itemCount": 0
+      },
+      {
+        "nid": 33794,
+        "parentNid": 8514,
+        "name": "Quick Step Settings",
+        "itemCount": 0
+      },
+      {
+        "nid": 8674,
+        "parentNid": 8354,
+        "name": "~MAPISP(Internal)",
+        "itemCount": 0
+      },
+      {
+        "nid": 8706,
+        "parentNid": 8354,
+        "name": "Drizzle",
+        "itemCount": 0
+      },
+      {
+        "nid": 8770,
+        "parentNid": 8354,
+        "name": "Shared Data",
+        "itemCount": 0
+      }
+    ],
+    "messages": [
+      {
+        "messageNid": 2097380,
+        "folderNid": 8578,
+        "subject": "Get started with OneDrive",
+        "messageClass": "IPM.Note",
+        "header": {
+          "tag": 8192031,
+          "length": 14424,
+          "sha256": "b88a3c83f87d1c00549b28054b38a32b4f5ebcc927b568639fd4699cfab81ba5",
+          "fields": [
+            {
+              "name": "Received",
+              "offset": 0,
+              "length": 342,
+              "sha256": "14034dff2ff9c8e90b04300633a0e3dc2e3e1d39abb1c6b4b4c1e78e79a8d4c3"
+            },
+            {
+              "name": "Received",
+              "offset": 342,
+              "length": 586,
+              "sha256": "30958a987d5642f575f58933520cf2068d4be504d0eef4bf96b439c04c23ba3c"
+            },
+            {
+              "name": "Received",
+              "offset": 928,
+              "length": 654,
+              "sha256": "04cfb8986a02c1e80bc9308927a816adc1a0d79779631c8c498bc904ba9e386d"
+            },
+            {
+              "name": "Authentication-Results",
+              "offset": 1582,
+              "length": 556,
+              "sha256": "27ca2049dabe540f35ecbb9e045c7b131794dc9d27b04e0a09b5a9c1896d6854"
+            },
+            {
+              "name": "Received-SPF",
+              "offset": 2138,
+              "length": 454,
+              "sha256": "c0515c7636328ebfeadd56e16c128ab28b4dd725304d6d17727aa4a95c7b98ec"
+            },
+            {
+              "name": "Received",
+              "offset": 2592,
+              "length": 580,
+              "sha256": "6086abfffa7844a3bb806784cf7397ee2c472a227c1a024cc2758f642b004ac6"
+            },
+            {
+              "name": "X-IncomingTopHeaderMarker",
+              "offset": 3172,
+              "length": 450,
+              "sha256": "098d01e374a27c4c37c1703438dddd9bea99f7af9b3b84c0ac79197fcbfd65f1"
+            },
+            {
+              "name": "DKIM-Signature",
+              "offset": 3622,
+              "length": 902,
+              "sha256": "8a14fc25a3cdacf3241871953f4f7bf2f836495ec79dbb2dd5be620a2c3e91dc"
+            },
+            {
+              "name": "Received",
+              "offset": 4524,
+              "length": 438,
+              "sha256": "59463afcd92b141011c5817c4ae85be9f2dfdadea4bb76102aa0b4a4e7b2dddf"
+            },
+            {
+              "name": "From",
+              "offset": 4962,
+              "length": 108,
+              "sha256": "c69fa20869c22d039f056c17f498f078b604bc6f11bd581192908664bf2eb7f2"
+            },
+            {
+              "name": "To",
+              "offset": 5070,
+              "length": 72,
+              "sha256": "150c3d33978e2c0be4daf079188d107da0d9ca12545d140a368a93a3d91c11e4"
+            },
+            {
+              "name": "Subject",
+              "offset": 5142,
+              "length": 72,
+              "sha256": "e5320b8526506ccde1541250e896ee2f3172506c917548c1b558b6dc2feea297"
+            },
+            {
+              "name": "Date",
+              "offset": 5214,
+              "length": 78,
+              "sha256": "aa56a11aa5c4c4fd4babd4196b037c452b4e3a19e4a822d01d31f2c6579fe516"
+            },
+            {
+              "name": "MIME-Version",
+              "offset": 5292,
+              "length": 38,
+              "sha256": "29b3ff1c09ef3f6a0537f018b0dc64fc6595882bc2ef9ec26dee67ad163f8685"
+            },
+            {
+              "name": "Reply-To",
+              "offset": 5330,
+              "length": 218,
+              "sha256": "71464538830d9c93838253c0fd965cd5bf8371c69a961cbd3abf685816b3a843"
+            },
+            {
+              "name": "List-ID",
+              "offset": 5548,
+              "length": 58,
+              "sha256": "7edc94431bd7ed9f0682d0175b45912d9ced70d3ef6502c4d769582a6e2c44e2"
+            },
+            {
+              "name": "X-CSA-Complaints",
+              "offset": 5606,
+              "length": 82,
+              "sha256": "644c18f2c570ef25201389f6546e048607fdd81f181acf1c98942ff527b311db"
+            },
+            {
+              "name": "X-SFMC-Stack",
+              "offset": 5688,
+              "length": 34,
+              "sha256": "62284a549a3c4b40cdf762f2af1ac4417ca1074fe52cbb76abd16cf544003c8d"
+            },
+            {
+              "name": "x-job",
+              "offset": 5722,
+              "length": 46,
+              "sha256": "7bcba9bcd1b246d5625d072ecd057ae615f77fb4361d885be76ac8ea9fe0b810"
+            },
+            {
+              "name": "Message-ID",
+              "offset": 5768,
+              "length": 152,
+              "sha256": "101705b15e4c09d4073682e63b82a893215823ef3c3dbbcff58ad04eb8d0e77d"
+            },
+            {
+              "name": "Content-Type",
+              "offset": 5920,
+              "length": 136,
+              "sha256": "835d5c20fe12cefe14511308d71115e668a524581b4e557ee5666080604cd572"
+            },
+            {
+              "name": "X-IncomingHeaderCount",
+              "offset": 6056,
+              "length": 54,
+              "sha256": "78a5813dd352e52f2bc6effaaf183413b6529a893a45d41181d5c4fb91cbc325"
+            },
+            {
+              "name": "Return-Path",
+              "offset": 6110,
+              "length": 184,
+              "sha256": "5847918c8f549b6a9b85c524dac51e1f31b30a97636a6abefa1422f1984277c7"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTime",
+              "offset": 6294,
+              "length": 166,
+              "sha256": "baa51f886ccf3cfaaf02ecfde1ff00f5d646448d1d92eed279d36b8ae0477659"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTimeReason",
+              "offset": 6460,
+              "length": 140,
+              "sha256": "d5db94d9df0d44ad163a3525926729832ca0a9ae899d76f66ad04b7c6b00ba79"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationInterval",
+              "offset": 6600,
+              "length": 134,
+              "sha256": "9a3dff382e0eb90cbd833af3b887d3996cc92fee11461cdd994bcc06ee8eef94"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationIntervalReason",
+              "offset": 6734,
+              "length": 138,
+              "sha256": "0f0d2695c677f05148c86c8886e4135dc6b8c94f74ffb0e420c9c5f8fa2a54c5"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-Network-Message-Id",
+              "offset": 6872,
+              "length": 174,
+              "sha256": "a93ef8a087b1f063721d6aea7a8753b252e4f2dd0e2e78d80f445a1393dca118"
+            },
+            {
+              "name": "X-EOPAttributedMessage",
+              "offset": 7046,
+              "length": 54,
+              "sha256": "2d73525205a646ce08e15bb6d6e284e5f62500fad7d36b7be0d3e51b12df3fc6"
+            },
+            {
+              "name": "X-EOPTenantAttributedMessage",
+              "offset": 7100,
+              "length": 140,
+              "sha256": "e04cf0c9af74f99852e0b61206bd88d09f580ac9e9aaa2cf02bed4ade3e0d793"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-MessageDirectionality",
+              "offset": 7240,
+              "length": 120,
+              "sha256": "6b7b8ec5a346b2b98424daa80804e021342dc4b9645c69ad4a4c1911ee3bed38"
+            },
+            {
+              "name": "X-MS-PublicTrafficType",
+              "offset": 7360,
+              "length": 62,
+              "sha256": "1616f8803f23a2a241161a1e8a8c34c02a5b51d56139ba761763b878951b251c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthSource",
+              "offset": 7422,
+              "length": 188,
+              "sha256": "d9ad7a95aa5102abaf9a89c126f24f3637b8226ba644e0c065521e7e25bdb87f"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthAs",
+              "offset": 7610,
+              "length": 92,
+              "sha256": "bb56d63a67648c16f1b59998930784a9bfaaf853a4205f2d0a90dcba59fc324a"
+            },
+            {
+              "name": "X-MS-UserLastLogonTime",
+              "offset": 7702,
+              "length": 92,
+              "sha256": "ad3a1fa5f02370d36913175255d7fcfc9f7532d14c90f68cb820ddb1505317dc"
+            },
+            {
+              "name": "X-MS-Office365-Filtering-Correlation-Id",
+              "offset": 7794,
+              "length": 158,
+              "sha256": "f0e4be380c43d42d8fa5d07e1ef792623ffca79e86c164468e4a4ab9aa029c51"
+            },
+            {
+              "name": "X-MS-TrafficTypeDiagnostic",
+              "offset": 7952,
+              "length": 88,
+              "sha256": "1259f38d301eda7db08aa6511944090c0607218d672a85193ba258460dc36ef7"
+            },
+            {
+              "name": "X-MS-Exchange-EOPDirect",
+              "offset": 8040,
+              "length": 62,
+              "sha256": "4334518100735a5a355ea441fe2184d70e971006d44e40f988067a76edb0525a"
+            },
+            {
+              "name": "X-Sender-IP",
+              "offset": 8102,
+              "length": 58,
+              "sha256": "9b7b012d40ccdf22f76a0eec072ad6f6ee6bf233917b4389d2196b63b0744254"
+            },
+            {
+              "name": "X-SID-PRA",
+              "offset": 8160,
+              "length": 72,
+              "sha256": "913bde6b7714de29b88e616587525e984ed1faa283bd015389cb9a2d07533879"
+            },
+            {
+              "name": "X-SID-Result",
+              "offset": 8232,
+              "length": 40,
+              "sha256": "fa30844f503d9efea6987b23cdafcff7548d3d6b3c8ba258e441ed386f2c5bfd"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-PCL",
+              "offset": 8272,
+              "length": 70,
+              "sha256": "c84a41324fee4eb2e380bf749bdf68492b6152e99210af369256774950d2e62c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-SCL",
+              "offset": 8342,
+              "length": 70,
+              "sha256": "6426c731bed5f46f59cced892f72b332bbf0061b47cdca4f74d4384e9f8d0b2b"
+            },
+            {
+              "name": "X-Microsoft-Antispam",
+              "offset": 8412,
+              "length": 60,
+              "sha256": "b8052b3c8fb352b46f8cab6bbf53b35e001f0caaac4523fed99d37e4083c3831"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-OriginalArrivalTime",
+              "offset": 8472,
+              "length": 164,
+              "sha256": "ac84e88d66229f7217df6d18ed6730a76f43cc0014b28cc5169c5aba53183e4a"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Network-Message-Id",
+              "offset": 8636,
+              "length": 168,
+              "sha256": "e76d29af0a81aec29236ae1a75d7d16bd092468a750caceeb85ca27cf5edfb53"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Id",
+              "offset": 8804,
+              "length": 136,
+              "sha256": "674f7aaaf6aa569594228d7f0c91cb5605aa07f9f401532618454ec26dd6e458"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthSource",
+              "offset": 8940,
+              "length": 186,
+              "sha256": "75d294560010f0c37718f62182e5e69bc0fc9c4a455084c9a563f1e6391037f4"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthAs",
+              "offset": 9126,
+              "length": 90,
+              "sha256": "f8021f9730b6c4d4a611f5fba8cc9b44ffe7d42170500640689865905966d261"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-FromEntityHeader",
+              "offset": 9216,
+              "length": 108,
+              "sha256": "a0e1ee304814357c6c606edf96d9b331752dabb03522e7a3fa9e73a7af3c55b9"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg",
+              "offset": 9324,
+              "length": 184,
+              "sha256": "166f6d67d25682fa6eecfb1fe0d9800239672bb682917a23483cf83dabcc484e"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-CrossTenantHeadersStamped",
+              "offset": 9508,
+              "length": 132,
+              "sha256": "1c6b45bf02869e32f7dd7ab344a59341987a581a0f57b7214fd4cd43cfc3fa6e"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-EndToEndLatency",
+              "offset": 9640,
+              "length": 118,
+              "sha256": "6f2c65c4d82ea514f2a3cad55015951747ad2a031ec96ebc8a5e9c177d626245"
+            },
+            {
+              "name": "X-MS-Exchange-Processed-By-BccFoldering",
+              "offset": 9758,
+              "length": 114,
+              "sha256": "e11390d2450d75cf931d1d85050d32b66d9fe6ae6f80cb25ef134158bc99113d"
+            },
+            {
+              "name": "X-Message-Info",
+              "offset": 9872,
+              "length": 472,
+              "sha256": "0b5660168421a2ba169ab264d197ef978d93de2e778780bd7c3b3e2865e64019"
+            },
+            {
+              "name": "X-Message-Delivery",
+              "offset": 10344,
+              "length": 140,
+              "sha256": "1c44240dcaa61eb967e2f3881c25bfa6ad6e2727b4c039c145d52dcebe45f00c"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Mailbox-Delivery",
+              "offset": 10484,
+              "length": 624,
+              "sha256": "f489a36cd0453238c71e438c8a0fb4c8081245b994e4ae5ab3ceb250e558c83f"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Message-Info",
+              "offset": 11108,
+              "length": 3316,
+              "sha256": "b3a10e01bca7a826dae657858ad92c2214c986ef07cd544b8bd32920e91b5400"
+            }
+          ]
+        },
+        "attachments": []
+      },
+      {
+        "messageNid": 2097412,
+        "folderNid": 8578,
+        "subject": "Welcome to your new Outlook.com account",
+        "messageClass": "IPM.Note",
+        "header": null,
+        "attachments": [
+          {
+            "index": 0,
+            "attachmentNid": 32805,
+            "name": "colors.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 5306,
+              "sha256": "f7c84a9569ffec90c4f96ff2158d8f5061c2b827e0bbe4fd5ac5fff43357e528",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "4fd4484e51ffc260cf75b654c5352daa8f1fde86caa1b528255fdca9be46edd0"
+                }
+              ]
+            }
+          },
+          {
+            "index": 1,
+            "attachmentNid": 32837,
+            "name": "colors-top.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 4130,
+              "sha256": "456a4ef033a40b9e2f6eded03f94e8b0cb70849b6dd3a3c9cf66c8f1835ff010",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "9900f1d10e09828e84ae7c69f46886a116134ffb01a555955a47cf30942c8650"
+                }
+              ]
+            }
+          },
+          {
+            "index": 2,
+            "attachmentNid": 32869,
+            "name": "devices.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 94183,
+              "sha256": "962637a8fe3c1e6691d17b8e769cd8956a0604cbd9d7d39f54b73a33bfbd14b9",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "1e198401a834ea153b1da4c4edec528c2d1292697c745f29cb8d1839b99b34a9"
+                },
+                {
+                  "offset": 65504,
+                  "length": 64,
+                  "sha256": "3ab463e2f7b8c9efe85d50a1ba73da4acd57eb1b6ab26601339bdc1b46237aa0"
+                }
+              ]
+            }
+          },
+          {
+            "index": 3,
+            "attachmentNid": 32901,
+            "name": "feature-attachments.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 7586,
+              "sha256": "f9d66e057be68c7f8d41f13cfff1f18e48a37ca2dd337ebd52a1b63f6ee6e9e1",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "d21bf6619f3ae0b9ca7ed021fca8f5a4ad2f1516431c62bd5106c7dfff7404f2"
+                }
+              ]
+            }
+          },
+          {
+            "index": 4,
+            "attachmentNid": 32933,
+            "name": "feature-calendars.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 6419,
+              "sha256": "d06c6d3c3e7238e1b0d6e24ca7675a82dfb8bf8cf8ee72e2a95cd553cb0e8a07",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "46b92657c4dcc5ea413718207862eedb0f0faa3662acbff0ba17a3a809d9ac4b"
+                }
+              ]
+            }
+          },
+          {
+            "index": 5,
+            "attachmentNid": 32965,
+            "name": "feature-integrations.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 8252,
+              "sha256": "65f59f56b99ee25cd68579971be408bc98b5ca96a449b4b486436f90e63973a8",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "e36814c751e9cc982ac66c3a61541e9e32a9758c6c96cfca65a4471cdf7b3433"
+                }
+              ]
+            }
+          },
+          {
+            "index": 6,
+            "attachmentNid": 32997,
+            "name": "feature-office.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 12226,
+              "sha256": "d17ad62c5986b19a929c28bf3c049217aedcbd0d949a05a5222dcbe2fac7f1ce",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "ba079b2006675122c27b7b285b0a0895bb2d505aea5a5e2f6bf7005ae9803a38"
+                }
+              ]
+            }
+          },
+          {
+            "index": 7,
+            "attachmentNid": 33029,
+            "name": "landing-appstore.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 2395,
+              "sha256": "f73499dee6ac3206490e0031b57fac6f7b1788014ea66f4513f07a49abc8af50",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                }
+              ]
+            }
+          },
+          {
+            "index": 8,
+            "attachmentNid": 33061,
+            "name": "landing-playstore.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 3383,
+              "sha256": "7df23e0a51c3c74aca231458aba29b680717a7ec43dbf7a4bce924de6cf03b76",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                }
+              ]
+            }
+          },
+          {
+            "index": 9,
+            "attachmentNid": 33093,
+            "name": "landing-winstore.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 4498,
+              "sha256": "74b7b9c5b36f502f2c5a2e75283a936d370a1befc2f36b531958d07e50a3aeba",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "51bab48435468828df9f8c36a8f26713eeb4704381fe5292579e0ef0947b3f67"
+                }
+              ]
+            }
+          },
+          {
+            "index": 10,
+            "attachmentNid": 33125,
+            "name": "microsoft-logo.png",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 2446,
+              "sha256": "a4e3abc6bf3ee4596151abb8d336f883860703e8ea297eb77181189a36813626",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "messageNid": 2103460,
+        "folderNid": 8578,
+        "subject": "test, no attachment",
+        "messageClass": "IPM.Note",
+        "header": {
+          "tag": 8192031,
+          "length": 16654,
+          "sha256": "6aae3d32d51d07f900b4ee823f996d53df7b6062220991d50c61803deb163f0f",
+          "fields": [
+            {
+              "name": "Received",
+              "offset": 0,
+              "length": 336,
+              "sha256": "ba0f40c9ef78b9630c7372a1f74808573a9bafdf097aff769b6f38e4a3348e75"
+            },
+            {
+              "name": "Received",
+              "offset": 336,
+              "length": 582,
+              "sha256": "acd63b725f55b7b4f2908aae25d7fbf4f33fe2550a980b027fcae6e5b483cc97"
+            },
+            {
+              "name": "Received",
+              "offset": 918,
+              "length": 658,
+              "sha256": "ccd3e016d3d13b4bf3e4bf553e43f44e95d0646d8338eced6b56d9fafa5adea3"
+            },
+            {
+              "name": "Authentication-Results",
+              "offset": 1576,
+              "length": 488,
+              "sha256": "25d749369242d0c6c4497ed627f93a02e687aefc7512109ee1f9c90d2ea7bd52"
+            },
+            {
+              "name": "Received-SPF",
+              "offset": 2064,
+              "length": 406,
+              "sha256": "a2863aed0d61aac0f7f140e0980db2c6e4a8727bd73f5322f76d5d9f3380748c"
+            },
+            {
+              "name": "Received",
+              "offset": 2470,
+              "length": 570,
+              "sha256": "6ce7783e6e8e3e2add66150bc9c2a2a4057374a17196414fc612b6abcaa3445e"
+            },
+            {
+              "name": "X-IncomingTopHeaderMarker",
+              "offset": 3040,
+              "length": 450,
+              "sha256": "5b209d6f9a9fb071a597204c2731a65db336174c90d54461cccb46103fd78239"
+            },
+            {
+              "name": "Received",
+              "offset": 3490,
+              "length": 370,
+              "sha256": "7c6c2bcde5c8faaf828b3e46e8ec4606e0c65fd9d516adee179975776f20fdcb"
+            },
+            {
+              "name": "DKIM-Signature",
+              "offset": 3860,
+              "length": 1330,
+              "sha256": "f122bfa3a6dd739207ae433f43e9cbbe3be15ef7f6b92f1426dfba9e16f200bc"
+            },
+            {
+              "name": "X-Google-DKIM-Signature",
+              "offset": 5190,
+              "length": 1386,
+              "sha256": "fd01cd042c0565e94f58d1a7d1f11df3130d7e44bd395bead80294682c1952ea"
+            },
+            {
+              "name": "X-Gm-Message-State",
+              "offset": 6576,
+              "length": 234,
+              "sha256": "7d7bb07d4be0d7a44052973967bfa34e30259d4c54df3bf44dcc67df91a20868"
+            },
+            {
+              "name": "X-Google-Smtp-Source",
+              "offset": 6810,
+              "length": 208,
+              "sha256": "6105b92df3e666dc19374f2ba70cd0f13a788d9a3e48051d3050b3c58672c343"
+            },
+            {
+              "name": "X-Received",
+              "offset": 7018,
+              "length": 260,
+              "sha256": "44070abbf9b49c34a1a3a3cf49058e47ec53df066079dca9a757623b2e4806c7"
+            },
+            {
+              "name": "Return-Path",
+              "offset": 7278,
+              "length": 66,
+              "sha256": "93653185cb1bb586ccbdbb145c77e09817d6a804e06a50702f910c197fb67f7d"
+            },
+            {
+              "name": "Received",
+              "offset": 7344,
+              "length": 646,
+              "sha256": "281d61c8352506d737a17d7b346aacde430de14e6df4ba7c15b1c50ea62aab6f"
+            },
+            {
+              "name": "MIME-Version",
+              "offset": 7990,
+              "length": 38,
+              "sha256": "29b3ff1c09ef3f6a0537f018b0dc64fc6595882bc2ef9ec26dee67ad163f8685"
+            },
+            {
+              "name": "Date",
+              "offset": 8028,
+              "length": 78,
+              "sha256": "c095746601aeb42115dc7c3c250e1b9c15233fee7bb627ba0bc29e62dd6ea4ea"
+            },
+            {
+              "name": "From",
+              "offset": 8106,
+              "length": 62,
+              "sha256": "5dd35eae9ca18063af7d9856999d541cc8e295937375cc3426eb45418adabf12"
+            },
+            {
+              "name": "Subject",
+              "offset": 8168,
+              "length": 60,
+              "sha256": "bf6006570fa56f34418b5b64e9c6a0ba3891ed59e7a14b35de35e6cb83fe840e"
+            },
+            {
+              "name": "Thread-Topic",
+              "offset": 8228,
+              "length": 70,
+              "sha256": "6c3894f1756e3c3499fb8e8952b4020914e8ad96145bf96fa1e9e8bdd10692f7"
+            },
+            {
+              "name": "Message-ID",
+              "offset": 8298,
+              "length": 124,
+              "sha256": "f8e9282cb3dd00fe327ee2cd2a0a95f0c9d18329d64991c0f381ed71cbfa6ab3"
+            },
+            {
+              "name": "To",
+              "offset": 8422,
+              "length": 134,
+              "sha256": "acd00700b6930d7835e175e9fec707aaa7b213aa7ed8c86fb965e6c1969715d4"
+            },
+            {
+              "name": "Content-Transfer-Encoding",
+              "offset": 8556,
+              "length": 90,
+              "sha256": "a4cd4d0bcc5ae1c747871cd4b3c2bf2ec454f5b83e29c973e1bf077576dddeb3"
+            },
+            {
+              "name": "Content-Type",
+              "offset": 8646,
+              "length": 84,
+              "sha256": "978443af162c17d3ae57fe73dd3065144c6dfe8d89ef8aa5fe83e092e0714611"
+            },
+            {
+              "name": "X-IncomingHeaderCount",
+              "offset": 8730,
+              "length": 54,
+              "sha256": "792d89c75ba64d5b2bcbf104f82ce8e13375220ede85c16fbd28df050dca5cc1"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTime",
+              "offset": 8784,
+              "length": 166,
+              "sha256": "75a37ed7aa03f8ee57ada8bd99ffbf3996ff39e25a2378e9d5b685db8a4e1077"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTimeReason",
+              "offset": 8950,
+              "length": 140,
+              "sha256": "d5db94d9df0d44ad163a3525926729832ca0a9ae899d76f66ad04b7c6b00ba79"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationInterval",
+              "offset": 9090,
+              "length": 134,
+              "sha256": "9a3dff382e0eb90cbd833af3b887d3996cc92fee11461cdd994bcc06ee8eef94"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationIntervalReason",
+              "offset": 9224,
+              "length": 138,
+              "sha256": "0f0d2695c677f05148c86c8886e4135dc6b8c94f74ffb0e420c9c5f8fa2a54c5"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-Network-Message-Id",
+              "offset": 9362,
+              "length": 174,
+              "sha256": "4534d5ae3760eef4cac06f024eb16f2f691da57156fee975622950fc5b8abfed"
+            },
+            {
+              "name": "X-EOPAttributedMessage",
+              "offset": 9536,
+              "length": 54,
+              "sha256": "2d73525205a646ce08e15bb6d6e284e5f62500fad7d36b7be0d3e51b12df3fc6"
+            },
+            {
+              "name": "X-EOPTenantAttributedMessage",
+              "offset": 9590,
+              "length": 140,
+              "sha256": "e04cf0c9af74f99852e0b61206bd88d09f580ac9e9aaa2cf02bed4ade3e0d793"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-MessageDirectionality",
+              "offset": 9730,
+              "length": 120,
+              "sha256": "6b7b8ec5a346b2b98424daa80804e021342dc4b9645c69ad4a4c1911ee3bed38"
+            },
+            {
+              "name": "X-MS-PublicTrafficType",
+              "offset": 9850,
+              "length": 62,
+              "sha256": "1616f8803f23a2a241161a1e8a8c34c02a5b51d56139ba761763b878951b251c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthSource",
+              "offset": 9912,
+              "length": 188,
+              "sha256": "15ee72baa35727f32cd15f016c05d9fe7f19f55efc4e77f81263a91370c316dc"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthAs",
+              "offset": 10100,
+              "length": 92,
+              "sha256": "bb56d63a67648c16f1b59998930784a9bfaaf853a4205f2d0a90dcba59fc324a"
+            },
+            {
+              "name": "X-MS-UserLastLogonTime",
+              "offset": 10192,
+              "length": 92,
+              "sha256": "1d19d269fa4ed8d2a36723a9c1cdc877182d98e34659344050fc796108203f3c"
+            },
+            {
+              "name": "X-MS-Office365-Filtering-Correlation-Id",
+              "offset": 10284,
+              "length": 158,
+              "sha256": "10d9bc3fa8aa30735dd832bf3169ce3f17952b032496fed075c038781da935b0"
+            },
+            {
+              "name": "X-MS-TrafficTypeDiagnostic",
+              "offset": 10442,
+              "length": 88,
+              "sha256": "86abbd4aa7159baa5528e806e23c9a9a5fdc71d8aee9f6740b7b0f7cdc867aba"
+            },
+            {
+              "name": "X-MS-Exchange-EOPDirect",
+              "offset": 10530,
+              "length": 62,
+              "sha256": "4334518100735a5a355ea441fe2184d70e971006d44e40f988067a76edb0525a"
+            },
+            {
+              "name": "X-Sender-IP",
+              "offset": 10592,
+              "length": 56,
+              "sha256": "dabdd5b232d54789b95353bab24209cea8161243209e91e12ff64a3aa8774eee"
+            },
+            {
+              "name": "X-SID-PRA",
+              "offset": 10648,
+              "length": 62,
+              "sha256": "c030acc0527f43041c788c323a8519eb6d156558a3b12e0498abf57751e34180"
+            },
+            {
+              "name": "X-SID-Result",
+              "offset": 10710,
+              "length": 40,
+              "sha256": "fa30844f503d9efea6987b23cdafcff7548d3d6b3c8ba258e441ed386f2c5bfd"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-PCL",
+              "offset": 10750,
+              "length": 70,
+              "sha256": "c84a41324fee4eb2e380bf749bdf68492b6152e99210af369256774950d2e62c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-SCL",
+              "offset": 10820,
+              "length": 70,
+              "sha256": "6426c731bed5f46f59cced892f72b332bbf0061b47cdca4f74d4384e9f8d0b2b"
+            },
+            {
+              "name": "X-Microsoft-Antispam",
+              "offset": 10890,
+              "length": 60,
+              "sha256": "b8052b3c8fb352b46f8cab6bbf53b35e001f0caaac4523fed99d37e4083c3831"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-OriginalArrivalTime",
+              "offset": 10950,
+              "length": 164,
+              "sha256": "041d1d8943682afc520288465247ac29f4fbb94a643f1d4a41d561aeac56ffbc"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Network-Message-Id",
+              "offset": 11114,
+              "length": 168,
+              "sha256": "d6ca73660bad025e42af508a6c3b8f55ec89ee891357fd28098f08449b4c6cfb"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Id",
+              "offset": 11282,
+              "length": 136,
+              "sha256": "674f7aaaf6aa569594228d7f0c91cb5605aa07f9f401532618454ec26dd6e458"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthSource",
+              "offset": 11418,
+              "length": 186,
+              "sha256": "abcb8b8d78595ee1cd75721d32a50838911a44a56f0a3e9e95b8d9d9e06f600a"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthAs",
+              "offset": 11604,
+              "length": 90,
+              "sha256": "f8021f9730b6c4d4a611f5fba8cc9b44ffe7d42170500640689865905966d261"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-FromEntityHeader",
+              "offset": 11694,
+              "length": 108,
+              "sha256": "a0e1ee304814357c6c606edf96d9b331752dabb03522e7a3fa9e73a7af3c55b9"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg",
+              "offset": 11802,
+              "length": 184,
+              "sha256": "166f6d67d25682fa6eecfb1fe0d9800239672bb682917a23483cf83dabcc484e"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-CrossTenantHeadersStamped",
+              "offset": 11986,
+              "length": 132,
+              "sha256": "90e00284211e59b26a102e664fb77e96cae80d263c267d9c722c9001425c4650"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-EndToEndLatency",
+              "offset": 12118,
+              "length": 118,
+              "sha256": "8f3891b1c7fc97815f660d41d9f264de63297a3c8744f18860ac696c2c4c76d4"
+            },
+            {
+              "name": "X-MS-Exchange-Processed-By-BccFoldering",
+              "offset": 12236,
+              "length": 114,
+              "sha256": "e11390d2450d75cf931d1d85050d32b66d9fe6ae6f80cb25ef134158bc99113d"
+            },
+            {
+              "name": "X-Message-Info",
+              "offset": 12350,
+              "length": 472,
+              "sha256": "30125d0630549d96093e50e6cdc344ae9cb0329ee39db647a574de795d13bb82"
+            },
+            {
+              "name": "X-Message-Delivery",
+              "offset": 12822,
+              "length": 132,
+              "sha256": "447737330d62290c1c4d20a4a83536aefe13eb5110d179c36b84936a4d481f72"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Mailbox-Delivery",
+              "offset": 12954,
+              "length": 604,
+              "sha256": "71b1a45bc2bd91a4288937c16b8bfb389133b13f020d01a195428ae60aff1200"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Message-Info",
+              "offset": 13558,
+              "length": 3096,
+              "sha256": "99d7840573018b39065f8b68ea29f47efba0954f788772d763a5812b20b3cca2"
+            }
+          ]
+        },
+        "attachments": []
+      },
+      {
+        "messageNid": 2104068,
+        "folderNid": 8578,
+        "subject": "text file attachment",
+        "messageClass": "IPM.Note",
+        "header": {
+          "tag": 8192031,
+          "length": 16496,
+          "sha256": "7835340512b19a9f78ac71a9898ca4c126080184a97001124d86bcbf4c01cb5c",
+          "fields": [
+            {
+              "name": "Received",
+              "offset": 0,
+              "length": 338,
+              "sha256": "f85f9e33e19504716c9e711ee9e10d1e12c9a509de342c647ec2ada02c208886"
+            },
+            {
+              "name": "Received",
+              "offset": 338,
+              "length": 584,
+              "sha256": "2d5f0a594c2d032a563b74d7e9578aed89d4533d26d733a62f12ade97e254880"
+            },
+            {
+              "name": "Received",
+              "offset": 922,
+              "length": 658,
+              "sha256": "197d337dc7f7f9fccb051b22f13c5b37af9dc47ebb7f66771510cda810018edf"
+            },
+            {
+              "name": "Authentication-Results",
+              "offset": 1580,
+              "length": 488,
+              "sha256": "3bcff2ed0de0917b45213a9c9cc3ff3e27c95a66bdb8562b400ef9451f8d033d"
+            },
+            {
+              "name": "Received-SPF",
+              "offset": 2068,
+              "length": 406,
+              "sha256": "eab86e20285da0ebdca912b69081375d58c6bedbeb44cb9537b25524ed807487"
+            },
+            {
+              "name": "Received",
+              "offset": 2474,
+              "length": 570,
+              "sha256": "0841eeb42ad39b3740a66451916a316b42e9c74f3acd4995c3a9f9cbbe40d232"
+            },
+            {
+              "name": "X-IncomingTopHeaderMarker",
+              "offset": 3044,
+              "length": 450,
+              "sha256": "71ac02395bf55c13e6796285336364aca7059942754d1b0500ff97dee776a2e9"
+            },
+            {
+              "name": "Received",
+              "offset": 3494,
+              "length": 368,
+              "sha256": "8b3c9440be8e515615e07a6e08853cb245bf64574afb4e7f6f1e20817a90c791"
+            },
+            {
+              "name": "DKIM-Signature",
+              "offset": 3862,
+              "length": 1256,
+              "sha256": "0edfc1101a881a9e49b5eec92584e868ea78daa8a765e73fe73aa9af114af97b"
+            },
+            {
+              "name": "X-Google-DKIM-Signature",
+              "offset": 5118,
+              "length": 1334,
+              "sha256": "8546c2ba7b574f72b82d8ddeba94ab6863d800db30edf400c90ea142c5ae8159"
+            },
+            {
+              "name": "X-Gm-Message-State",
+              "offset": 6452,
+              "length": 234,
+              "sha256": "bc3e37f186faf231ba7c4c14c25b6df9369b1698f200119ec32347b6d253a744"
+            },
+            {
+              "name": "X-Google-Smtp-Source",
+              "offset": 6686,
+              "length": 208,
+              "sha256": "fe1b8dc6b54ba20ef8b714e36c18c09d8a61f094a5fd9950b3b56af5e25ccb30"
+            },
+            {
+              "name": "X-Received",
+              "offset": 6894,
+              "length": 252,
+              "sha256": "3cc5f0f254fa3059ff33d2e363be2abbb3c8e937cc64cf299750c8fd6c8e947f"
+            },
+            {
+              "name": "Return-Path",
+              "offset": 7146,
+              "length": 66,
+              "sha256": "93653185cb1bb586ccbdbb145c77e09817d6a804e06a50702f910c197fb67f7d"
+            },
+            {
+              "name": "Received",
+              "offset": 7212,
+              "length": 644,
+              "sha256": "2bce4650119bd51c25990a0e52d3925393a34ea9585bc21e4560ce71c1d255b9"
+            },
+            {
+              "name": "MIME-Version",
+              "offset": 7856,
+              "length": 38,
+              "sha256": "29b3ff1c09ef3f6a0537f018b0dc64fc6595882bc2ef9ec26dee67ad163f8685"
+            },
+            {
+              "name": "Date",
+              "offset": 7894,
+              "length": 78,
+              "sha256": "afb8e8332f765d5d0770e6fdb53f784f5b607beb433d5f34baad6039850afd7d"
+            },
+            {
+              "name": "From",
+              "offset": 7972,
+              "length": 62,
+              "sha256": "5dd35eae9ca18063af7d9856999d541cc8e295937375cc3426eb45418adabf12"
+            },
+            {
+              "name": "Subject",
+              "offset": 8034,
+              "length": 62,
+              "sha256": "4b5e0e45b63f55427bf48f68957138e3b7a4c701e1d84f6a77166dcdedc66b99"
+            },
+            {
+              "name": "Thread-Topic",
+              "offset": 8096,
+              "length": 72,
+              "sha256": "94a13531efc86851a36eb6fc48eaab9073b12eff70bf8edccd49244db27088bd"
+            },
+            {
+              "name": "Message-ID",
+              "offset": 8168,
+              "length": 124,
+              "sha256": "10a533b2f8b06a6f879228d1e97c7e0f009114ba0212d14b83bd6f181b2a4ddc"
+            },
+            {
+              "name": "To",
+              "offset": 8292,
+              "length": 134,
+              "sha256": "acd00700b6930d7835e175e9fec707aaa7b213aa7ed8c86fb965e6c1969715d4"
+            },
+            {
+              "name": "Content-Type",
+              "offset": 8426,
+              "length": 168,
+              "sha256": "9f8b7afa989b57c294fe7d44bc735369083c09cb28582d4a27451b9097bb18a6"
+            },
+            {
+              "name": "X-IncomingHeaderCount",
+              "offset": 8594,
+              "length": 54,
+              "sha256": "614a1040f87093720e1b28076d85015f5640e4c5b022c4996b72091e2dffa5f8"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTime",
+              "offset": 8648,
+              "length": 166,
+              "sha256": "7d9b012ceabc629286fabbbe25339c722bf6d10f61f2c0dfed11736b26abc9dc"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTimeReason",
+              "offset": 8814,
+              "length": 140,
+              "sha256": "d5db94d9df0d44ad163a3525926729832ca0a9ae899d76f66ad04b7c6b00ba79"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationInterval",
+              "offset": 8954,
+              "length": 134,
+              "sha256": "9a3dff382e0eb90cbd833af3b887d3996cc92fee11461cdd994bcc06ee8eef94"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationIntervalReason",
+              "offset": 9088,
+              "length": 138,
+              "sha256": "0f0d2695c677f05148c86c8886e4135dc6b8c94f74ffb0e420c9c5f8fa2a54c5"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-Network-Message-Id",
+              "offset": 9226,
+              "length": 174,
+              "sha256": "f3cde38c4f024ff2be2ace915d1e9927f54ff680f5ba53d8d7de6528edb2c344"
+            },
+            {
+              "name": "X-EOPAttributedMessage",
+              "offset": 9400,
+              "length": 54,
+              "sha256": "2d73525205a646ce08e15bb6d6e284e5f62500fad7d36b7be0d3e51b12df3fc6"
+            },
+            {
+              "name": "X-EOPTenantAttributedMessage",
+              "offset": 9454,
+              "length": 140,
+              "sha256": "e04cf0c9af74f99852e0b61206bd88d09f580ac9e9aaa2cf02bed4ade3e0d793"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-MessageDirectionality",
+              "offset": 9594,
+              "length": 120,
+              "sha256": "6b7b8ec5a346b2b98424daa80804e021342dc4b9645c69ad4a4c1911ee3bed38"
+            },
+            {
+              "name": "X-MS-PublicTrafficType",
+              "offset": 9714,
+              "length": 62,
+              "sha256": "1616f8803f23a2a241161a1e8a8c34c02a5b51d56139ba761763b878951b251c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthSource",
+              "offset": 9776,
+              "length": 188,
+              "sha256": "d0e99e03db139db8613e39651f3fdb195476be29dbf5cd0570b068709ff4ae98"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthAs",
+              "offset": 9964,
+              "length": 92,
+              "sha256": "bb56d63a67648c16f1b59998930784a9bfaaf853a4205f2d0a90dcba59fc324a"
+            },
+            {
+              "name": "X-MS-UserLastLogonTime",
+              "offset": 10056,
+              "length": 92,
+              "sha256": "3bcc36b17f986bc92362b3e00cebfa6b7a67cae9989744943dfc0daefdcdd13f"
+            },
+            {
+              "name": "X-MS-Office365-Filtering-Correlation-Id",
+              "offset": 10148,
+              "length": 158,
+              "sha256": "d44c8e811206f9de935790d34ba72072096087c476298ca76c25c1c0c82d04d8"
+            },
+            {
+              "name": "X-MS-TrafficTypeDiagnostic",
+              "offset": 10306,
+              "length": 88,
+              "sha256": "43cf3329d7ef81b5a7f6dd2c6c117d5a1d06ee615c0f7795b922e8db93fad03e"
+            },
+            {
+              "name": "X-MS-Exchange-EOPDirect",
+              "offset": 10394,
+              "length": 62,
+              "sha256": "4334518100735a5a355ea441fe2184d70e971006d44e40f988067a76edb0525a"
+            },
+            {
+              "name": "X-Sender-IP",
+              "offset": 10456,
+              "length": 56,
+              "sha256": "983763edf998ad13c1378aa2952e84ef51e0cc8cf1288b29e18c9abcb5aa6dac"
+            },
+            {
+              "name": "X-SID-PRA",
+              "offset": 10512,
+              "length": 62,
+              "sha256": "c030acc0527f43041c788c323a8519eb6d156558a3b12e0498abf57751e34180"
+            },
+            {
+              "name": "X-SID-Result",
+              "offset": 10574,
+              "length": 40,
+              "sha256": "fa30844f503d9efea6987b23cdafcff7548d3d6b3c8ba258e441ed386f2c5bfd"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-PCL",
+              "offset": 10614,
+              "length": 70,
+              "sha256": "c84a41324fee4eb2e380bf749bdf68492b6152e99210af369256774950d2e62c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-SCL",
+              "offset": 10684,
+              "length": 70,
+              "sha256": "6426c731bed5f46f59cced892f72b332bbf0061b47cdca4f74d4384e9f8d0b2b"
+            },
+            {
+              "name": "X-Microsoft-Antispam",
+              "offset": 10754,
+              "length": 60,
+              "sha256": "b8052b3c8fb352b46f8cab6bbf53b35e001f0caaac4523fed99d37e4083c3831"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-OriginalArrivalTime",
+              "offset": 10814,
+              "length": 164,
+              "sha256": "4ce7d79c6b901b5713f24caac38623caefbcc867585a1daf1e5165fba22a5f3a"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Network-Message-Id",
+              "offset": 10978,
+              "length": 168,
+              "sha256": "a1b7e0be3cef5bea3865ee2b091ce8bdf5cf024c383fa333ca601f6a4cf659b2"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Id",
+              "offset": 11146,
+              "length": 136,
+              "sha256": "674f7aaaf6aa569594228d7f0c91cb5605aa07f9f401532618454ec26dd6e458"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthSource",
+              "offset": 11282,
+              "length": 186,
+              "sha256": "d3fc62deb9173feefcfe405df5830d3c0494356570a7b8b68d4a811022eb1576"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthAs",
+              "offset": 11468,
+              "length": 90,
+              "sha256": "f8021f9730b6c4d4a611f5fba8cc9b44ffe7d42170500640689865905966d261"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-FromEntityHeader",
+              "offset": 11558,
+              "length": 108,
+              "sha256": "a0e1ee304814357c6c606edf96d9b331752dabb03522e7a3fa9e73a7af3c55b9"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg",
+              "offset": 11666,
+              "length": 184,
+              "sha256": "166f6d67d25682fa6eecfb1fe0d9800239672bb682917a23483cf83dabcc484e"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-CrossTenantHeadersStamped",
+              "offset": 11850,
+              "length": 132,
+              "sha256": "c955cb899571a510a7317cd23ddce2c0a71357cbbfd176141a534aac356d6c48"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-EndToEndLatency",
+              "offset": 11982,
+              "length": 118,
+              "sha256": "c31270589d766f4d8db3614d5c3e2f2c496107310168de80888cb0d3cbc3a25a"
+            },
+            {
+              "name": "X-MS-Exchange-Processed-By-BccFoldering",
+              "offset": 12100,
+              "length": 114,
+              "sha256": "e11390d2450d75cf931d1d85050d32b66d9fe6ae6f80cb25ef134158bc99113d"
+            },
+            {
+              "name": "X-Message-Info",
+              "offset": 12214,
+              "length": 472,
+              "sha256": "6f42f92413817caca2f977ec8758505114feec24613f6b4face81908b336ea99"
+            },
+            {
+              "name": "X-Message-Delivery",
+              "offset": 12686,
+              "length": 132,
+              "sha256": "447737330d62290c1c4d20a4a83536aefe13eb5110d179c36b84936a4d481f72"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Mailbox-Delivery",
+              "offset": 12818,
+              "length": 582,
+              "sha256": "718f15d691eed6c0666d7310e54a08f835cfc2a73ec8da77cca85bf669c5780d"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Message-Info",
+              "offset": 13400,
+              "length": 3096,
+              "sha256": "a5034313cf2ccf782f998977bef6c24524e6c39836231be762ea79e0a684d20c"
+            }
+          ]
+        },
+        "attachments": [
+          {
+            "index": 0,
+            "attachmentNid": 33157,
+            "name": "text.txt",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 18,
+              "sha256": "479b060322517dbb30f0f10b68bf785d48bb8825276cabde82d54ed773cbcb50",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "c4f67d09ff264a1ac9b0bdf61676d255c6b273d5b9634e5c951a3718e90bc86d"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "messageNid": 2104228,
+        "folderNid": 8578,
+        "subject": "jpg attachment",
+        "messageClass": "IPM.Note",
+        "header": {
+          "tag": 8192031,
+          "length": 16376,
+          "sha256": "e1270e948e187aeb0a50b859a765509ae2d46820598142cdc44dff9220e15398",
+          "fields": [
+            {
+              "name": "Received",
+              "offset": 0,
+              "length": 342,
+              "sha256": "bdb4469817e892f153b70cca33fd0359e7f72e0d0273925b9e5ea7873e3e1cf5"
+            },
+            {
+              "name": "Received",
+              "offset": 342,
+              "length": 592,
+              "sha256": "6b87369568946c8791fd193eed6b43dd2ca1c431529056aa94abc7861cfcd720"
+            },
+            {
+              "name": "Received",
+              "offset": 934,
+              "length": 662,
+              "sha256": "347d874b3d65c6867df00b920bb09b60a47577b1b4970b35d9e04ff35f5a4a42"
+            },
+            {
+              "name": "Authentication-Results",
+              "offset": 1596,
+              "length": 490,
+              "sha256": "255f29bc422d080fa2d7c89bb724e3c8b84035e1b5c9187b37f85b1fbbe8d776"
+            },
+            {
+              "name": "Received-SPF",
+              "offset": 2086,
+              "length": 412,
+              "sha256": "45081a37dcde27e8249a81b9fde20bd4690cb70890fc84bbf6df77dcaac8d03f"
+            },
+            {
+              "name": "Received",
+              "offset": 2498,
+              "length": 578,
+              "sha256": "29bedc64f8b113459563a2cedb48ab37f2097b473cbc0c10d010108296f1f125"
+            },
+            {
+              "name": "X-IncomingTopHeaderMarker",
+              "offset": 3076,
+              "length": 450,
+              "sha256": "66001f86f4a7afa7c370870f426e47c08278c76cf79834d521c3de1688feef2c"
+            },
+            {
+              "name": "Received",
+              "offset": 3526,
+              "length": 308,
+              "sha256": "5e77f3598ba14063695a6e2f44e53f269ac9141dbfebf69a0579d3b0834eaaa4"
+            },
+            {
+              "name": "DKIM-Signature",
+              "offset": 3834,
+              "length": 1256,
+              "sha256": "3964d10c124e08d4011e0b986594c04750a89d805b87d24212ebf84426afc2b0"
+            },
+            {
+              "name": "X-Google-DKIM-Signature",
+              "offset": 5090,
+              "length": 1334,
+              "sha256": "745bba3104e24dc76778717611f6211fb06e41144562e684e0c415325281fd83"
+            },
+            {
+              "name": "X-Gm-Message-State",
+              "offset": 6424,
+              "length": 234,
+              "sha256": "262bd590e68d3083ce73df330b8852e85878793573c9632b1250311a70d5bc5f"
+            },
+            {
+              "name": "X-Google-Smtp-Source",
+              "offset": 6658,
+              "length": 208,
+              "sha256": "7f9468ed743e49c1498f738146c7786adf19ed5ee299e860e8442274f64a5963"
+            },
+            {
+              "name": "X-Received",
+              "offset": 6866,
+              "length": 250,
+              "sha256": "e20b80b8a0aa140d7b82c87c84f5b60cf3249305bf16dfded4657ab0baa36684"
+            },
+            {
+              "name": "Return-Path",
+              "offset": 7116,
+              "length": 66,
+              "sha256": "93653185cb1bb586ccbdbb145c77e09817d6a804e06a50702f910c197fb67f7d"
+            },
+            {
+              "name": "Received",
+              "offset": 7182,
+              "length": 648,
+              "sha256": "a32688faf48a63f85f3d55ec86111059eae77e1747f174d777609b91c2ccacfd"
+            },
+            {
+              "name": "MIME-Version",
+              "offset": 7830,
+              "length": 38,
+              "sha256": "29b3ff1c09ef3f6a0537f018b0dc64fc6595882bc2ef9ec26dee67ad163f8685"
+            },
+            {
+              "name": "Date",
+              "offset": 7868,
+              "length": 78,
+              "sha256": "ea54dbe17e1f25218e5d573fa53d9ae50fcdc15f0cdb572de1768e4b602e55d8"
+            },
+            {
+              "name": "From",
+              "offset": 7946,
+              "length": 62,
+              "sha256": "5dd35eae9ca18063af7d9856999d541cc8e295937375cc3426eb45418adabf12"
+            },
+            {
+              "name": "Subject",
+              "offset": 8008,
+              "length": 50,
+              "sha256": "0c7be371f752a97210639fdbe9b8878883824e4417f92712a2b85ee11a6341c2"
+            },
+            {
+              "name": "Thread-Topic",
+              "offset": 8058,
+              "length": 60,
+              "sha256": "14ba630419ca90c5fca30c9a9bebc5c0d0c2c0cb4e8e97df53906a3fef199067"
+            },
+            {
+              "name": "Message-ID",
+              "offset": 8118,
+              "length": 124,
+              "sha256": "e621ae06cdab06f7cd394da4570c15d990fdc7368fca04643f1bc318b6383ad1"
+            },
+            {
+              "name": "To",
+              "offset": 8242,
+              "length": 134,
+              "sha256": "acd00700b6930d7835e175e9fec707aaa7b213aa7ed8c86fb965e6c1969715d4"
+            },
+            {
+              "name": "Content-Type",
+              "offset": 8376,
+              "length": 168,
+              "sha256": "e69671d8529401dbd0a9fdc75f7e31505821e810d4fb628b7216988713cd422f"
+            },
+            {
+              "name": "X-IncomingHeaderCount",
+              "offset": 8544,
+              "length": 54,
+              "sha256": "614a1040f87093720e1b28076d85015f5640e4c5b022c4996b72091e2dffa5f8"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTime",
+              "offset": 8598,
+              "length": 166,
+              "sha256": "7a39cc7b80f420e92aa99554a7c4a059ffd391fe14e3f02ccda517f391e2355d"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTimeReason",
+              "offset": 8764,
+              "length": 140,
+              "sha256": "d5db94d9df0d44ad163a3525926729832ca0a9ae899d76f66ad04b7c6b00ba79"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationInterval",
+              "offset": 8904,
+              "length": 134,
+              "sha256": "9a3dff382e0eb90cbd833af3b887d3996cc92fee11461cdd994bcc06ee8eef94"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationIntervalReason",
+              "offset": 9038,
+              "length": 138,
+              "sha256": "0f0d2695c677f05148c86c8886e4135dc6b8c94f74ffb0e420c9c5f8fa2a54c5"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-Network-Message-Id",
+              "offset": 9176,
+              "length": 174,
+              "sha256": "36059d9779dfb1f9f44a341158a71f40ca187b87dcc879ae3994c8c8dde7519c"
+            },
+            {
+              "name": "X-EOPAttributedMessage",
+              "offset": 9350,
+              "length": 54,
+              "sha256": "2d73525205a646ce08e15bb6d6e284e5f62500fad7d36b7be0d3e51b12df3fc6"
+            },
+            {
+              "name": "X-EOPTenantAttributedMessage",
+              "offset": 9404,
+              "length": 140,
+              "sha256": "e04cf0c9af74f99852e0b61206bd88d09f580ac9e9aaa2cf02bed4ade3e0d793"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-MessageDirectionality",
+              "offset": 9544,
+              "length": 120,
+              "sha256": "6b7b8ec5a346b2b98424daa80804e021342dc4b9645c69ad4a4c1911ee3bed38"
+            },
+            {
+              "name": "X-MS-PublicTrafficType",
+              "offset": 9664,
+              "length": 62,
+              "sha256": "1616f8803f23a2a241161a1e8a8c34c02a5b51d56139ba761763b878951b251c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthSource",
+              "offset": 9726,
+              "length": 188,
+              "sha256": "5f8c881b9102ce4ffc6734d5be30a30fbcc9f7ad90b9a11e96fcd6cbd2434fd8"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthAs",
+              "offset": 9914,
+              "length": 92,
+              "sha256": "bb56d63a67648c16f1b59998930784a9bfaaf853a4205f2d0a90dcba59fc324a"
+            },
+            {
+              "name": "X-MS-UserLastLogonTime",
+              "offset": 10006,
+              "length": 92,
+              "sha256": "de8cdaabc6d0b2cd1dcfb8661da2018be1f2054c82f0cb43375d48c4cf99bad9"
+            },
+            {
+              "name": "X-MS-Office365-Filtering-Correlation-Id",
+              "offset": 10098,
+              "length": 158,
+              "sha256": "9f5cd037ea5ba095ac1a12cb11f33f4aac2e5a912f700c4cb12ab6392d691c22"
+            },
+            {
+              "name": "X-MS-TrafficTypeDiagnostic",
+              "offset": 10256,
+              "length": 88,
+              "sha256": "f0e9cadb909cc3cd925f71354aba01623465252225272507c64380ccf00fe8bc"
+            },
+            {
+              "name": "X-MS-Exchange-EOPDirect",
+              "offset": 10344,
+              "length": 62,
+              "sha256": "4334518100735a5a355ea441fe2184d70e971006d44e40f988067a76edb0525a"
+            },
+            {
+              "name": "X-Sender-IP",
+              "offset": 10406,
+              "length": 58,
+              "sha256": "580ea2b7f4d6f6cb2152067a0508e1bf34987d21bfb7689a4cf6ab2184de70ba"
+            },
+            {
+              "name": "X-SID-PRA",
+              "offset": 10464,
+              "length": 62,
+              "sha256": "c030acc0527f43041c788c323a8519eb6d156558a3b12e0498abf57751e34180"
+            },
+            {
+              "name": "X-SID-Result",
+              "offset": 10526,
+              "length": 40,
+              "sha256": "fa30844f503d9efea6987b23cdafcff7548d3d6b3c8ba258e441ed386f2c5bfd"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-PCL",
+              "offset": 10566,
+              "length": 70,
+              "sha256": "c84a41324fee4eb2e380bf749bdf68492b6152e99210af369256774950d2e62c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-SCL",
+              "offset": 10636,
+              "length": 70,
+              "sha256": "6426c731bed5f46f59cced892f72b332bbf0061b47cdca4f74d4384e9f8d0b2b"
+            },
+            {
+              "name": "X-Microsoft-Antispam",
+              "offset": 10706,
+              "length": 60,
+              "sha256": "b8052b3c8fb352b46f8cab6bbf53b35e001f0caaac4523fed99d37e4083c3831"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-OriginalArrivalTime",
+              "offset": 10766,
+              "length": 164,
+              "sha256": "b64bb642db2ce26bb8c8b3b06f0e7e7a059320b8444ed446ce2dbfff1d54a118"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Network-Message-Id",
+              "offset": 10930,
+              "length": 168,
+              "sha256": "4726362720e3d9207be9ccfc7c21bc3140bb83b89df653ed97545e18de949857"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Id",
+              "offset": 11098,
+              "length": 136,
+              "sha256": "674f7aaaf6aa569594228d7f0c91cb5605aa07f9f401532618454ec26dd6e458"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthSource",
+              "offset": 11234,
+              "length": 186,
+              "sha256": "3dfda9d202e8b8497460320b182d4aaba496cfcb036b90b74c8fa5ccdfaae749"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthAs",
+              "offset": 11420,
+              "length": 90,
+              "sha256": "f8021f9730b6c4d4a611f5fba8cc9b44ffe7d42170500640689865905966d261"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-FromEntityHeader",
+              "offset": 11510,
+              "length": 108,
+              "sha256": "a0e1ee304814357c6c606edf96d9b331752dabb03522e7a3fa9e73a7af3c55b9"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg",
+              "offset": 11618,
+              "length": 184,
+              "sha256": "166f6d67d25682fa6eecfb1fe0d9800239672bb682917a23483cf83dabcc484e"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-CrossTenantHeadersStamped",
+              "offset": 11802,
+              "length": 132,
+              "sha256": "a5fc04dfaa9e45c79bfe77e70694bf3e80d3663d4ce5f9f0aa1ff5cb3f3f420a"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-EndToEndLatency",
+              "offset": 11934,
+              "length": 118,
+              "sha256": "ccbb246a63fdd5287ea5288c6ba8e66a25f1622549974d83d124cf15686a6142"
+            },
+            {
+              "name": "X-MS-Exchange-Processed-By-BccFoldering",
+              "offset": 12052,
+              "length": 114,
+              "sha256": "e11390d2450d75cf931d1d85050d32b66d9fe6ae6f80cb25ef134158bc99113d"
+            },
+            {
+              "name": "X-Message-Info",
+              "offset": 12166,
+              "length": 472,
+              "sha256": "fd4fe8f65277be4bb2fcf4c8e53c01319d4e31fedc1698eb8849baf5c044509c"
+            },
+            {
+              "name": "X-Message-Delivery",
+              "offset": 12638,
+              "length": 132,
+              "sha256": "447737330d62290c1c4d20a4a83536aefe13eb5110d179c36b84936a4d481f72"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Mailbox-Delivery",
+              "offset": 12770,
+              "length": 582,
+              "sha256": "718f15d691eed6c0666d7310e54a08f835cfc2a73ec8da77cca85bf669c5780d"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Message-Info",
+              "offset": 13352,
+              "length": 3024,
+              "sha256": "a47fb095e8850e64d5925b7d5be7e4e61d40b2f66f8115c2ec935b3772879468"
+            }
+          ]
+        },
+        "attachments": [
+          {
+            "index": 0,
+            "attachmentNid": 33189,
+            "name": "primoz-roglic-of-slovenia-and-team-jumbo-visma-red-leader-news-photo-1628610563.jpg",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 79653,
+              "sha256": "755560d196b67580846cec91fe4188cb82df0f8ce9913eca450134b8f7989810",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "eb7e0381d519c6a257584ed4a69cf3ae4e4cfc7351cacb301ac646c0df5e8aca"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "bc3a537cec12dfc40a924cc16ea377e36d23419adc56604bb8887fc09bafc341"
+                },
+                {
+                  "offset": 65504,
+                  "length": 64,
+                  "sha256": "6811bb3ab09dc47936799562e0401ce1d72f870f31d2ee28ad29adeac96caea3"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "messageNid": 2104324,
+        "folderNid": 8578,
+        "subject": "pdf attachment",
+        "messageClass": "IPM.Note",
+        "header": {
+          "tag": 8192031,
+          "length": 16272,
+          "sha256": "05b516b9d74b52bfba8bc6d7c6afb107aea18faea3eeaf83a3035c427067268c",
+          "fields": [
+            {
+              "name": "Received",
+              "offset": 0,
+              "length": 340,
+              "sha256": "51e098ae876286cdda78158eeecf6fa0a5f023acc2392da3138239f665f7c5bd"
+            },
+            {
+              "name": "Received",
+              "offset": 340,
+              "length": 586,
+              "sha256": "db080b6af0cd8ae84a43b5995b24f1f931c4a241d70c49fa4360db40d2b8d5f1"
+            },
+            {
+              "name": "Received",
+              "offset": 926,
+              "length": 658,
+              "sha256": "a23b2b18dc3e0aff1df191a5747920c9fcb80b91dbc2291ff3167d417df53776"
+            },
+            {
+              "name": "Authentication-Results",
+              "offset": 1584,
+              "length": 490,
+              "sha256": "cf9638fcec6d837c43573883eb8334670ea9c91f35ec1470b08fafd85786019e"
+            },
+            {
+              "name": "Received-SPF",
+              "offset": 2074,
+              "length": 412,
+              "sha256": "2a6d75dea6c7856251ee53c432f89fc91bf20359cefac3a311f06bd71b25ac55"
+            },
+            {
+              "name": "Received",
+              "offset": 2486,
+              "length": 576,
+              "sha256": "ff7652ab6741c49364895dc9c8b1df19055f1eb176d3de532f00baa594b0cf4d"
+            },
+            {
+              "name": "X-IncomingTopHeaderMarker",
+              "offset": 3062,
+              "length": 450,
+              "sha256": "a912ceb3e13bb8a413c322369217e4e0759b78ff5a88c9f8dd59cb824917f591"
+            },
+            {
+              "name": "Received",
+              "offset": 3512,
+              "length": 304,
+              "sha256": "22348c9ae494ee9ad849c2ab94c31e4d6e4646d236e7e38783945d5b98cba3d2"
+            },
+            {
+              "name": "DKIM-Signature",
+              "offset": 3816,
+              "length": 1256,
+              "sha256": "2c1b96a4814e0709efa31c575f0d692385c2e17c5ce8705c71912b9a7d02458f"
+            },
+            {
+              "name": "X-Google-DKIM-Signature",
+              "offset": 5072,
+              "length": 1334,
+              "sha256": "efad56f9d07d368f3c3196e839075f0ea46986201e4c51fbba40ff8d8a6cedd5"
+            },
+            {
+              "name": "X-Gm-Message-State",
+              "offset": 6406,
+              "length": 234,
+              "sha256": "3e1f8867ca0deb7587dd61c8d11ecaa47c756896abf58b472ef60f825626d684"
+            },
+            {
+              "name": "X-Google-Smtp-Source",
+              "offset": 6640,
+              "length": 208,
+              "sha256": "8cdc5dc7947cab92a34103204da21b95fd54a19c0c6b184bc027889dcd62542c"
+            },
+            {
+              "name": "X-Received",
+              "offset": 6848,
+              "length": 260,
+              "sha256": "19664b7b857b3375246f0a5c7b2366b42a9c1057232ace4a909fb2089793cfbc"
+            },
+            {
+              "name": "Return-Path",
+              "offset": 7108,
+              "length": 66,
+              "sha256": "93653185cb1bb586ccbdbb145c77e09817d6a804e06a50702f910c197fb67f7d"
+            },
+            {
+              "name": "Received",
+              "offset": 7174,
+              "length": 644,
+              "sha256": "a7eafe5bbcbaf20f7d20ddeb47b06808d949bdb5fb08d8e523d9802eafb2c435"
+            },
+            {
+              "name": "MIME-Version",
+              "offset": 7818,
+              "length": 38,
+              "sha256": "29b3ff1c09ef3f6a0537f018b0dc64fc6595882bc2ef9ec26dee67ad163f8685"
+            },
+            {
+              "name": "Date",
+              "offset": 7856,
+              "length": 78,
+              "sha256": "ccf838b4bda02d7091798b4c518ca7d6f5f77ec91adf700e763c95e404ea28c6"
+            },
+            {
+              "name": "From",
+              "offset": 7934,
+              "length": 62,
+              "sha256": "5dd35eae9ca18063af7d9856999d541cc8e295937375cc3426eb45418adabf12"
+            },
+            {
+              "name": "Subject",
+              "offset": 7996,
+              "length": 50,
+              "sha256": "2ad862b2f45e74a6cf5ce1e6ef794d28d5a7b01931f6f1daa1b1839fd4ae1838"
+            },
+            {
+              "name": "Thread-Topic",
+              "offset": 8046,
+              "length": 60,
+              "sha256": "d22122c0d645087261b633557e21e7e862d35044cd1e6089485d98e84d6f8cc6"
+            },
+            {
+              "name": "Message-ID",
+              "offset": 8106,
+              "length": 124,
+              "sha256": "30405ca4fa2e6f192e0f25ebbbfda382e3fb636e8a7efad7034592c2b63f18ab"
+            },
+            {
+              "name": "To",
+              "offset": 8230,
+              "length": 134,
+              "sha256": "acd00700b6930d7835e175e9fec707aaa7b213aa7ed8c86fb965e6c1969715d4"
+            },
+            {
+              "name": "Content-Type",
+              "offset": 8364,
+              "length": 168,
+              "sha256": "1767bd8662f81f6d4c978959636604fd44f52fe6a5a2fb8e9f023e29b7802d20"
+            },
+            {
+              "name": "X-IncomingHeaderCount",
+              "offset": 8532,
+              "length": 54,
+              "sha256": "614a1040f87093720e1b28076d85015f5640e4c5b022c4996b72091e2dffa5f8"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTime",
+              "offset": 8586,
+              "length": 166,
+              "sha256": "695d588172fe53a477e2b75ac799451111c7f29f407d51c603f4f2592b99172c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTimeReason",
+              "offset": 8752,
+              "length": 140,
+              "sha256": "d5db94d9df0d44ad163a3525926729832ca0a9ae899d76f66ad04b7c6b00ba79"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationInterval",
+              "offset": 8892,
+              "length": 134,
+              "sha256": "9a3dff382e0eb90cbd833af3b887d3996cc92fee11461cdd994bcc06ee8eef94"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationIntervalReason",
+              "offset": 9026,
+              "length": 138,
+              "sha256": "0f0d2695c677f05148c86c8886e4135dc6b8c94f74ffb0e420c9c5f8fa2a54c5"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-Network-Message-Id",
+              "offset": 9164,
+              "length": 174,
+              "sha256": "7744854f4ee67a08644f15e8b1c67acf5b654e1f405b29495577a5838a9a2460"
+            },
+            {
+              "name": "X-EOPAttributedMessage",
+              "offset": 9338,
+              "length": 54,
+              "sha256": "2d73525205a646ce08e15bb6d6e284e5f62500fad7d36b7be0d3e51b12df3fc6"
+            },
+            {
+              "name": "X-EOPTenantAttributedMessage",
+              "offset": 9392,
+              "length": 140,
+              "sha256": "e04cf0c9af74f99852e0b61206bd88d09f580ac9e9aaa2cf02bed4ade3e0d793"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-MessageDirectionality",
+              "offset": 9532,
+              "length": 120,
+              "sha256": "6b7b8ec5a346b2b98424daa80804e021342dc4b9645c69ad4a4c1911ee3bed38"
+            },
+            {
+              "name": "X-MS-PublicTrafficType",
+              "offset": 9652,
+              "length": 62,
+              "sha256": "1616f8803f23a2a241161a1e8a8c34c02a5b51d56139ba761763b878951b251c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthSource",
+              "offset": 9714,
+              "length": 188,
+              "sha256": "849b35372049f341ce6d5e7aedda351dadae193a02e419fc6dc68b918a5ac971"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthAs",
+              "offset": 9902,
+              "length": 92,
+              "sha256": "bb56d63a67648c16f1b59998930784a9bfaaf853a4205f2d0a90dcba59fc324a"
+            },
+            {
+              "name": "X-MS-UserLastLogonTime",
+              "offset": 9994,
+              "length": 92,
+              "sha256": "de8cdaabc6d0b2cd1dcfb8661da2018be1f2054c82f0cb43375d48c4cf99bad9"
+            },
+            {
+              "name": "X-MS-Office365-Filtering-Correlation-Id",
+              "offset": 10086,
+              "length": 158,
+              "sha256": "1c761eae4a6b7b2e66d01ed9c52f4aa4edb451fe845f9d6cadec6cda20403cb3"
+            },
+            {
+              "name": "X-MS-TrafficTypeDiagnostic",
+              "offset": 10244,
+              "length": 88,
+              "sha256": "5bc062a37f514158ee9dd2cf08a460be1135c87914a7f594f5b7e285a5f40502"
+            },
+            {
+              "name": "X-MS-Exchange-EOPDirect",
+              "offset": 10332,
+              "length": 62,
+              "sha256": "4334518100735a5a355ea441fe2184d70e971006d44e40f988067a76edb0525a"
+            },
+            {
+              "name": "X-Sender-IP",
+              "offset": 10394,
+              "length": 58,
+              "sha256": "40cc641d659deb8235dc5211b6e1d4cbba115ead88b39416a85bae0b908ae565"
+            },
+            {
+              "name": "X-SID-PRA",
+              "offset": 10452,
+              "length": 62,
+              "sha256": "c030acc0527f43041c788c323a8519eb6d156558a3b12e0498abf57751e34180"
+            },
+            {
+              "name": "X-SID-Result",
+              "offset": 10514,
+              "length": 40,
+              "sha256": "fa30844f503d9efea6987b23cdafcff7548d3d6b3c8ba258e441ed386f2c5bfd"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-PCL",
+              "offset": 10554,
+              "length": 70,
+              "sha256": "c84a41324fee4eb2e380bf749bdf68492b6152e99210af369256774950d2e62c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-SCL",
+              "offset": 10624,
+              "length": 70,
+              "sha256": "6426c731bed5f46f59cced892f72b332bbf0061b47cdca4f74d4384e9f8d0b2b"
+            },
+            {
+              "name": "X-Microsoft-Antispam",
+              "offset": 10694,
+              "length": 60,
+              "sha256": "b8052b3c8fb352b46f8cab6bbf53b35e001f0caaac4523fed99d37e4083c3831"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-OriginalArrivalTime",
+              "offset": 10754,
+              "length": 164,
+              "sha256": "a1bcd6c9e9b36e232947035cdf1662249828939f93c92452009d3e4ab3976711"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Network-Message-Id",
+              "offset": 10918,
+              "length": 168,
+              "sha256": "9f077f6e9966743b8bf2483e3ae964d518807a4989c8e9f13232477f0613840d"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Id",
+              "offset": 11086,
+              "length": 136,
+              "sha256": "674f7aaaf6aa569594228d7f0c91cb5605aa07f9f401532618454ec26dd6e458"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthSource",
+              "offset": 11222,
+              "length": 186,
+              "sha256": "47b2acc35712b0d185f872d3f5241f28bd4cb63939a98c08107c30f9d800a820"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthAs",
+              "offset": 11408,
+              "length": 90,
+              "sha256": "f8021f9730b6c4d4a611f5fba8cc9b44ffe7d42170500640689865905966d261"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-FromEntityHeader",
+              "offset": 11498,
+              "length": 108,
+              "sha256": "a0e1ee304814357c6c606edf96d9b331752dabb03522e7a3fa9e73a7af3c55b9"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg",
+              "offset": 11606,
+              "length": 184,
+              "sha256": "166f6d67d25682fa6eecfb1fe0d9800239672bb682917a23483cf83dabcc484e"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-CrossTenantHeadersStamped",
+              "offset": 11790,
+              "length": 132,
+              "sha256": "25790cfde145b27e69fa8775d65ef99e9e2a2cfe27aa0abdf583ecc7b606f50d"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-EndToEndLatency",
+              "offset": 11922,
+              "length": 118,
+              "sha256": "6f0ddee90e65a6ca6817c2aaaf2ef521f8746e68e0712f93a4c3b5101724bff9"
+            },
+            {
+              "name": "X-MS-Exchange-Processed-By-BccFoldering",
+              "offset": 12040,
+              "length": 114,
+              "sha256": "e11390d2450d75cf931d1d85050d32b66d9fe6ae6f80cb25ef134158bc99113d"
+            },
+            {
+              "name": "X-Message-Info",
+              "offset": 12154,
+              "length": 472,
+              "sha256": "41fbf1cae2f4d779065f958dd229f48108d4e01f64517f583a4e94fb820368a8"
+            },
+            {
+              "name": "X-Message-Delivery",
+              "offset": 12626,
+              "length": 132,
+              "sha256": "447737330d62290c1c4d20a4a83536aefe13eb5110d179c36b84936a4d481f72"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Mailbox-Delivery",
+              "offset": 12758,
+              "length": 582,
+              "sha256": "718f15d691eed6c0666d7310e54a08f835cfc2a73ec8da77cca85bf669c5780d"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Message-Info",
+              "offset": 13340,
+              "length": 2932,
+              "sha256": "8785989c44198e0eb6733c02f33449238b399f089b6626a103ea073292183434"
+            }
+          ]
+        },
+        "attachments": [
+          {
+            "index": 0,
+            "attachmentNid": 33221,
+            "name": "Clinometer Usage.pdf",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 87069,
+              "sha256": "36a917a48e7b93f5226a082529e6c3ec663f083d4f9387551303d82379e2e445",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "0a68f7a8e751840fa203a2f7f0e71aaf209a190edfbf94277d8b2fc917aec7c6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "d01aa2b5cb4db80916fad316d6cb74d0fd7d71aa7fbc5db05adbedc30019122b"
+                },
+                {
+                  "offset": 65504,
+                  "length": 64,
+                  "sha256": "3ea7c4ac7f61088b8f8deccc77674a0f2c00e6f1589a3d778808dcdb64ca7334"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "messageNid": 2104516,
+        "folderNid": 8578,
+        "subject": "text, jpg, pdf attachments",
+        "messageClass": "IPM.Note",
+        "header": {
+          "tag": 8192031,
+          "length": 16306,
+          "sha256": "e2cfd1ec5fa21249977aafb9ade3a3592d89ef0759f5618e81f8c240c1a5f2f9",
+          "fields": [
+            {
+              "name": "Received",
+              "offset": 0,
+              "length": 340,
+              "sha256": "2ecd425e437257d77d9fbe53878e9c7f5229f890707c21c46af456bb0acd8ba4"
+            },
+            {
+              "name": "Received",
+              "offset": 340,
+              "length": 588,
+              "sha256": "03e4cb830ccb060b699fff0395b9e2f538f265d6cb8947c29e95f59cc59c717d"
+            },
+            {
+              "name": "Received",
+              "offset": 928,
+              "length": 660,
+              "sha256": "42444809600521973ed0136018daa52a8158b106fbc396572966e93cb264be1c"
+            },
+            {
+              "name": "Authentication-Results",
+              "offset": 1588,
+              "length": 488,
+              "sha256": "988efce50aac1c4f09507c3104b210c792552d90d32241abe19d5869c6fc587b"
+            },
+            {
+              "name": "Received-SPF",
+              "offset": 2076,
+              "length": 406,
+              "sha256": "9874bdab29a4d1029367cf2f99ba53c56fd500c48ec06e5816e97dca8a934d1e"
+            },
+            {
+              "name": "Received",
+              "offset": 2482,
+              "length": 570,
+              "sha256": "1d6560466dac0d0935a3147149a9612fab2da32c4764dacfd42836b7344f6bc9"
+            },
+            {
+              "name": "X-IncomingTopHeaderMarker",
+              "offset": 3052,
+              "length": 450,
+              "sha256": "364544fe529607e380d535adc3389c26d68636f8d977d4a3cf8a474d24b6caac"
+            },
+            {
+              "name": "Received",
+              "offset": 3502,
+              "length": 306,
+              "sha256": "afc09d6f3a3d8c6365d486df29f526cc8315765c8f61097559609c89fb238409"
+            },
+            {
+              "name": "DKIM-Signature",
+              "offset": 3808,
+              "length": 1256,
+              "sha256": "fe0ddd5d0dd0cbe12d13d7cbbc64fbea182e018a7c08c71dec93c4e987fb4f2b"
+            },
+            {
+              "name": "X-Google-DKIM-Signature",
+              "offset": 5064,
+              "length": 1334,
+              "sha256": "4bdf7668f37bb55f349a0f84042a9eee6adfd6dfc2a8e2a3b3c34f6c7fdeef7e"
+            },
+            {
+              "name": "X-Gm-Message-State",
+              "offset": 6398,
+              "length": 234,
+              "sha256": "1b423352c3dc57c83ebf9f12b983b2556cf2363a219ea92a7d46a30445851098"
+            },
+            {
+              "name": "X-Google-Smtp-Source",
+              "offset": 6632,
+              "length": 208,
+              "sha256": "5e4c705d5bb516237d4a24a49e343be35f41ff81db2c20a3f22f965cea422c34"
+            },
+            {
+              "name": "X-Received",
+              "offset": 6840,
+              "length": 254,
+              "sha256": "55ecae5c55b4ac01c33d1d3586cbd943250a1cd7e6ed5d0132288a67cab1cfcc"
+            },
+            {
+              "name": "Return-Path",
+              "offset": 7094,
+              "length": 66,
+              "sha256": "93653185cb1bb586ccbdbb145c77e09817d6a804e06a50702f910c197fb67f7d"
+            },
+            {
+              "name": "Received",
+              "offset": 7160,
+              "length": 646,
+              "sha256": "602c06901efa831390a4f0cd9242585e6882558196cf570dd8f5f9debe0e6200"
+            },
+            {
+              "name": "MIME-Version",
+              "offset": 7806,
+              "length": 38,
+              "sha256": "29b3ff1c09ef3f6a0537f018b0dc64fc6595882bc2ef9ec26dee67ad163f8685"
+            },
+            {
+              "name": "Date",
+              "offset": 7844,
+              "length": 78,
+              "sha256": "1c915c774d8c24f43c81cfa086a6b22fed96669039af1ffec5667f1d3ebda9e4"
+            },
+            {
+              "name": "From",
+              "offset": 7922,
+              "length": 62,
+              "sha256": "5dd35eae9ca18063af7d9856999d541cc8e295937375cc3426eb45418adabf12"
+            },
+            {
+              "name": "Subject",
+              "offset": 7984,
+              "length": 74,
+              "sha256": "858f82afa1bd4a1839649b369527afea1c66f6972250e2af2e76b0324b781400"
+            },
+            {
+              "name": "Thread-Topic",
+              "offset": 8058,
+              "length": 84,
+              "sha256": "8261e7e39ac7b560cfb8e82f636b34192aceba30978af9e772651e7acb8dbdf4"
+            },
+            {
+              "name": "Message-ID",
+              "offset": 8142,
+              "length": 124,
+              "sha256": "27ba3a562b6d3d0c5ea023cecad74f892496645b065070887061508a57b6fb08"
+            },
+            {
+              "name": "To",
+              "offset": 8266,
+              "length": 134,
+              "sha256": "acd00700b6930d7835e175e9fec707aaa7b213aa7ed8c86fb965e6c1969715d4"
+            },
+            {
+              "name": "Content-Type",
+              "offset": 8400,
+              "length": 168,
+              "sha256": "684727942556b04b973b2eae49a25eac1e9688e4f6eba2377769e5310469c9f2"
+            },
+            {
+              "name": "X-IncomingHeaderCount",
+              "offset": 8568,
+              "length": 54,
+              "sha256": "614a1040f87093720e1b28076d85015f5640e4c5b022c4996b72091e2dffa5f8"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTime",
+              "offset": 8622,
+              "length": 166,
+              "sha256": "68a51e08f22f001fd933f4798125c93c55edaf87fb59841947801a00621ff4b5"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationStartTimeReason",
+              "offset": 8788,
+              "length": 140,
+              "sha256": "d5db94d9df0d44ad163a3525926729832ca0a9ae899d76f66ad04b7c6b00ba79"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationInterval",
+              "offset": 8928,
+              "length": 134,
+              "sha256": "9a3dff382e0eb90cbd833af3b887d3996cc92fee11461cdd994bcc06ee8eef94"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-ExpirationIntervalReason",
+              "offset": 9062,
+              "length": 138,
+              "sha256": "0f0d2695c677f05148c86c8886e4135dc6b8c94f74ffb0e420c9c5f8fa2a54c5"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-Network-Message-Id",
+              "offset": 9200,
+              "length": 174,
+              "sha256": "3f08faa93b688af004aa29c1685ea740b663937f2bdd64dfbfafe54c2d02de7c"
+            },
+            {
+              "name": "X-EOPAttributedMessage",
+              "offset": 9374,
+              "length": 54,
+              "sha256": "2d73525205a646ce08e15bb6d6e284e5f62500fad7d36b7be0d3e51b12df3fc6"
+            },
+            {
+              "name": "X-EOPTenantAttributedMessage",
+              "offset": 9428,
+              "length": 140,
+              "sha256": "e04cf0c9af74f99852e0b61206bd88d09f580ac9e9aaa2cf02bed4ade3e0d793"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-MessageDirectionality",
+              "offset": 9568,
+              "length": 120,
+              "sha256": "6b7b8ec5a346b2b98424daa80804e021342dc4b9645c69ad4a4c1911ee3bed38"
+            },
+            {
+              "name": "X-MS-PublicTrafficType",
+              "offset": 9688,
+              "length": 62,
+              "sha256": "1616f8803f23a2a241161a1e8a8c34c02a5b51d56139ba761763b878951b251c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthSource",
+              "offset": 9750,
+              "length": 188,
+              "sha256": "b5bc183eeb73c011f5f1c0858e8366bc2d0b14b01db0aeb9ada21d6e48130036"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-AuthAs",
+              "offset": 9938,
+              "length": 92,
+              "sha256": "bb56d63a67648c16f1b59998930784a9bfaaf853a4205f2d0a90dcba59fc324a"
+            },
+            {
+              "name": "X-MS-UserLastLogonTime",
+              "offset": 10030,
+              "length": 92,
+              "sha256": "de8cdaabc6d0b2cd1dcfb8661da2018be1f2054c82f0cb43375d48c4cf99bad9"
+            },
+            {
+              "name": "X-MS-Office365-Filtering-Correlation-Id",
+              "offset": 10122,
+              "length": 158,
+              "sha256": "5f7d16df78cff480dec4798349604b6bcdb2bd51c154bd424af58a1dda6a3a14"
+            },
+            {
+              "name": "X-MS-TrafficTypeDiagnostic",
+              "offset": 10280,
+              "length": 88,
+              "sha256": "6e4279bd8662975c0dca9b8005c3309fd25c15116f5f6e46a733fdb6dd69a777"
+            },
+            {
+              "name": "X-MS-Exchange-EOPDirect",
+              "offset": 10368,
+              "length": 62,
+              "sha256": "4334518100735a5a355ea441fe2184d70e971006d44e40f988067a76edb0525a"
+            },
+            {
+              "name": "X-Sender-IP",
+              "offset": 10430,
+              "length": 56,
+              "sha256": "31cbacd9da66a07216ca6ddc41c7116b35a067fa9e9d24f46eebc9f480e85cb5"
+            },
+            {
+              "name": "X-SID-PRA",
+              "offset": 10486,
+              "length": 62,
+              "sha256": "c030acc0527f43041c788c323a8519eb6d156558a3b12e0498abf57751e34180"
+            },
+            {
+              "name": "X-SID-Result",
+              "offset": 10548,
+              "length": 40,
+              "sha256": "fa30844f503d9efea6987b23cdafcff7548d3d6b3c8ba258e441ed386f2c5bfd"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-PCL",
+              "offset": 10588,
+              "length": 70,
+              "sha256": "c84a41324fee4eb2e380bf749bdf68492b6152e99210af369256774950d2e62c"
+            },
+            {
+              "name": "X-MS-Exchange-Organization-SCL",
+              "offset": 10658,
+              "length": 70,
+              "sha256": "6426c731bed5f46f59cced892f72b332bbf0061b47cdca4f74d4384e9f8d0b2b"
+            },
+            {
+              "name": "X-Microsoft-Antispam",
+              "offset": 10728,
+              "length": 60,
+              "sha256": "b8052b3c8fb352b46f8cab6bbf53b35e001f0caaac4523fed99d37e4083c3831"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-OriginalArrivalTime",
+              "offset": 10788,
+              "length": 164,
+              "sha256": "e8de844caf04ad18223236628f117187a12eeddd46a642aa3e69dc21fc4aceec"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Network-Message-Id",
+              "offset": 10952,
+              "length": 168,
+              "sha256": "864d28a5b8cdc8d99687cb7840993b93d65145325dac0642352e9a479367d67d"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-Id",
+              "offset": 11120,
+              "length": 136,
+              "sha256": "674f7aaaf6aa569594228d7f0c91cb5605aa07f9f401532618454ec26dd6e458"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthSource",
+              "offset": 11256,
+              "length": 186,
+              "sha256": "4bd5db5c812a325d910a2f62ce2f42aec414dc31b86243a13699e895374ee13e"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-AuthAs",
+              "offset": 11442,
+              "length": 90,
+              "sha256": "f8021f9730b6c4d4a611f5fba8cc9b44ffe7d42170500640689865905966d261"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-FromEntityHeader",
+              "offset": 11532,
+              "length": 108,
+              "sha256": "a0e1ee304814357c6c606edf96d9b331752dabb03522e7a3fa9e73a7af3c55b9"
+            },
+            {
+              "name": "X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg",
+              "offset": 11640,
+              "length": 184,
+              "sha256": "166f6d67d25682fa6eecfb1fe0d9800239672bb682917a23483cf83dabcc484e"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-CrossTenantHeadersStamped",
+              "offset": 11824,
+              "length": 132,
+              "sha256": "418ad7b9c38b90111a0232cab559b4d9d15f65701aae489dc9e0a55d2fc405ff"
+            },
+            {
+              "name": "X-MS-Exchange-Transport-EndToEndLatency",
+              "offset": 11956,
+              "length": 118,
+              "sha256": "a5ccb833edf3900cb8097cd2f0f1bcddc60f0fe8abfb05f1dacadc7929df4f96"
+            },
+            {
+              "name": "X-MS-Exchange-Processed-By-BccFoldering",
+              "offset": 12074,
+              "length": 114,
+              "sha256": "e11390d2450d75cf931d1d85050d32b66d9fe6ae6f80cb25ef134158bc99113d"
+            },
+            {
+              "name": "X-Message-Info",
+              "offset": 12188,
+              "length": 472,
+              "sha256": "3f70d8f6048ce00527b7ce18ff25a5ddcafc07eda404358e0a53627321e66a10"
+            },
+            {
+              "name": "X-Message-Delivery",
+              "offset": 12660,
+              "length": 132,
+              "sha256": "447737330d62290c1c4d20a4a83536aefe13eb5110d179c36b84936a4d481f72"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Mailbox-Delivery",
+              "offset": 12792,
+              "length": 582,
+              "sha256": "718f15d691eed6c0666d7310e54a08f835cfc2a73ec8da77cca85bf669c5780d"
+            },
+            {
+              "name": "X-Microsoft-Antispam-Message-Info",
+              "offset": 13374,
+              "length": 2932,
+              "sha256": "cb393481d58d434a639c2834f2aa7b7aeb00108f55ebd5b6a5994a1968bd99fc"
+            }
+          ]
+        },
+        "attachments": [
+          {
+            "index": 0,
+            "attachmentNid": 33253,
+            "name": "Clinometer Usage.pdf",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 87069,
+              "sha256": "36a917a48e7b93f5226a082529e6c3ec663f083d4f9387551303d82379e2e445",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "0a68f7a8e751840fa203a2f7f0e71aaf209a190edfbf94277d8b2fc917aec7c6"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "d01aa2b5cb4db80916fad316d6cb74d0fd7d71aa7fbc5db05adbedc30019122b"
+                },
+                {
+                  "offset": 65504,
+                  "length": 64,
+                  "sha256": "3ea7c4ac7f61088b8f8deccc77674a0f2c00e6f1589a3d778808dcdb64ca7334"
+                }
+              ]
+            }
+          },
+          {
+            "index": 1,
+            "attachmentNid": 33285,
+            "name": "primoz-roglic-of-slovenia-and-team-jumbo-visma-red-leader-news-photo-1628610563.jpg",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 79653,
+              "sha256": "755560d196b67580846cec91fe4188cb82df0f8ce9913eca450134b8f7989810",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "eb7e0381d519c6a257584ed4a69cf3ae4e4cfc7351cacb301ac646c0df5e8aca"
+                },
+                {
+                  "offset": 4064,
+                  "length": 64,
+                  "sha256": "bc3a537cec12dfc40a924cc16ea377e36d23419adc56604bb8887fc09bafc341"
+                },
+                {
+                  "offset": 65504,
+                  "length": 64,
+                  "sha256": "6811bb3ab09dc47936799562e0401ce1d72f870f31d2ee28ad29adeac96caea3"
+                }
+              ]
+            }
+          },
+          {
+            "index": 2,
+            "attachmentNid": 33317,
+            "name": "text.txt",
+            "method": 1,
+            "property": {
+              "tag": 922812674,
+              "length": 18,
+              "sha256": "479b060322517dbb30f0f10b68bf785d48bb8825276cabde82d54ed773cbcb50",
+              "ranges": [
+                {
+                  "offset": 0,
+                  "length": 8,
+                  "sha256": "c4f67d09ff264a1ac9b0bdf61676d255c6b273d5b9634e5c951a3718e90bc86d"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "messageNid": 2108228,
+        "folderNid": 33634,
+        "subject": "Synchronization Log: ",
+        "messageClass": "IPM.Note",
+        "header": null,
+        "attachments": []
+      }
+    ]
+  }
+}

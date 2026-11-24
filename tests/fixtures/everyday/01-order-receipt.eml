@@ -1,0 +1,51 @@
+From: =?utf-8?b?66qo7ISc66asIOusuOq1rOygkA==?= <orders@example.test>
+To: =?utf-8?b?7YWM7Iqk7Yq4IOyImOyLoOyekA==?= <customer@example.test>
+Subject: =?utf-8?b?7KO866y4IO2ZleyduCDCtyDso7zrrLjrsojtmLg=?= EX-2048
+Date: Mon, 23 Nov 2026 09:08:00 +0900
+Message-ID: <everyday-01@example.test>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="mail-viewer-everyday-01-0"
+
+--mail-viewer-everyday-01-0
+Content-Type: multipart/alternative; boundary="mail-viewer-everyday-01-1"
+
+--mail-viewer-everyday-01-1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+7JWI64WV7ZWY7IS47JqULiDrhbjtirggMuq2jOqzvCDtjpwg7IS47Yq4IDHqsJwg7KO866y47J20
+IOygkeyImOuQmOyXiOyKteuLiOuLpC4g7LSd7JWh7J2AIDE4LDUwMOybkOyeheuLiOuLpC4g7LKo
+67aA7ZWcIOyYgeyImOymneyXkOyEnCDquIjslaHsnYQg7ZmV7J247ZWY7IukIOyImCDsnojsirXr
+i4jri6QuDQo=
+
+--mail-viewer-everyday-01-1
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+
+PGh0bWwgbGFuZz0ia28iPjxib2R5PjxoMj7so7zrrLjsnbQg7KCR7IiY65CY7JeI7Iq164uI64uk
+PC9oMj48cD7so7zrrLggRVgtMjA0OCDCtyAxOCw1MDDsm5A8L3A+PHA+7JiB7IiY7Kad7J2EIOyy
+qOu2gO2WiOyKteuLiOuLpC48L3A+PC9ib2R5PjwvaHRtbD4NCg==
+
+--mail-viewer-everyday-01-1--
+
+--mail-viewer-everyday-01-0
+Content-Type: application/pdf
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename*=utf-8''%EC%A3%BC%EB%AC%B8%20%EC%98%81%EC%88%98%EC%A6%9D.pdf
+MIME-Version: 1.0
+
+JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2Jq
+CjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2Jq
+CjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIg
+NzkyXSAvUmVzb3VyY2VzIDw8IC9Gb250IDw8IC9GMSA0IDAgUiA+PiA+PiAvQ29udGVudHMgNSAw
+IFIgPj4KZW5kb2JqCjQgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNl
+Rm9udCAvSGVsdmV0aWNhID4+CmVuZG9iago1IDAgb2JqCjw8IC9MZW5ndGggNjEgPj4Kc3RyZWFt
+CkJUIC9GMSAxNiBUZiA0OCA3NDAgVGQgKE1haWwgVmlld2VyIGF0dGFjaG1lbnQgc2FtcGxlKSBU
+aiBFVAplbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCA2CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAw
+MDAwOSAwMDAwMCBuIAowMDAwMDAwMDU4IDAwMDAwIG4gCjAwMDAwMDAxMTUgMDAwMDAgbiAKMDAw
+MDAwMDI0MSAwMDAwMCBuIAowMDAwMDAwMzExIDAwMDAwIG4gCnRyYWlsZXIKPDwgL1NpemUgNiAv
+Um9vdCAxIDAgUiA+PgpzdGFydHhyZWYKNDIxCiUlRU9GCg==
+
+--mail-viewer-everyday-01-0--

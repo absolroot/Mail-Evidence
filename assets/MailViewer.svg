@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Mail Evidence</title>
+  <g id="frame">
+    <path fill="#6543A8" d="M128 8L205 52V68L228 81V108L246 119V149L228 160V181L205 194V204L128 248L51 204V194L28 181V160L10 149V119L28 108V81L51 68V52Z"/>
+    <path fill="#492F82" d="M246 119V149L228 160V181L205 194V204L128 248L51 204V194L28 181V160L10 149V137H235Z"/>
+    <path fill="#AD96F1" d="M128 8L205 52V60L128 17L51 60V52Z"/>
+  </g>
+  <g id="monogram" fill="#F3F7FF" aria-hidden="true">
+    <path d="M53 74H70L89 91L109 74H126V123H108V96L89 112L71 96V123H53Z"/>
+    <path fill-rule="evenodd" d="M151 74H181L203 123H184L179 113H153L148 123H129ZM159 100H173L166 84Z"/>
+    <path d="M53 127H126V142H99V167H126V182H53V167H80V142H53Z"/>
+    <path d="M129 127H149V166H203V182H129Z"/>
+  </g>
+</svg>
+

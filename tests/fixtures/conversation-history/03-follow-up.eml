@@ -1,0 +1,12 @@
+From: Accounts <accounts@example.com>
+To: Customer <customer@example.net>
+Reply-To: case+updated@EXAMPLE.COM
+Date: 14 Jan 2026 10:00:00 +0900
+Message-ID: <payment-follow-up@example.com>
+References: <payment-original@example.com> <payment-change@example.com>
+In-Reply-To: <payment-change@example.com>
+Subject: [03] Payment follow-up
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+Synthetic fixture for Mail Evidence.

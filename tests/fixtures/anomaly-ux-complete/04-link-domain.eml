@@ -1,0 +1,23 @@
+From: Review Team <review@example.com>
+To: reviewer@example.org
+Subject: 04 Displayed link and target differ
+Message-ID: <sample-04-link-domain@example.org>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============1970522867916538808=="
+
+--===============1970522867916538808==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Synthetic local UX fixture. No real incident data.
+
+--===============1970522867916538808==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<a href=3D"https://example.net/review?case=3Dsynthetic&amp;scope=3Dlong-path-=
+for-wrapping">https://example.com/review</a>
+
+--===============1970522867916538808==--

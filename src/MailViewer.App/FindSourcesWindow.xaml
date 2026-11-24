@@ -1,0 +1,108 @@
+<Window x:Class="MailViewer.App.FindSourcesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="740" Height="570" MinWidth="570" MinHeight="450"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" UseLayoutRounding="True"
+        FontFamily="Segoe UI, Malgun Gothic"
+        Background="{DynamicResource Viewer.Canvas}" Foreground="{DynamicResource Viewer.Text}"
+        Closing="OnClosing">
+    <Border Background="{DynamicResource Viewer.Canvas}" Padding="16">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="Heading" FontSize="21" FontWeight="SemiBold" Margin="0,0,0,12"/>
+            <WrapPanel Grid.Row="1" Margin="0,0,0,10">
+                <RadioButton x:Name="KnownLocations" IsChecked="True" Checked="ChangeScope" Margin="0,0,18,0"/>
+                <RadioButton x:Name="CustomLocation" Checked="ChangeScope"/>
+            </WrapPanel>
+            <Border Grid.Row="2" Margin="0,0,0,12" Background="{DynamicResource Viewer.Panel}"
+                    BorderBrush="{DynamicResource Viewer.Rule}" BorderThickness="1" Padding="10,7">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="ScanButton" Grid.Column="1" Style="{StaticResource PrimaryAction}"
+                            Tag="&#xE721;" Click="StartScan" VerticalAlignment="Top" Margin="8,0,0,0"
+                            Height="{StaticResource FormInputHeight}" AutomationProperties.AutomationId="FindScanButton"/>
+                    <Grid x:Name="OutlookLocationPanel">
+                        <ComboBox x:Name="OutlookScope" Style="{StaticResource ViewerComboBox}" MinHeight="0"
+                                  Height="{StaticResource FormInputHeight}" MaxDropDownHeight="180"
+                                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                  SelectionChanged="ChangeOutlookLocation" DropDownOpened="SizeOutlookDropDown"
+                                  AutomationProperties.AutomationId="FindOutlookScope">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Label}" ToolTip="{Binding Path}" TextTrimming="CharacterEllipsis"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock x:Name="SingleOutlookLocation" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                   ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+                    </Grid>
+                    <Grid x:Name="ManualLocationPanel" Visibility="Collapsed">
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <DockPanel>
+                            <Button x:Name="ChooseLocationButton" DockPanel.Dock="Left" Style="{StaticResource Action}"
+                                    Tag="&#xE8B7;" Click="ChooseLocation" Margin="0,0,8,0"/>
+                            <Button x:Name="CopyPathButton" DockPanel.Dock="Right" Style="{StaticResource IconAction}"
+                                    Tag="&#xE8C8;" Click="CopyLocation"/>
+                            <TextBlock x:Name="SelectedPath" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"
+                                       ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+                        </DockPanel>
+                        <CheckBox x:Name="RecurseLocation" Grid.Row="1" IsChecked="True" Margin="0,7,0,0"/>
+                    </Grid>
+                </Grid>
+            </Border>
+            <DataGrid x:Name="HitsGrid" Grid.Row="3" Style="{StaticResource EvidenceGrid}" RowHeight="26"
+                      AutomationProperties.AutomationId="FoundSourcesGrid">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn x:Name="IncludeColumn" Width="48">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Included, UpdateSourceTrigger=PropertyChanged}"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                                          AutomationProperties.Name="{Binding Path}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn x:Name="NameColumn" Binding="{Binding Name}" Width="3*" MinWidth="120" IsReadOnly="True">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="ToolTip" Value="{Binding Name}"/>
+                                <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn x:Name="TypeColumn" Binding="{Binding Extension}" Width="64" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="PathColumn" Binding="{Binding Path}" Width="4*" MinWidth="110" IsReadOnly="True">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="ToolTip" Value="{Binding Path}"/>
+                                <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Grid.Row="4" Margin="0,8,0,0">
+                <TextBlock x:Name="ScanStatus" AutomationProperties.LiveSetting="Polite" TextWrapping="Wrap"/>
+                <Expander x:Name="ScanIssues" Visibility="Collapsed" Margin="0,3,0,0">
+                    <TextBox x:Name="IssuesBox" Style="{StaticResource Copyable}" MaxHeight="74"/>
+                </Expander>
+            </StackPanel>
+            <WrapPanel Grid.Row="5" HorizontalAlignment="Right" Margin="0,12,0,0">
+                <Button x:Name="CloseButton" Click="CloseWindow" Style="{StaticResource Action}" IsCancel="True"/>
+                <Button x:Name="AcceptButton" Click="AcceptSources" Style="{StaticResource PrimaryAction}"
+                        IsEnabled="False" AutomationProperties.AutomationId="AcceptFoundSourcesButton"/>
+            </WrapPanel>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,22 @@
+From: Review Team <review@example.com>
+To: reviewer@example.org
+Subject: 09 Incomplete attachment evidence
+Message-ID: <sample-09-unavailable@example.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8156266353038022880=="
+
+--===============8156266353038022880==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Synthetic local UX fixture. No real incident data.
+
+--===============8156266353038022880==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="truncated.pdf"
+MIME-Version: 1.0
+
+TVo=
+
+--===============8156266353038022880==--

@@ -1,0 +1,83 @@
+From: fixtures@example.test
+To: analyst@example.test
+Subject: =?utf-8?b?7KCV7IOBIO2MjOydvOqzvCDtj6zrp7frs4Qg7KKF66OMIOq3nOy5mQ==?=
+Date: Tue, 24 Nov 2026 09:00:00 +0900
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7595840864209077124=="
+
+--===============7595840864209077124==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Synthetic forensic fixture. Attachments contain harmless verification data.
+
+--===============7595840864209077124==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="normal.png"
+MIME-Version: 1.0
+
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGUlEQVR4nGNUyFvNQApgIkn1qIZR
+DUNKAwDv0AFZ+WFloAAAAABJRU5ErkJggg==
+
+--===============7595840864209077124==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="normal.jpg"
+MIME-Version: 1.0
+
+/9j//gA2U2lnbmFsIGluc2lkZSBhIEpQRUcgY29tbWVudDog/9kuIEl0IGlzIG5vdCB0aGUgRU9J
+Lv/gABBKRklGAAEBAAABAAEAAP/bAEMACAYGBwYFCAcHBwkJCAoMFA0MCwsMGRITDxQdGh8eHRoc
+HCAkLicgIiwjHBwoNyksMDE0NDQfJzk9ODI8LjM0Mv/bAEMBCQkJDAsMGA0NGDIhHCEyMjIyMjIy
+MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMv/AABEIABAAEAMBIgAC
+EQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAA
+AX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4
+OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaan
+qKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQAD
+AQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEG
+EkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpT
+VFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4
+ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AOdooor6
+c+YP/9k=
+
+--===============7595840864209077124==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="normal.gif"
+MIME-Version: 1.0
+
+R0lGODdhEAAQAIEAACBuqwAAAAAAAAAAACwAAAAAEAAQAEAIHQABCBxIsKDBgwgTKlzIsKHDhxAj
+SpxIsaLFgQEBADs=
+
+--===============7595840864209077124==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="comment.zip"
+MIME-Version: 1.0
+
+UEsDBBQAAAAAAABgeF3xmdpAEwAAABMAAAAKAAAAcmVhZG1lLnR4dEJlbmlnbiB0ZXN0IHJlY29y
+ZC5QSwECFAAUAAAAAAAAYHhd8ZnaQBMAAAATAAAACgAAAAAAAAAAAAAAgAEAAAAAcmVhZG1lLnR4
+dFBLBQYAAAAAAQABADgAAAA7AAAARABUZXN0IGFyY2hpdmUgY29tbWVudDsgZW1iZWRkZWQgYnl0
+ZXMgUEsFBiBhcmUgbm90IGFuIGFyY2hpdmUgZW5kaW5nLg==
+
+--===============7595840864209077124==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="normal.pdf"
+MIME-Version: 1.0
+
+JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2Jq
+CjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9Db3VudCAwIC9LaWRzIFtdID4+CmVuZG9iagp4cmVm
+CjAgMwowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDA1OCAw
+MDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDMgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjExMAol
+JUVPRg0K
+
+--===============7595840864209077124==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="unknown.bin"
+MIME-Version: 1.0
+
+bm8gYXNzZXJ0ZWQgZmlsZSB0eXBl
+
+--===============7595840864209077124==--

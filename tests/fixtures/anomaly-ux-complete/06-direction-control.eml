@@ -1,0 +1,22 @@
+From: Review Team <review@example.com>
+To: reviewer@example.org
+Subject: 06 Direction control in attachment name
+Message-ID: <sample-06-direction-control@example.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1928632286017226540=="
+
+--===============1928632286017226540==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Synthetic local UX fixture. No real incident data.
+
+--===============1928632286017226540==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename*=utf-8''review%E2%80%AE.txt
+MIME-Version: 1.0
+
+SW5lcnQgdGV4dCBmaXh0dXJlLg==
+
+--===============1928632286017226540==--

@@ -1,0 +1,22 @@
+From: Review Team <review@example.com>
+To: reviewer@example.org
+Subject: 05 Double extension
+Message-ID: <sample-05-double-extension@example.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2003274989203466794=="
+
+--===============2003274989203466794==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Synthetic local UX fixture. No real incident data.
+
+--===============2003274989203466794==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="review.pdf.exe"
+MIME-Version: 1.0
+
+SW5lcnQgdGV4dCBmaXh0dXJlOyB0aGVyZSBpcyBubyBleGVjdXRhYmxlIGNvZGUu
+
+--===============2003274989203466794==--

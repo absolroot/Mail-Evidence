@@ -1,0 +1,26 @@
+From: =?utf-8?b?64KY66y0IOyLne2DgQ==?= <booking@example.test>
+To: =?utf-8?b?7YWM7Iqk7Yq4IOyImOyLoOyekA==?= <customer@example.test>
+Subject: =?utf-8?b?7Iud64u5IOyYiOyVvSDtmZXsnbggwrcg7Yag7JqU7J28IOyggOuFgQ==?=
+Date: Mon, 23 Nov 2026 09:40:00 +0900
+Message-ID: <everyday-05@example.test>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="mail-viewer-everyday-05-0"
+
+--mail-viewer-everyday-05-0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+MTHsm5QgMjjsnbwg7Yag7JqU7J28IOyYpO2bhCA27IucLCDshLHsnbggM+uqhSDsmIjslb3snbQg
+7ZmV7J2465CY7JeI7Iq164uI64ukLiDsmIjslb0g67KI7Zi464qUIEVYLVQzN+yeheuLiOuLpC4N
+Cg==
+
+--mail-viewer-everyday-05-0
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+
+PGh0bWwgbGFuZz0ia28iPjxib2R5PjxoMj7smIjslb3snbQg7ZmV7KCV65CY7JeI7Iq164uI64uk
+PC9oMj48cD4xMeyblCAyOOydvCDsmKTtm4QgNuyLnCDCtyAz66qFPC9wPjwvYm9keT48L2h0bWw+
+DQo=
+
+--mail-viewer-everyday-05-0--

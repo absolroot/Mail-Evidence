@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Version>1.2.1</Version>
+    <DebugType>embedded</DebugType>
+    <DefaultItemExcludes>$(DefaultItemExcludes);Logical/Native/build/**;Logical/Native/libewf_python-*/**;Logical/Native/zlib-*/**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="LTRData.DiscUtils.Ntfs" Version="1.0.91" />
+    <PackageReference Include="LTRData.DiscUtils.Vhd" Version="1.0.91" />
+    <PackageReference Include="LTRData.DiscUtils.Vhdx" Version="1.0.91" />
+    <PackageReference Include="LTRData.DiscUtils.Vmdk" Version="1.0.91" />
+    <None Update="Notices/DiscUtils.txt" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Update="Logical/Native/NtfsTracer.libewf.dll" Condition="'$(EwfRuntimeIdentifier)' != 'win-x86'" Link="NtfsTracer.libewf.dll" CopyToOutputDirectory="Always" ExcludeFromSingleFile="true" />
+    <None Update="Logical/Native/JournalDesk.libewf.dll" Condition="'$(EwfRuntimeIdentifier)' != 'win-x86' and !Exists('Logical/Native/NtfsTracer.libewf.dll')" Link="NtfsTracer.libewf.dll" CopyToOutputDirectory="Always" ExcludeFromSingleFile="true" />
+    <None Update="Logical/Native/NtfsTracer.libewf.x86.dll" Condition="'$(EwfRuntimeIdentifier)' == 'win-x86'" Link="NtfsTracer.libewf.dll" CopyToOutputDirectory="Always" ExcludeFromSingleFile="true" />
+    <None Update="Logical/Native/COPYING*;Logical/Native/README.md" Link="Notices/ewf/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+  </ItemGroup>
+</Project>
