@@ -40,6 +40,10 @@ public static partial class Program
             var messageAnomalies = Field<TabItem>(window, "InvestigationCluesTab");
             bool CanRead() => !Field<Button>(window, "CancelWorkButton").IsEnabled;
 
+            var settings = Field<TabItem>(window, "SourcesTab");
+            workspaceTabs.SelectedItem = settings;
+            var analyze = Field<Button>(window, "AnalyzeButton");
+            await WaitFor(() => analyze.IsVisible && analyze.IsEnabled, "README source selection");
             Click(window, "AnalyzeButton");
             await WaitFor(() => list.Items.Count == 3 && CanRead(), "README mail list");
             list.SelectedItem = list.Items.Cast<object>().Single(row => RecordFromRow(row).Subject == "Attachment structure review");
