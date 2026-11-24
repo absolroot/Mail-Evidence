@@ -1,6 +1,6 @@
-# Windows 화면 검증
+# Windows UI verification
 
-저장소 루트에서 Release 빌드를 만든 뒤 실행합니다. 각 명령에는 아직 없는 출력 폴더를 지정하세요. 테스트는 별도 Windows 데스크톱에서 실행하며 결과 JSON과 스크린샷을 그 폴더에 저장합니다.
+Build the Release configuration from the repository root. Pass a new output directory to each command. The tests run on a separate Windows desktop and save the result JSON and screenshots in that directory.
 
 ```powershell
 dotnet build MailViewer.slnx -c Release
@@ -9,17 +9,17 @@ python tools/run-flow-smoke.py artifacts/smoke-investigation --scenario investig
 python tools/run-flow-smoke.py artifacts/smoke-languages --scenario languages
 ```
 
-EML·MBOX·MSG·PST·OST 원본으로 시험하려면 [형식별 표본](../tests/fixtures/README.md)을 준비하고 `--scenario mail`, `msg`, `pst`, `ost`, `ost-expanded` 중 하나를 지정합니다.
+To test with original EML, MBOX, MSG, PST, or OST samples, prepare the [format-specific fixtures](../tests/fixtures/README.md) and pass `--scenario` with `mail`, `msg`, `pst`, `ost`, or `ost-expanded`.
 
-## 형식별 대조 지점
+## Evidence checked by format
 
-아래는 2026년 11월 23일 Windows 검증에서 확인한 대표 값입니다. 오프셋의 기준은 형식마다 다릅니다.
+These are representative values checked in the Windows UI on 23 November 2026. Offsets are relative to the source indicated for each format.
 
-| 형식 | 화면에서 대조한 값 |
+| Format | UI checks |
 | --- | --- |
-| EML·MBOX | 공개 EML의 `Test TxtA.txt` MIME 범위는 파일 오프셋 `0x575`에서 45바이트입니다. 저장한 첨부는 디코딩 후 33바이트였습니다. 공개 Apache MBOX에서 제목 `mime` 검색 결과 네 건의 순서는 CSV와 일치했습니다. [EML·MBOX 기준값](verification.md) |
-| MSG | ANSI `0x007D001E`와 Unicode `0x007D001F`의 전송 헤더를 각각 CFB 스트림과 대조했습니다. POI 표본의 PDF 첨부는 스트림 오프셋 0에서 `%PDF-`로 시작하며 13,539바이트입니다. [MSG 기준값](msg-verification.md) |
-| PST | Tika 메시지 NID `0x00200024`의 전송 헤더 속성은 10,660바이트입니다. libpff 표본의 `Inbox`에서 찾은 `1.jpg`는 첨부 NID `0x00008025`, 속성 `0x37010102`, 1,969바이트였습니다. [PST 기준값](pst-verification.md) |
-| OST | Aspose 표본은 일반 메일 81건을 읽었습니다. `newsletter copy`의 `Received`는 디코딩한 전송 헤더 속성의 처음 338바이트입니다. `image001.jpg`의 첨부 NID는 `0x000082A5`이고 길이는 20,833바이트였습니다. [OST 기준값](ost-expanded-verification.md) |
+| EML and MBOX | The MIME range for `Test TxtA.txt` in the public EML is 45 bytes at file offset `0x575`. The exported, decoded attachment is 33 bytes. The four `mime` subject matches in the public Apache MBOX appeared in the same order in the CSV. [EML and MBOX reference values](verification.md) |
+| MSG | The ANSI `0x007D001E` and Unicode `0x007D001F` transport headers matched their CFB streams. The Apache POI PDF attachment starts with `%PDF-` at stream offset 0 and is 13,539 bytes long. [MSG reference values](msg-verification.md) |
+| PST | The transport header property for Tika message NID `0x00200024` is 10,660 bytes. In the libpff sample's `Inbox`, `1.jpg` has attachment NID `0x00008025`, property `0x37010102`, and length 1,969 bytes. [PST reference values](pst-verification.md) |
+| OST | The Aspose sample yielded 81 regular messages. The `Received` header in `newsletter copy` occupies the first 338 bytes of the decoded transport header property. `image001.jpg` has attachment NID `0x000082A5` and length 20,833 bytes. [OST reference values](ost-expanded-verification.md) |
 
-각 형식에서 내보내기 전후의 원본 SHA-256을 대조했습니다. 화면에서 저장 결과를 검증하고 돌아왔을 때 검색어와 선택한 메일이 유지되는지 확인했습니다. WPF의 논리 포커스와 키 이벤트를 시험했습니다.
+For each format, the original SHA-256 matched before and after export. The search text and selected message were preserved when returning from export verification. The test exercised WPF logical focus and keyboard events.

@@ -1,20 +1,20 @@
-# 이상 징후 샘플
+# Anomaly samples
 
-이 폴더의 EML 10개를 함께 열면 **전체 10통**, **이상 징후 8통**이 표시됩니다. 각 징후의 설명을 읽고, 근거를 선택한 뒤 원본 바이트 탭에서 대조할 수 있습니다.
+Open all 10 EML files together. **All mail** shows 10 messages and **Anomalies** shows eight. Select a finding to see its evidence, then open the source bytes to check the underlying data.
 
-| 파일 | 볼 수 있는 동작 |
-|---|---|
-| `01-duplicate-header.eml` | 중복된 Date 헤더 두 줄을 징후 한 건으로 표시합니다. |
-| `02-reply-domain.eml` | 발신 주소와 회신 주소가 다릅니다. 회신 주소의 우클릭 메뉴에서 주소로 검색하거나 편집 메뉴에서 메시지 ID로 검색하면 08번 메일도 찾을 수 있습니다. |
-| `03-relay-clock.eml` | 시간 순서가 2분 역전된 두 경유 기록을 비교합니다. |
-| `04-link-domain.eml` | 링크 문구와 실제 연결 주소가 다릅니다. 긴 URL을 좁은 화면에서 읽고 복사할 수 있습니다. |
-| `05-double-extension.eml` | 문서 확장자 뒤에 실행 확장자가 붙은 첨부 이름을 확인합니다. 첨부에는 일반 텍스트만 들어 있습니다. |
-| `06-direction-control.eml` | 이름에 포함된 방향 제어 문자와 MIME 파일명 원본을 확인합니다. |
-| `07-pe-header.eml` | PDF 이름과 PE 헤더의 불일치를 확인합니다. 첨부는 헤더만 있는 합성 바이트이며 실행 가능한 본문이 없습니다. |
-| `08-ordinary.eml` | 징후 0건, 메일 정보의 기록된 인증 결과, 동일 등록 도메인에 속하는 두 링크 주소를 확인합니다. |
-| `09-unavailable.eml` | 징후 0건과 일부 항목 확인 불가 문구를 함께 봅니다. 첨부는 두 바이트만 있습니다. |
-| `10-same-attachment.eml` | 이름이 다른 07번 첨부와 SHA-256이 같습니다. 편집 메뉴의 주소·URL·해시·ID 검색에서 해당 해시를 선택하면 두 메일이 모두 나타납니다. |
+| File | What to try |
+| --- | --- |
+| `01-duplicate-header.eml` | Two Date header lines produce one finding. |
+| `02-reply-domain.eml` | The From and Reply-To addresses use different domains. Search from the Reply-To address context menu or search by Message-ID from **Edit** to find message 08 as well. |
+| `03-relay-clock.eml` | Compare two relay timestamps that are out of order by two minutes. |
+| `04-link-domain.eml` | Compare the displayed link with its destination. Check that a long URL can be read and copied in a narrow window. |
+| `05-double-extension.eml` | Inspect a filename with an executable extension after a document extension. The attachment contains plain text. |
+| `06-direction-control.eml` | Inspect the direction control character and the filename as stored in MIME. |
+| `07-pe-header.eml` | Compare a PDF filename with a PE header. The synthetic attachment contains only the header bytes. |
+| `08-ordinary.eml` | Check the zero finding count, the recorded authentication results in **Message information**, and two link addresses on the same registrable domain. |
+| `09-unavailable.eml` | Check the zero finding count and the notice that some checks could not be completed. The attachment is two bytes long. |
+| `10-same-attachment.eml` | The attachment has the same SHA-256 as the one in message 07 under a different filename. Select the hash in **Edit → Search by message address, URL, hash or ID…** to find both messages. |
 
-**첨부 이름의 위장 징후** 필터를 적용하면 05·06번 두 통이 남습니다. 내보내기를 선택하면 두 통의 결과만 저장됩니다. 상단 탭의 8건은 현재 열린 자료 전체에서 징후가 있는 메일 수입니다. 한 메일에서 여러 징후가 발견되는 상태는 [첨부 구조 검증용 메일](../attachment-boundaries/README.md)에서 확인할 수 있습니다.
+Filter by **Attachment filename disguise** to show messages 05 and 06. Exporting the search results saves those two messages. The eight shown in the mailbox tab count all messages with findings across the open sources. To see several findings in one message, open the [attachment boundary samples](../attachment-boundaries/README.md).
 
-주소, 본문, 첨부는 검증을 위해 합성한 자료입니다.
+The addresses, bodies, and attachments are synthetic test data.

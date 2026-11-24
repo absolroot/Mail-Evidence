@@ -1,11 +1,11 @@
-# 회신 주소 변경 샘플
+# Reply-To change samples
 
-세 EML을 함께 열면 **전체**는 3통, **이상 징후**는 1통입니다.
+Open all three EML files together. **All mail** shows three messages and **Anomalies** shows one.
 
-| 파일 | 확인할 내용 |
+| File | What to check |
 | --- | --- |
-| [01-original.eml](01-original.eml) | 관련 메일 목록에서 이 메일을 참조한 두 통을 찾습니다. |
-| [02-change.eml](02-change.eml) | 같은 발신자의 이전 메일과 현재 메일에서 회신 주소의 `+` 뒤 값이 달라졌습니다. 이상 징후에서 이전·현재 주소를 비교하고 해당 헤더를 엽니다. |
-| [03-follow-up.eml](03-follow-up.eml) | 회신 주소의 도메인 대소문자만 다릅니다. 주소는 같은 것으로 비교됩니다. |
+| [01-original.eml](01-original.eml) | The related messages list shows the two messages that reference this one. |
+| [02-change.eml](02-change.eml) | The text after `+` in the Reply-To address differs between two messages from the same sender. In **Anomalies**, compare the two addresses and open their headers. |
+| [03-follow-up.eml](03-follow-up.eml) | The Reply-To domains differ only in letter casing. The comparison treats them as the same address. |
 
-이상 징후 목록을 CSV로 내보내면 `reply-address-changes.json`에 두 메일의 회신 주소, 참조 헤더와 원본 위치가 기록됩니다.
+Exporting the anomaly results to CSV creates `reply-address-changes.json` with both Reply-To addresses, reference headers, and source locations.

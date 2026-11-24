@@ -62,7 +62,7 @@ Mail Evidence opens most mail formats you’ll run into, from everyday EML files
 | TNEF `.tnef`, `winmail.dat` | ✓ | ✓ |
 | CMS SignedData with embedded mail `.p7m`, `.p7s` | ✓ | ✓ |
 
-PST and OST files are limited to **2 GiB** each. The app reads 512-byte pages in ANSI 14–15 and Unicode 21 and 23 with encodings 0–2, and 4 KiB pages in Unicode 36 with encoding 0. EDB and NSF support stops at format identification. The new Outlook cache, protected OST files, server-only mail, and deleted-item recovery are outside the supported coverage. [Windows format coverage](docs/windows-format-coverage.md) · [CLI format notes](docs/rust-mail-cli.md#입력과-첨부)
+PST and OST files are limited to **2 GiB** each. The app reads 512-byte pages in ANSI 14–15 and Unicode 21 and 23 with encodings 0–2, and 4 KiB pages in Unicode 36 with encoding 0. EDB and NSF support stops at format identification. The new Outlook cache, protected OST files, server-only mail, and deleted-item recovery are outside the supported coverage. [Windows format coverage](docs/windows-format-coverage.md) · [CLI format notes](docs/rust-mail-cli.md#inputs-and-attachments)
 
 ### Disk images
 

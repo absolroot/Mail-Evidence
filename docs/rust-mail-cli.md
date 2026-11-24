@@ -1,6 +1,6 @@
-# Rust 메일 CLI 0.4.0
+# Rust mail CLI 0.4.0
 
-Windows x64의 명령줄에서 메일 목록과 첨부를 내보냅니다. 파일과 폴더를 한 번에 지정할 수 있으며, 폴더를 지정하면 하위 폴더도 검색합니다. [CLI 다운로드](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
+List messages and export attachments from the command line on Windows x64. Pass files and folders together. The CLI searches folders recursively. [Download the CLI](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
 
 ```powershell
 ./mailviewer-engine.exe report D:/Evidence/Mail
@@ -9,36 +9,36 @@ $result = ./mailviewer-engine.exe extract D:/Cases/Output D:/Evidence/Mail | Con
 ./mailviewer-engine.exe verify $result.directory
 ```
 
-| 명령 | 결과 |
+| Command | Output |
 | --- | --- |
-| `report` | 원본 경로·SHA-256, 메일 정보, 본문, 헤더와 첨부 위치를 JSON으로 출력합니다. 누락된 값과 판독 오류도 기록합니다. |
-| `report --csv` | 메일 목록을 UTF-8 CSV로 출력합니다. 수식으로 해석될 수 있는 값에는 `[text] `를 붙입니다. |
-| `extract` | 매번 새 결과 폴더에 `messages.csv`, `manifest.json`, `attachments/`를 만듭니다. 첨부의 길이와 해시를 대조하고, 이름이 같아도 별도 파일로 저장합니다. |
-| `verify` | 매니페스트에 기록된 길이와 SHA-256을 검사합니다. 파일이 누락되거나 달라지면 실패로 종료합니다. |
+| `report` | JSON with the source paths and SHA-256 hashes, message metadata, bodies, headers, and attachment locations. Includes missing values and read errors. |
+| `report --csv` | A UTF-8 message list. Values that could be interpreted as formulas are prefixed with `[text] `. |
+| `extract` | A new output directory for each run with `messages.csv`, `manifest.json`, and `attachments/`. Checks attachment lengths and hashes and saves attachments with the same name as separate files. |
+| `verify` | Checks file lengths and SHA-256 hashes against the manifest. Returns an error if a file is missing or has changed. |
 
-## 로컬 메일함
+## Local mail stores
 
-| 자료 | 입력 |
+| Source | Input |
 | --- | --- |
-| Maildir · MH | Maildir는 `cur/`와 `new/`, MH는 숫자 이름의 메시지와 `.mh_sequences`가 있는 폴더를 지정합니다. |
-| Apple Mail | `Messages/`와 `Attachments/<메시지 번호>/<MIME 파트 번호>/`의 상대 경로를 유지합니다. |
-| Thunderbird | 메일 폴더를 직접 지정하거나 `inspect-profile thunderbird`로 프로필을 지정합니다. `Mail/`, `ImapMail/`과 `.sbd` 계층을 읽고 `.msf`는 보조 색인으로 식별합니다. |
-| Windows Mail · Windows Live Mail | 저장 폴더를 직접 지정하거나 `inspect-profile windows-mail`로 EML을 찾습니다. |
-| Outlook Express | 저장 폴더나 `inspect-profile outlook-express`로 찾습니다. 폴더·색인 파일도 지정하면 메시지와 저장소의 관계가 JSON에 기록됩니다. |
+| Maildir and MH | For Maildir, select the folder containing `cur/` and `new/`. For MH, select the folder containing numerically named messages and `.mh_sequences`. |
+| Apple Mail | Preserve the relative paths of `Messages/` and `Attachments/<message number>/<MIME part number>/`. |
+| Thunderbird | Pass the mail folder or use `inspect-profile thunderbird`. This reads `Mail/`, `ImapMail/`, and `.sbd` folder trees, and identifies `.msf` files as auxiliary indexes. |
+| Windows Mail and Windows Live Mail | Pass the mail store folder or use `inspect-profile windows-mail` to find EML files. |
+| Outlook Express | Pass the mail store folder or use `inspect-profile outlook-express`. Including folder and index files records how messages relate to their stores in the JSON output. |
 
-## 입력과 첨부
+## Inputs and attachments
 
-| 입력 | 추출되는 바이트 |
+| Input | Bytes extracted |
 | --- | --- |
-| EML·MBOX·EMLX·Maildir·MH·MMDF·Babyl | 전송 인코딩을 해제한 MIME 첨부. 부분 EMLX는 위치를 찾은 외부 첨부도 포함합니다. |
-| MSG | CFB에 저장된 일반 첨부 스트림. 내장 메시지의 일반 첨부도 추출할 수 있습니다. |
-| PST·OST | 로컬에서 읽을 수 있는 일반 첨부의 MAPI 데이터 속성. |
-| Outlook Express DBX·MBX | 메일 원본에서 읽은 MIME 첨부. |
-| OLM·ZIP | OLM의 첨부 파일과 ZIP 안의 EML·EMLX·MBOX에서 읽은 MIME 첨부. |
-| 독립 TNEF | 일반 첨부의 데이터 속성. |
+| EML, MBOX, EMLX, Maildir, MH, MMDF, Babyl | MIME attachment bytes after transfer decoding. Partial EMLX also includes external attachments whose location can be resolved. |
+| MSG | By-value attachment streams in CFB, including those in embedded messages. |
+| PST and OST | MAPI data properties of locally readable by-value attachments. |
+| Outlook Express DBX and MBX | MIME attachments read from the original message. |
+| OLM and ZIP | OLM attachment files and MIME attachments from EML, EMLX, and MBOX members of ZIP archives. |
+| Standalone TNEF | Data properties of by-value attachments. |
 
-첨부를 읽을 수 없으면 `unavailable`, 기록한 길이·해시와 달라졌거나 저장 단계에서 읽지 못하면 `failed`로 표시합니다. 서버 참조 첨부, 보호된 내용의 복호화, OLE 개체, 내장 Outlook 항목의 독립 MSG 재구성, EDB·NSF 판독은 지원 범위 밖입니다. 파일 범위나 MSG 스트림을 직접 저장하는 명령은 `mailviewer-engine.exe --help`에서 확인할 수 있습니다.
+The CLI reports `unavailable` if it cannot read an attachment, and `failed` if the length or hash differs from the recorded value or the export cannot read it. Server-referenced attachments, decryption, OLE objects, reconstructing standalone MSG files from embedded Outlook items, and parsing EDB and NSF are outside this coverage. Use `mailviewer-engine.exe --help` for commands that save file ranges or MSG streams directly.
 
-## 검증
+## Verification
 
-공개 자료와 합성 자료의 메일 75건에서 첨부 96개를 추출했습니다. EML은 Python MIME, MSG는 olefile, PST·OST는 독립 판독 기준값, OLM은 ZIP 원본 멤버와 대조했습니다. 첨부를 변경하거나 삭제했을 때 `verify`가 이를 검출했습니다. [검증 표본](../tests/fixtures/README.md)
+The test extracted 96 attachments from 75 messages in public and synthetic samples. Results were checked against Python's MIME parser for EML, olefile for MSG, independent reference values for PST and OST, and the original ZIP members for OLM. The test also confirmed that `verify` detects changed or missing attachments. [Test fixtures](../tests/fixtures/README.md)

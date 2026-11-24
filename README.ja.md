@@ -62,7 +62,7 @@ HTML 本文では外部画像、スクリプト、リンク先への移動が既
 | TNEF `.tnef`、`winmail.dat` | ✓ | ✓ |
 | メールを含む CMS SignedData `.p7m`、`.p7s` | ✓ | ✓ |
 
-PST・OST は 1 ファイルあたり最大 **2 GiB** です。512 バイトページは ANSI 14・15 と Unicode 21・23 のエンコード方式 0・1・2 に、4 KiB ページは Unicode 36 の方式 0 に対応しています。EDB・NSF は形式の識別まで対応しています。新しい Outlook 専用のキャッシュ、保護された OST、サーバーにのみ残るメール、削除済みアイテムの復元は対象外です。[Windows 版の対応範囲](docs/windows-format-coverage.md) · [CLI の形式別対応範囲](docs/rust-mail-cli.md#입력과-첨부)
+PST・OST は 1 ファイルあたり最大 **2 GiB** です。512 バイトページは ANSI 14・15 と Unicode 21・23 のエンコード方式 0・1・2 に、4 KiB ページは Unicode 36 の方式 0 に対応しています。EDB・NSF は形式の識別まで対応しています。新しい Outlook 専用のキャッシュ、保護された OST、サーバーにのみ残るメール、削除済みアイテムの復元は対象外です。[Windows 版の対応範囲](docs/windows-format-coverage.md) · [CLI の形式別対応範囲](docs/rust-mail-cli.md#inputs-and-attachments)
 
 ### ディスクイメージ
 

@@ -62,7 +62,7 @@ HTML 본문은 외부 이미지, 스크립트와 링크 이동을 기본 차단�
 | TNEF `.tnef`, `winmail.dat` | ✓ | ✓ |
 | 메일이 포함된 CMS SignedData `.p7m`, `.p7s` | ✓ | ✓ |
 
-PST·OST는 파일당 최대 **2 GiB**입니다. 512바이트 페이지는 ANSI 14·15와 Unicode 21·23에서 인코딩 0·1·2를, 4 KiB 페이지는 Unicode 36에서 인코딩 0을 읽습니다. EDB·NSF는 형식 식별까지 지원합니다. 새 Outlook 전용 캐시, 보호된 OST, 서버에만 남은 메일과 삭제된 항목 복구는 지원 범위 밖입니다. [Windows 판독과 원본 검증](docs/windows-format-coverage.md) · [CLI 형식별 지원 범위](docs/rust-mail-cli.md#입력과-첨부)
+PST·OST는 파일당 최대 **2 GiB**입니다. 512바이트 페이지는 ANSI 14·15와 Unicode 21·23에서 인코딩 0·1·2를, 4 KiB 페이지는 Unicode 36에서 인코딩 0을 읽습니다. EDB·NSF는 형식 식별까지 지원합니다. 새 Outlook 전용 캐시, 보호된 OST, 서버에만 남은 메일과 삭제된 항목 복구는 지원 범위 밖입니다. [Windows 판독과 원본 검증](docs/windows-format-coverage.md) · [CLI 형식별 지원 범위](docs/rust-mail-cli.md#inputs-and-attachments)
 
 ### 디스크 이미지
 
