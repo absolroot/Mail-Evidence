@@ -12,13 +12,13 @@
 | `generated-sdk-v14.ost` | 공개 Microsoft PST SDK ANSI 원본의 사본에서 클라이언트 표지를 `SO`로 바꾸고 헤더 CRC를 맞췄다. ANSI 14·512바이트·Permute 판독을 확인했다. [Microsoft PST SDK 표본 사본](https://github.com/emk/pstsdk/blob/21c7d2d57bd09555afd0a08adc966f9b3779cb19/test/sample2.pst) · [표본 출처와 라이선스](https://github.com/bslater/bodu/blob/76abdd27524f59853bd1b994bbf1f2c0e67b62d6/Bodu.IO.Pst/test/Fixtures/Reference/NOTICE.md) | `adf2a442715a56d99a2559c87753a39a3c54b3c925d7f78a4622c19a01e3e10e` |
 | `generated-sdk-v15.ost` | 같은 ANSI PST 원본 사본에서 `SO`, NDB 버전 15와 관련 헤더 CRC를 지정해 ANSI 15 분기를 확인했다. 두 ANSI 사본에서 독립 판독 결과 폴더 5개와 메일 1건이 원본과 일치했다. | `9625470a5ed8a8687e45a406f04fbc49017498f419a3bfee8638ec9b59968392` |
 
-Aspose의 `PersonalStorageFile.ost`와 `test.ost`는 `SM` 표지가 있는 PST로 분류했다. ANSI 14·15, Unicode 21, Cyclic `0x02`는 위 재현 자료로 검증했다. 해당 조합의 Outlook 생성 OST는 표본으로 확보하지 못했다. 이전에 검증한 Unicode 36 OST 두 개와 Unicode 23 PST는 이번 회귀 시험에도 사용했다. [Aspose 예제 디렉터리](https://github.com/aspose-email/Aspose.Email-for-.NET/tree/88cb2da311382bbbba6d14813127b0e6b3854c12/Examples/Data/MAPI) · 기존 OST 검증 · [기존 PST 검증](pst-verification.md)
+Aspose의 `PersonalStorageFile.ost`와 `test.ost`는 `SM` 표지가 있는 PST로 분류했다. ANSI 14·15, Unicode 21, Cyclic `0x02`는 위 재현 자료로 검증했다. 해당 조합의 Outlook 생성 OST는 표본으로 확보하지 못했다. 이전에 검증한 Unicode 36 OST 두 개와 Unicode 23 PST는 이번 회귀 시험에도 사용했다. [Aspose 예제 디렉터리](https://github.com/aspose-email/Aspose.Email-for-.NET/tree/88cb2da311382bbbba6d14813127b0e6b3854c12/Examples/Data/MAPI) · [기존 PST 검증](pst-verification.md)
 
 ## 독립 판독 기준
 
 별도로 설치한 `libpff-python` 20261030에서 Aspose 원본의 일반 폴더 37개, 지원하는 메일 81건, 전송 헤더 속성 66개와 헤더 행 1,237개를 확인했다. 첨부 35개 중 바이트가 저장된 일반 첨부 22개의 전체 SHA-256과 34개 부분 구간을 대조했다. 나머지 첨부 13개는 일반 파일 바이트를 제공할 수 없는 상태로 표시됐다. [libpff 배포판](https://pypi.org/project/libpff-python/20261030/) · [독립 기준값](../tests/fixtures/ost-expanded-oracle.json)
 
-Mbox Viewer에 포함된 `pst-extractor` 1.12.0으로 원본을 다시 읽었다. 두 판독기에서 같은 일반 폴더 37개와 이 스크립트가 선택한 `IPM.Note` 메일 80건을 확인했다. 공통 메일의 전송 헤더 65개와 일반 첨부 22개의 속성 태그, 길이, SHA-256이 일치했다. `libpff-python` 결과에는 배달 상태 보고 메일 `REPORT.IPM.Note.NotSupportedICal.NDR` 1건이 추가됐다. 두 번째 판독 스크립트
+Mbox Viewer에 포함된 `pst-extractor` 1.12.0으로 원본을 다시 읽었다. 두 판독기에서 같은 일반 폴더 37개와 이 스크립트가 선택한 `IPM.Note` 메일 80건을 확인했다. 공통 메일의 전송 헤더 65개와 일반 첨부 22개의 속성 태그, 길이, SHA-256이 일치했다. `libpff-python` 결과에는 배달 상태 보고 메일 `REPORT.IPM.Note.NotSupportedICal.NDR` 1건이 추가됐다.
 
 | 대표 근거 | 독립 판독 값 |
 |---|---|
@@ -35,13 +35,13 @@ Release 빌드에서 경고 0개, 오류 0개를 확인했다. `--ost --ost-expa
 - 실제 Permute 원본과 Cyclic 사본의 전송 헤더와 첨부를 내보낸 뒤 독립 SHA-256과 대조했다. 매니페스트에서 원본 SHA-256, NDB 버전, 페이지 크기, 블록 인코딩과 확정한 폴더 조건을 확인했다. 저장한 첨부에서 길이를 유지한 채 마지막 바이트를 바꾸자 검증에 실패했다. 같은 검색을 실행했을 때 원래 메일이 다시 선택 대상에 포함됐다.
 - 512바이트 NBT 루트 손상과 미지원 WIP 인코딩을 구분해 표시했다. 같은 세션의 정상 PST와 두 OST는 계속 조회됐고, 시험 전후 원본 SHA-256도 일치했다.
 
-실제 UI에서 폴더 탐색부터 내보내기 검증과 검색 복귀까지 실행한 결과는 별도 검수 기록에 있다. [확장 OST 화면 검수](ost-expanded-ui-verification.md)
+실제 UI에서 폴더 탐색부터 내보내기 검증과 검색 복귀까지 실행한 결과는 별도 검수 기록에 있다. [Windows 화면 검증](ui-verification.md)
 
-표본 없이 실행한 임시 작업공간에서 기본 시험은 확장 OST 항목을 건너뛰었다. `--ost-expanded`를 명시하면 획득 명령과 함께 실패했다. 표본을 다시 확보하고 두 종류 OST 회귀를 실행하려면 아래 명령을 사용한다. 공개 OST와 파생 바이너리는 로컬 표본 디렉터리에만 둔다. [표본 획득](../tests/fixtures/make-ost-oracle.py) · [검증용 사본 생성](../tests/fixtures/encode-ost-control.py)
+저장소 루트에서 아래 명령으로 두 종류의 OST를 준비하고 검증합니다. [표본 획득](../tests/fixtures/make-ost-oracle.py) · [검증용 사본 생성](../tests/fixtures/encode-ost-control.py)
 
 ```powershell
-python Mail-Viewer/tests/fixtures/make-ost-oracle.py --fetch-only
-python Mail-Viewer/tests/fixtures/make-ost-oracle.py --expanded --fetch-only
-dotnet build Mail-Viewer/MailViewer.slnx -c Release -warnaserror
-dotnet run --project Mail-Viewer/tests/MailViewer.Verification -c Release --no-build -- --ost --ost-expanded --large
+python tests/fixtures/make-ost-oracle.py --fetch-only
+python tests/fixtures/make-ost-oracle.py --expanded --fetch-only
+dotnet build MailViewer.slnx -c Release -warnaserror
+dotnet run --project tests/MailViewer.Verification -c Release --no-build -- --ost --ost-expanded --large
 ```

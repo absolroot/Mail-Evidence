@@ -4,24 +4,26 @@
 
 <h3 align="center">A user-friendly email analysis tool built around the analyst’s workflow</h3>
 
-<p align="center"><strong>Open mail files, folders, and disk images. Preview messages and attachments, review anomalies, and trace each finding back to its source.</strong></p>
-
 [한국어](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
 [Windows x64 compact](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-compact.zip) · [Windows x64 with runtime](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
 
-## Why use Mail Evidence?
+## Investigation features
 
-- **Work in a familiar layout.** Browse folders, search messages as you type, and read the selected message in the same window. Pin or bookmark messages you want to revisit.
-- **Start with the evidence you have.** Open individual files and folders together, or find mail on a readable NTFS volume in a disk image. Selected files are extracted with hashes and their paths in the image.
-- **Read older Outlook data.** The Windows app reads ANSI and Unicode MSG files and supported older OST files. The Rust CLI also reads older PST variants and Outlook Express DBX and MBX files.
-- **See what triggered a finding.** Compare actual header values, link destinations, filenames, or file bytes. Preview an attachment and go straight to the relevant source location when you need more detail.
+[![Mail Evidence walkthrough covering search, attachment preview, findings, and hex](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
+
+- Browse folders, search as you type, and read the selected message in one window. Pin or bookmark messages for later.
+- Open mail files and folders together, or extract selected mail from a readable NTFS disk image. The Rust CLI also reads older PST and Outlook Express DBX and MBX files.
+- Preview attachments and inspect the headers, link destinations, or bytes behind a finding. Find other messages by exact address, URL, Message-ID, or attachment SHA-256.
+- Open evidence read-only. Export selected messages, search results, or attachments and verify the saved sizes and SHA-256 hashes.
 
 ## Quick start
 
-1. Extract the Windows x64 ZIP and run `MailEvidence.exe`. The compact edition uses the [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0). Keep the included `NtfsTracer.libewf.dll` next to the executable when opening E01 or Ex01 images.
-2. Choose files or a folder in **Open mail sources**, or select **Disk image…** to find and extract mail. Use **Find mail files on this PC…** to look in Outlook storage locations. [Disk image workflow](docs/disk-image-mail.md)
-3. Search under **All mail**, or use **Anomalies** to review flagged messages. Open the body, attachments, raw headers, or source bytes in the reading pane. [Sample messages](tests/fixtures/anomaly-ux-complete/) · [Conversation sample](tests/fixtures/conversation-history/)
+1. Extract the Windows x64 ZIP and run `MailEvidence.exe`. The compact edition requires the [.NET 10 Desktop Runtime (x64)](https://dotnet.microsoft.com/en-us/download/dotnet/10.0).
+2. Choose files or a folder in **Open mail sources**, then select **Analyze**. Use **Find mail files on this PC…** to look in Outlook storage locations. [Open mail from a disk image](docs/disk-image-mail.md)
+3. Search in **All mail**, or review findings in **Anomalies**. Try the [sample messages](tests/fixtures/README.md) to see the workflow.
+
+HTML messages block external images, scripts, and link navigation by default. HTML rendering uses [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution).
 
 **Settings → Display language** offers Korean, English, Japanese, German, Spanish, French, Indonesian, Italian, Polish, Brazilian Portuguese, Turkish, Vietnamese, Russian, Ukrainian, and Simplified and Traditional Chinese.
 
@@ -71,15 +73,6 @@ The app finds EML, MBOX, MSG, PST, and OST files on readable NTFS volumes. Logic
 
 [Preview limits](preview/README.md)
 
-## Investigation features
-
-[![Mail Evidence walkthrough showing live search, attachment preview, anomaly evidence, and the marked bytes in hex](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
-
-- **Search and cross-reference.** Filter by date, source, attachment status, or anomaly type. Find other messages with the same address, host, URL, attachment SHA-256, or Message-ID.
-- **Read messages and attachments.** Switch between HTML and plain text. External images, scripts, and link navigation are blocked by default. HTML rendering uses [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution).
-- **Examine source bytes.** Use the attachment toolbar to inspect the stored MIME range, MSG stream, or PST/OST property. File structure and PE findings can open the decoded attachment at the relevant offset.
-- **Export and verify.** Save a message, selected messages, search results, or attachments. Verify exported file sizes and SHA-256 hashes against the manifest. Source evidence is opened read-only.
-
 ## What does Mail Evidence flag?
 
 | Finding | Evidence shown |
@@ -93,51 +86,17 @@ The app finds EML, MBOX, MSG, PST, and OST files on readable NTFS volumes. Logic
 | Unexpected attachment structure | A mismatched start signature or internal structure, a missing end marker, or bytes after the end |
 | Reply-To change in a conversation | The current address and the most recent comparable referenced message from the same sender in the preceding 30 days |
 
-Treat findings as leads. Support services and tracking links can produce legitimate differences. Checks that could not be completed are marked separately. Authentication results are shown as recorded in the headers, with trust unverified. [Rule details](docs/investigation-rules.md) · [Attachment checks](docs/attachment-signatures.md)
+A finding is an observation to look into. Support addresses and tracking links can also trigger a difference. SPF, DKIM, and DMARC results are shown as recorded in the headers, with trust unverified. [Rules and limits](docs/investigation-rules.md) · [Attachment signatures](docs/attachment-signatures.md)
 
-## Example and related tools
+## Try it with a sample
 
-Open the [attachment test message](tests/fixtures/attachment-boundaries/02-mixed.eml) and select `invalid-idat.png`. The PNG declares **8,200 bytes** for the IDAT chunk, where there is room for at most **37 bytes**. **Open full attachment hex** opens the decoded bytes at `0x21`. When you return, the same finding remains selected.
+Open the [attachment sample](tests/fixtures/attachment-boundaries/02-mixed.eml) and select `invalid-idat.png` in **Anomalies**. The PNG declares **8,200 bytes** for the IDAT chunk. There is room for **at most 37 bytes**. **Open full attachment hex** displays the decoded bytes at `0x21`.
 
-[![Mail Evidence showing an anomalous PNG length field and the supporting bytes](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
-
-| Tool | Typical use |
-| --- | --- |
-| Mbox Viewer | Read and search MBOX, EML, or PST files, bookmark messages, and save attachments. [Project documentation](https://github.com/zoltanf/MboxViewer) |
-| MiTeC Mail Viewer | Browse Outlook Express, Windows Mail, and Thunderbird stores in a desktop interface. [Product documentation](https://www.mitec.cz/wp/mmv/) |
-| MailXaminer | Conduct email investigations with disk-image input, previews, hex views, OCR, and relationship analysis. [Product documentation](https://www.mailxaminer.com/features.html) |
-| **Mail Evidence** | Review files, folders, and disk images in one workspace. Trace a finding from the observed value to its source location. |
-
-## Process mail in batches with the Rust CLI
-
-```powershell
-./mailviewer-engine.exe report D:/Evidence/Mail
-./mailviewer-engine.exe report --csv D:/Evidence/Mail | Set-Content -Encoding utf8 D:/Cases/messages.csv
-$result = ./mailviewer-engine.exe extract D:/Cases/Output D:/Evidence/Mail | ConvertFrom-Json
-./mailviewer-engine.exe verify $result.directory
-```
-
-`report` generates a JSON or CSV inventory. The JSON includes readable message bodies, headers, and source locations. `extract` creates `messages.csv`, `manifest.json`, and an `attachments/` directory. `verify` checks the exported attachments against their recorded sizes and SHA-256 hashes. [CLI commands and output](docs/rust-mail-cli.md)
-
-<details>
-<summary>Working with local mail stores</summary>
-
-| Store | How to open it |
-| --- | --- |
-| Maildir | Select the directory containing `cur/` and `new/`. |
-| MH | Select the directory containing numbered message files and `.mh_sequences`. |
-| Apple Mail | The relative paths under `Messages/` and `Attachments/<message number>/<MIME part number>/` are preserved. |
-| Thunderbird | Select the store directly, or use `inspect-profile thunderbird` to check `profiles.ini`, `Mail/`, and `ImapMail/`. The CLI reads the `.sbd` folder hierarchy and identifies `.msf` index files. |
-| Windows Mail and Windows Live Mail | Select the store or use `inspect-profile windows-mail` to find local EML files. |
-| Outlook Express | Select the store or use `inspect-profile outlook-express`. Include the folder and index files to verify how the messages are organized. |
-
-[Local store fixtures](tests/fixtures/README.md) · [Source ranges and streams by format](docs/rust-mail-cli.md)
-
-</details>
+[![PNG chunk length and available bytes shown in the Anomalies tab](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
 
 ## Build and test
 
-Run these commands from the checkout root on Windows with the .NET 10 SDK and Rust.
+Build the Windows app with the .NET 10 SDK. The attachment preview worker and CLI use Rust.
 
 ```powershell
 cargo build --manifest-path preview/Cargo.toml --release --locked
@@ -146,6 +105,6 @@ cargo build --manifest-path engine/Cargo.toml --release --locked
 dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-only
 ```
 
-[CLI usage](docs/rust-mail-cli.md) · [Test fixtures](tests/fixtures/README.md) · [EWF library build](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [Dependency notices](licenses/)
+[CLI commands](docs/rust-mail-cli.md) · [Fixtures and test commands](tests/fixtures/README.md) · [UI tests](docs/ui-verification.md) · [Build the EWF DLL](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [Licenses](licenses/)
 
-To refresh the English screenshot and walkthrough on Windows, install Pillow and run `python tools/update-readme-media.py`.
+Use `tools/publish-mail-evidence.ps1` to publish the Windows builds. To refresh the English README media on Windows, install Pillow and run `python tools/update-readme-media.py`.

@@ -5,20 +5,20 @@
 ## 실행
 
 ```powershell
-dotnet build Mail-Viewer/tests/MailViewer.Verification/MailViewer.Verification.csproj --nologo
-dotnet run --project Mail-Viewer/tests/MailViewer.Verification/MailViewer.Verification.csproj -- --large
+dotnet build tests/MailViewer.Verification/MailViewer.Verification.csproj --nologo
+dotnet run --project tests/MailViewer.Verification/MailViewer.Verification.csproj -- --large
 ```
 
-빌드는 경고와 오류가 각각 0건이었다. 콘솔 시험은 **10건 중 10건**을 통과했다. `--large`를 생략하면 Windows에서 스파스 파일로 진행하는 4 GiB 경계 시험을 건너뛴다. 시험용 산출물은 임시 폴더에서 검사한 뒤 지우며, 해당 경로와 작업 ID가 일치하는 시험 영수증도 정리한다. [검증 코드](../tests/MailViewer.Verification/Program.cs) · [4 GiB 경계 시험](../tests/MailViewer.Verification/LargeMbox.cs)
+빌드는 경고와 오류가 각각 0건이었다. 콘솔 시험은 **10건 중 10건**을 통과했다. `--large`를 생략하면 Windows에서 스파스 파일로 진행하는 4 GiB 경계 시험을 건너뛴다. [검증 코드](../tests/MailViewer.Verification/Program.cs) · [4 GiB 경계 시험](../tests/MailViewer.Verification/LargeMbox.cs)
 
 ## 입력과 독립 기준값
 
 | 입력 | 확보 및 기준값 | 검증 결과 |
 |---|---|---|
-| 합성 EML | 1,148바이트. SHA-256 `9a8106fd358cd0be272e515248196d4fd6cb31a21baae41607bc5360059c61ad`. 원본 | 접힌 `Received`의 원본 바이트와 두 줄의 순서가 일치했다. 날짜의 `+0900`이 유지됐으며 UTC는 03:00이었다. Plain 및 HTML 전용 검색어는 각각 같은 메일의 해당 MIME 파트에서 적중했다. 8바이트 첨부 해시도 일치했다. |
+| 합성 EML | 1,148바이트. SHA-256 `9a8106fd358cd0be272e515248196d4fd6cb31a21baae41607bc5360059c61ad`. | 접힌 `Received`의 원본 바이트와 두 줄의 순서가 일치했다. 날짜의 `+0900`이 유지됐으며 UTC는 03:00이었다. Plain 및 HTML 전용 검색어는 각각 같은 메일의 해당 MIME 파트에서 적중했다. 8바이트 첨부 해시도 일치했다. |
 | 합성 MBOX | SHA-256 `390e94e0e8755c5230eadc30f488550d99700ddc70296f27a418f9a7ade36b95`. 범위 기준값 | 메시지의 오프셋과 길이는 각각 `50/1149`, `1249/304`, `1603/315`바이트였다. 메시지 바이트와 SHA-256이 일치했고 구분 `CRLF` 2바이트는 별도 범위로 남았다. 같은 Message-ID 두 건이 유지됐다. 마지막 메시지의 봉투 시각은 03:03, 메시지 Date는 03:02였으며 날짜 범위에는 둘 다 메시지 Date를 기준으로 포함됐다. |
-| Apache Tika 공개 EML 시험 자료 | 1,904바이트. SHA-256 `86e5feb18e16178359d6aaa704bd74ceebe7a41f302df5b656f5e6fe0ea34cc5`. 로컬 표본 · [고정 커밋의 공개 원본](https://github.com/apache/tika/blob/f1f785f533877ce7426f45b1460ed52e154bcaca/tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-mail-module/src/test/resources/test-documents/testRFC822_multipart_attachments.eml) | `Test TxtA.txt`와 `Test TxtB.txt`를 이름으로 각각 찾았다. Python 표준 MIME 판독기가 디코딩한 첨부와 바이트 길이 33 및 각 SHA-256이 일치했다. 저장한 첨부 A의 SHA-256은 `710b0ea810c12c93cae9982b60ca333e5302e72b8948b194f611513d4737c97d`였다. |
-| Apache Tika 개발 메일 공개 MBOX | 2008년 2월 아카이브. 139,161바이트. SHA-256 `76f15052d9cd1a3c8157d945f2a3778f469f36d550bffd27c986bd6f0df8bfe7`. Python 표준 `mailbox` 및 봉투 줄의 원시 바이트 기준으로 36건이다. 로컬 표본 · [Apache 다운로드](https://mail-archives.apache.org/mod_mbox/tika-dev/200802.mbox) | 36건을 읽었고 제목 `tika`는 19건, `mime`은 4건이었다. `mime`의 원본 시작 위치는 32,630, 35,955, 39,859, 44,219였다. 첫 결과는 원본 헤더 2,059바이트와 `Received` 8줄을 확인했다. CSV와 매니페스트에서 고정한 4건의 순서와 범위를 확인했다. |
+| Apache Tika 공개 EML 시험 자료 | 1,904바이트. SHA-256 `86e5feb18e16178359d6aaa704bd74ceebe7a41f302df5b656f5e6fe0ea34cc5`. [고정 커밋의 공개 원본](https://github.com/apache/tika/blob/f1f785f533877ce7426f45b1460ed52e154bcaca/tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-mail-module/src/test/resources/test-documents/testRFC822_multipart_attachments.eml) | `Test TxtA.txt`와 `Test TxtB.txt`를 이름으로 각각 찾았다. Python 표준 MIME 판독기가 디코딩한 첨부와 바이트 길이 33 및 각 SHA-256이 일치했다. 저장한 첨부 A의 SHA-256은 `710b0ea810c12c93cae9982b60ca333e5302e72b8948b194f611513d4737c97d`였다. |
+| Apache Tika 개발 메일 공개 MBOX | 2008년 2월 아카이브. 139,161바이트. SHA-256 `76f15052d9cd1a3c8157d945f2a3778f469f36d550bffd27c986bd6f0df8bfe7`. Python 표준 `mailbox` 및 봉투 줄의 원시 바이트 기준으로 36건이다. [Apache 다운로드](https://mail-archives.apache.org/mod_mbox/tika-dev/200802.mbox) | 36건을 읽었고 제목 `tika`는 19건, `mime`은 4건이었다. `mime`의 원본 시작 위치는 32,630, 35,955, 39,859, 44,219였다. 첫 결과는 원본 헤더 2,059바이트와 `Received` 8줄을 확인했다. CSV와 매니페스트에서 고정한 4건의 순서와 범위를 확인했다. |
 
 ## 산출물과 장애 처리
 

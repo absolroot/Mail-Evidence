@@ -1,6 +1,6 @@
 # 첨부파일 시그니처와 종료 구조
 
-Windows 앱에서 메일을 열면 첨부파일 이름으로 예상한 형식과 디코딩한 바이트를 대조합니다. 시작 시그니처 불일치, 내부 구조 불일치, 종료 구조 미확인, 종료 뒤 추가 바이트를 **이상 징후**에 표시합니다. 목록 위 필터의 **첨부파일 시작·끝 구조 이상**로 해당 메일을 좁힐 수 있습니다.
+Windows 앱에서 메일을 열면 첨부파일 이름으로 예상한 형식과 디코딩한 바이트를 대조합니다. 시작 시그니처 불일치, 내부 구조 불일치, 종료 구조 미확인, 종료 뒤 추가 바이트를 **이상 징후**에 표시합니다. 목록 위 필터의 **첨부파일 시작·끝 구조 이상**으로 해당 메일을 좁힐 수 있습니다.
 
 ## 검사하는 바이트
 
@@ -18,7 +18,7 @@ Windows 앱에서 메일을 열면 첨부파일 이름으로 예상한 형식과
 
 [SEARCH 시그니처 목록](https://filesig.search.org/)에서 검사할 형식을 골랐습니다. 종료 규칙은 [PNG](https://www.w3.org/TR/png/), [JPEG](https://www.itu.int/itu-t/recommendations/rec.aspx?id=2633&lang=en), [GIF](https://www.w3.org/Graphics/GIF/spec-gif89a.txt), [PDF](https://pdf-issues.pdfa.org/32000-2-2020/clause07.html), [ZIP](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT), [WebP](https://developers.google.com/speed/webp/docs/riff_container) 명세를 참고했습니다.
 
-이 검사는 첨부의 시작과 확인 가능한 경계를 대조합니다. 예를 들어 DOCX와 HWPX는 ZIP 구조를 공통으로 확인합니다. 검사 목록에 없는 확장자는 이 조건의 대상에서 제외합니다. 구조 판독 한도는 첨부당 8 MiB이며, 한도를 넘거나 바이트를 읽을 수 없는 경우에는 확인하지 못한 범위를 표시합니다.
+DOCX와 HWPX는 공통 ZIP 구조를 검사합니다. 표에 없는 확장자는 검사 대상에서 제외합니다. 첨부가 8 MiB를 넘거나 바이트를 읽을 수 없으면 확인 불가로 표시합니다.
 
 ## HEX에서 근거 확인
 

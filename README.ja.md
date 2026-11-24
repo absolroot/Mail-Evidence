@@ -4,24 +4,26 @@
 
 <h3 align="center">調査の進めやすさを重視したメール分析ツール</h3>
 
-<p align="center"><strong>メールファイル、フォルダー、ディスクイメージを開き、本文や添付ファイルの表示から異常の確認、元データの照合までを一つの画面で進められます。</strong></p>
-
 [한국어](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
 [Windows x64 軽量版](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-compact.zip) · [Windows x64 ランタイム同梱版](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
 
-## Mail Evidence でできること
+## 調査機能
 
-- **使い慣れたメール画面で調査。** フォルダーを選び、入力しながらメールを検索し、選んだメールを右側の閲覧ペインで確認します。後で調べるメールにはブックマークを付けたり、一覧の先頭に固定したりできます。
-- **手元の資料をまとめて確認。** メールファイルとフォルダーを一緒に開けます。ディスクイメージ内の読み取り可能な NTFS ボリュームから必要なメールを抽出し、ハッシュとイメージ内のパスを記録できます。
-- **旧版 Outlook のファイルにも対応。** Windows アプリでは ANSI・Unicode の MSG と対応する旧形式の OST、Rust CLI では旧形式の PST や Outlook Express の DBX・MBX も開けます。
-- **異常を検出した根拠を表示。** ヘッダー、リンク先、ファイル名、バイト列など実際に観測した値を確認し、必要に応じて元データの該当箇所を開けます。
+[![メール検索、添付ファイルのプレビュー、異常の根拠と16進表示](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
+
+- フォルダー、メール一覧、閲覧ペインを一つの画面に表示します。入力に合わせて検索結果が絞られ、後で確認するメールは固定したり、ブックマークを付けたりできます。
+- メールファイルやフォルダーをまとめて開きます。読み取り可能な NTFS ディスクイメージからも必要なメールを抽出できます。Rust CLI は旧形式の PST や Outlook Express の DBX・MBX にも対応します。
+- 添付ファイルをプレビューし、異常の根拠となったヘッダー、リンク先、バイト列を確認できます。同じアドレス、URL、Message-ID、添付ファイルの SHA-256 で別のメールを探せます。
+- 元の資料は読み取り専用で開きます。メールや検索結果、添付ファイルを書き出し、保存したファイルのサイズと SHA-256 を検証できます。
 
 ## 使い方
 
-1. Windows x64 用の ZIP を展開して `MailEvidence.exe` を起動します。軽量版には [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) が必要です。E01・Ex01 を開く場合は同梱の `NtfsTracer.libewf.dll` を実行ファイルと同じフォルダーに置きます。
-2. ファイルかフォルダーを選択するか、**ディスクイメージ…** からメールを検索・抽出します。保存先が分からない場合は **この PC でメールファイルを探す…** を使います。[ディスクイメージからの抽出](docs/disk-image-mail.md)
-3. 全メールを検索するか、**異常の兆候** に表示されたメールを選びます。閲覧ペインで本文、添付ファイル、ヘッダー原文、元データのバイト列を切り替えられます。[異常を含むサンプル](tests/fixtures/anomaly-ux-complete/) · [やり取りのサンプル](tests/fixtures/conversation-history/)
+1. Windows x64 用の ZIP を展開して `MailEvidence.exe` を起動します。軽量版には [.NET 10 Desktop Runtime (x64)](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) が必要です。
+2. **メールデータを開く**画面でファイルかフォルダーを選び、**分析を開始**を押します。Outlook の保存先を調べるには **この PC でメールファイルを探す…** を使います。[ディスクイメージからメールを開く](docs/disk-image-mail.md)
+3. **すべてのメール**で検索するか、**異常の兆候**に表示されたメールを選びます。[サンプルメール](tests/fixtures/README.md)でも試せます。
+
+HTML 本文では外部画像、スクリプト、リンク先への移動が既定でブロックされます。HTML 表示には [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution) を使います。
 
 **設定 → 表示言語** で、韓国語、英語、日本語、ドイツ語、スペイン語、フランス語、インドネシア語、イタリア語、ポーランド語、ブラジルポルトガル語、トルコ語、ベトナム語、ロシア語、ウクライナ語、中国語（簡体字・繁体字）を選べます。
 
@@ -71,15 +73,6 @@ PST・OST は **1 ファイルにつき 2 GiB** までです。Windows アプリ
 
 [プレビューの条件](preview/README.md)
 
-## 調査機能
-
-[![メール検索、添付ファイルのプレビュー、異常の根拠、該当バイトの16進表示をたどる Mail Evidence のデモ](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
-
-- **検索と照合。** 日付、読み込んだ資料、添付ファイルの有無、異常の種類で絞り込めます。同じメールアドレス、ホスト、URL、添付ファイルの SHA-256、Message-ID を持つメールも検索できます。
-- **本文と添付ファイルの確認。** HTML とプレーンテキストを切り替えられます。外部画像、スクリプト、リンク先への移動は既定でブロックされます。HTML 表示には [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution) を使います。
-- **元データの確認。** 添付ファイルのツールバーから MIME 内の範囲、MSG ストリーム、PST・OST プロパティを開けます。ファイル構造や PE に関する異常からは、デコードした添付ファイルの該当位置を直接開けます。
-- **書き出しと再検証。** メール、選択した複数のメール、検索結果、添付ファイルを保存できます。保存したファイルの長さと SHA-256 をマニフェストと照合できます。元の資料は読み取り専用で開きます。
-
 ## 検出する異常の兆候
 
 | 確認項目 | 表示する根拠 |
@@ -93,51 +86,17 @@ PST・OST は **1 ファイルにつき 2 GiB** までです。Windows アプリ
 | 添付ファイルの構造異常 | 先頭シグネチャの不一致、内部構造の不一致、終端マーカーが見つからない箇所、終端後のデータ |
 | やり取りの途中で返信先が変更 | 直前 30 日に同じ送信元から届いた参照メールのうち、比較可能な最新メールと現在の返信先 |
 
-検出結果は調査の手掛かりです。正規のサポート窓口や計測用のリンクでも違いが生じる場合があります。確認できなかった項目は別に表示します。メール認証の結果は保存されたヘッダーの記録を示し、信頼性は未確認と表示します。[判定ルール](docs/investigation-rules.md) · [添付ファイルの構造検査](docs/attachment-signatures.md)
+検出結果は調査の手掛かりです。サポート窓口の返信先や計測用のリンクでも違いが出る場合があります。SPF・DKIM・DMARC はヘッダーに記録された値を表示し、信頼性は未確認と示します。[判定ルールと制限](docs/investigation-rules.md) · [ファイルのシグネチャ](docs/attachment-signatures.md)
 
-## 調査例と関連ツール
+## サンプルで試す
 
-[添付ファイル検証用メール](tests/fixtures/attachment-boundaries/02-mixed.eml) を開いて `invalid-idat.png` を選びます。PNG の IDAT には **8,200 バイト**と記録されていますが、使える領域は **37 バイト**です。**添付ファイルの 16 進表示を開く**を選ぶと、デコード後の `0x21` を確認できます。戻ると、選択していた項目がそのまま表示されます。
+[添付ファイルの検証用メール](tests/fixtures/attachment-boundaries/02-mixed.eml)を開き、**異常の兆候**で `invalid-idat.png` を選びます。PNG の IDAT チャンクには **8,200 バイト**と記録されていますが、残りの領域は **最大 37 バイト**です。**添付ファイルの 16 進表示を開く**を選ぶと、デコード後の `0x21` を確認できます。
 
-[![PNG の長さフィールドと根拠となるバイト列を表示した画面](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
-
-| ツール | 主な用途 |
-| --- | --- |
-| Mbox Viewer | MBOX・EML・PST の閲覧と検索、メールのブックマーク、添付ファイルの保存。[プロジェクトの説明](https://github.com/zoltanf/MboxViewer) |
-| MiTeC Mail Viewer | Outlook Express、Windows Mail、Thunderbird のメールストアの閲覧。[製品情報](https://www.mitec.cz/wp/mmv/) |
-| MailXaminer | ディスクイメージの取り込み、添付ファイルのプレビュー、16 進表示、OCR や関係分析を用いたメール調査。[製品情報](https://www.mailxaminer.com/features.html) |
-| **Mail Evidence** | 複数のローカル資料を一つの画面で読み込み、検出した異常から観測値と元データの位置をたどります。 |
-
-## Rust CLI でメールを一括処理する
-
-```powershell
-./mailviewer-engine.exe report D:/Evidence/Mail
-./mailviewer-engine.exe report --csv D:/Evidence/Mail | Set-Content -Encoding utf8 D:/Cases/messages.csv
-$result = ./mailviewer-engine.exe extract D:/Cases/Output D:/Evidence/Mail | ConvertFrom-Json
-./mailviewer-engine.exe verify $result.directory
-```
-
-`report` でメール一覧を JSON または CSV に出力します。JSON には読み取れた本文、ヘッダー、元データ内の位置も含まれます。`extract` は `messages.csv`、`manifest.json`、`attachments/` を作成します。`verify` は保存した添付ファイルのサイズと SHA-256 をマニフェストと照合します。[CLI のコマンドと出力](docs/rust-mail-cli.md)
-
-<details>
-<summary>ローカルに保存されたメールを開く</summary>
-
-| 形式・アプリ | 開き方 |
-| --- | --- |
-| Maildir | `cur/` と `new/` があるフォルダーを指定します。 |
-| MH | ファイル名が数字のメールと `.mh_sequences` があるフォルダーを指定します。 |
-| Apple Mail | `Messages/` と `Attachments/<メール番号>/<MIME パート番号>/` の相対パスを保持します。 |
-| Thunderbird | メールの保存先を直接指定するか、`inspect-profile thunderbird` で `profiles.ini`、`Mail/`、`ImapMail/` を確認します。`.sbd` のフォルダー階層を読み込み、`.msf` をインデックスとして識別します。 |
-| Windows Mail・Windows Live Mail | 保存先を指定するか、`inspect-profile windows-mail` でローカルの EML ファイルを探します。 |
-| Outlook Express | 保存先を指定するか、`inspect-profile outlook-express` を使います。フォルダー情報とインデックスのファイルも指定すると、メールの格納先を照合できます。 |
-
-[ローカルメールの検証用データ](tests/fixtures/README.md) · [形式別の元データ範囲とストリーム](docs/rust-mail-cli.md)
-
-</details>
+[![PNG チャンクに記録された長さと残りのバイト数を表示する画面](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
 
 ## ビルドとテスト
 
-Windows 上で .NET 10 SDK と Rust を使用し、リポジトリのルートで実行します。
+Windows アプリのビルドには .NET 10 SDK が必要です。添付ファイルのプレビュー用プログラムと CLI は Rust でビルドします。
 
 ```powershell
 cargo build --manifest-path preview/Cargo.toml --release --locked
@@ -146,6 +105,6 @@ cargo build --manifest-path engine/Cargo.toml --release --locked
 dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-only
 ```
 
-[CLI の使い方](docs/rust-mail-cli.md) · [検証用データ](tests/fixtures/README.md) · [EWF ライブラリのビルド](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [依存ライブラリのライセンス](licenses/)
+[CLI のコマンド](docs/rust-mail-cli.md) · [検証用データとテスト手順](tests/fixtures/README.md) · [画面の検証](docs/ui-verification.md) · [EWF DLL のビルド](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [ライセンス](licenses/)
 
-英語の画面画像と操作デモを作り直すには、Windows に Pillow をインストールして `python tools/update-readme-media.py` を実行します。
+Windows 用の配布ファイルは `tools/publish-mail-evidence.ps1` で作成できます。英語の画面画像と GIF の更新は、Windows に Pillow をインストールして `python tools/update-readme-media.py` を実行します。

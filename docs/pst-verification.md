@@ -2,20 +2,20 @@
 
 ## 공개 표본과 독립 기준값
 
-제품 파서와 분리된 Mbox Viewer 배포본의 `pst-extractor` 1.12.0으로 PST의 폴더와 메시지를 열었다. 전송 헤더와 첨부는 텍스트나 EML로 변환하기 전에 MAPI 속성 바이트를 직접 추출했다. 검색 결과만 나타내는 가상 검색 폴더는 일반 폴더 순회에서 제외했다. 기준값 생성 코드 · [바이트·NID·SHA-256 기준값](../tests/fixtures/pst-oracle.json)
+제품 파서와 분리된 Mbox Viewer 배포본의 `pst-extractor` 1.12.0으로 PST의 폴더와 메시지를 열었다. 전송 헤더와 첨부는 텍스트나 EML로 변환하기 전에 MAPI 속성 바이트를 직접 추출했다. 검색 결과만 나타내는 가상 검색 폴더는 일반 폴더 순회에서 제외했다. [바이트·NID·SHA-256 기준값](../tests/fixtures/pst-oracle.json)
 
 | 표본 | 독립 판독 결과 |
 |---|---|
-| Apache Tika `testPST.pst` | Unicode v23, 271,360바이트, SHA-256 `acad1e91d58d51494b459d986a1550b352031f0088a90f8e68d5ef449f3e9f5e`. `Début du fichier de données Outlook` 폴더 NID 32802에 메일 6건. 각 `0x007D001F` 속성에서 `Received`가 모두 50개이며, 첨부는 0개다. 획득 기록 |
-| libpff `outlook.pst` | Unicode v23, 271,360바이트, SHA-256 `df01707f76d0e24ab913cf1ffeffa6eaf9c1d590e02102c7ed26bb3ac51d4e24`. `Inbox` NID 33090과 `Recovered_Group2` NID 33410에 제목이 같은 메일이 각각 하나 있으며 두 메일의 첨부는 각각 11개다. `Inbox`의 `1.jpg`는 메시지 NID 2097188의 첨부 NID 32805, 속성 `0x37010102`, 1,969바이트, SHA-256 `0c7da5374fe7e65b84521e111a584c5508eb40e1f8f044e4ff9416740d601311`이다. [libyal/testdata 원본과 고정 커밋](https://github.com/libyal/testdata/blob/c3631ff17ce4ae6798ed9abd065c6a67ad626bce/pst/outlook.pst) · CC BY 4.0 라이선스 |
+| Apache Tika `testPST.pst` | Unicode v23, 271,360바이트, SHA-256 `acad1e91d58d51494b459d986a1550b352031f0088a90f8e68d5ef449f3e9f5e`. `Début du fichier de données Outlook` 폴더 NID 32802에 메일 6건. 각 `0x007D001F` 속성에서 `Received`가 모두 50개이며, 첨부는 0개다. [표본 경로와 다운로드](../tests/fixtures/README.md) |
+| libpff `outlook.pst` | Unicode v23, 271,360바이트, SHA-256 `df01707f76d0e24ab913cf1ffeffa6eaf9c1d590e02102c7ed26bb3ac51d4e24`. `Inbox` NID 33090과 `Recovered_Group2` NID 33410에 제목이 같은 메일이 각각 하나 있으며 두 메일의 첨부는 각각 11개다. `Inbox`의 `1.jpg`는 메시지 NID 2097188의 첨부 NID 32805, 속성 `0x37010102`, 1,969바이트, SHA-256 `0c7da5374fe7e65b84521e111a584c5508eb40e1f8f044e4ff9416740d601311`이다. [libyal/testdata 원본과 고정 커밋](https://github.com/libyal/testdata/blob/c3631ff17ce4ae6798ed9abd065c6a67ad626bce/pst/outlook.pst) |
 
 추가 검증 표본은 libyal/testdata가 libpff 시험용으로 공개한 파일이며, 원본 바이트를 유지하고 로컬 파일명에 출처를 덧붙였다. [libpff의 시험 자료 설정](https://github.com/libyal/libpff/blob/main/libpff.ini)
 
 ## 실행
 
 ```powershell
-dotnet build Mail-Viewer/tests/MailViewer.Verification/MailViewer.Verification.csproj -c Release -warnaserror
-dotnet run --project Mail-Viewer/tests/MailViewer.Verification/MailViewer.Verification.csproj -c Release --no-build -- --large
+dotnet build tests/MailViewer.Verification/MailViewer.Verification.csproj -c Release -warnaserror
+dotnet run --project tests/MailViewer.Verification/MailViewer.Verification.csproj -c Release --no-build -- --large
 ```
 
 콘솔에는 폴더·원본 전송 헤더, 동일 이름 첨부의 소속 범위, 검색 CSV와 원본 속성 내보내기, 손상 파일 격리 시험을 추가했다. [PST 콘솔 검증 코드](../tests/MailViewer.Verification/PstChecks.cs)
