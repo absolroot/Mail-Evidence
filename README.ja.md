@@ -12,6 +12,8 @@
 
 [![ポインターでメール検索、添付ファイルのプレビュー、異常の根拠から16進表示までをたどる英語版の操作デモ](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
 
+デモと同じ[サンプルメール 24 通](tests/fixtures/readme-demo/)で、画像のプレビューや異常の根拠を確認できます。
+
 - フォルダー、メール一覧、閲覧ペインを一つの画面に表示します。入力に合わせて検索結果が絞られ、後で確認するメールは固定したり、ブックマークを付けたりできます。
 - メールファイルやフォルダーをまとめて開きます。NTFS イメージから必要なメールも抽出できます。Windows アプリでは旧形式の PST、Outlook Express の DBX・MBX、Apple Mail の EMLX も開けます。
 - 添付ファイルをプレビューし、異常の根拠となったヘッダー、リンク先、バイト列を確認できます。同じアドレス、URL、Message-ID、添付ファイルの SHA-256 で別のメールを探せます。
@@ -104,4 +106,4 @@ dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-onl
 
 [CLI のコマンド](docs/rust-mail-cli.md) · [検証用データとテスト手順](tests/fixtures/README.md) · [画面の検証](docs/ui-verification.md) · [EWF DLL のビルド](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [ライセンス](licenses/)
 
-Windows 用の配布ファイルは `tools/publish-mail-evidence.ps1` で作成できます。英語の画面画像と GIF の更新は、Windows に Pillow をインストールして `python tools/update-readme-media.py` を実行します。
+Windows 用の配布ファイルは `tools/publish-mail-evidence.ps1` で作成できます。英語の画面画像と GIF の更新は、Windows で上記の手順に従ってプレビューワーカーをビルドし、Pillow をインストールしてから `python tools/update-readme-media.py` を実行します。

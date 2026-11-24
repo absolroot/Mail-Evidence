@@ -12,17 +12,19 @@ from PIL import Image, ImageDraw
 
 # A target is recorded in the screenshot that precedes the action.
 SCENES = (
-    ("01-mail.png", None, 950),
+    ("01-mail.png", None, 1600),
     ("02-typing.png", "search", 230),
-    ("03-search.png", None, 1080),
-    ("04-attachments.png", "attachments", 450),
-    ("05-preview.png", "preview", 1700),
-    ("06-all.png", "reset", 350),
-    ("07-anomaly-mailbox.png", "anomaly-mailbox", 620),
-    ("08-findings.png", "anomaly-tab", 450),
-    ("09-anomaly.png", "png-length", 2600),
-    ("10-hex.png", "hex", 2200),
-    ("11-return.png", "back", 1050),
+    ("03-search.png", None, 940),
+    ("04-attachments.png", "attachments", 1450),
+    ("05-preview.png", "preview", 1600),
+    ("06-expanded.png", "expand", 500),
+    ("06b-image.png", "file-info", 2050),
+    ("07-restored.png", "restore", 380),
+    ("08-all.png", "reset", 280),
+    ("09-anomaly-mailbox.png", "anomaly-mailbox", 950),
+    ("11-anomaly.png", "png-length", 2300),
+    ("12-hex.png", "hex", 2100),
+    ("13-return.png", "back", 850),
 )
 
 POINTER = ((0, 0), (0, 20), (5, 15), (9, 23), (13, 21), (9, 14), (16, 14))
@@ -44,7 +46,10 @@ def shared_palette(screens):
 
 def render(captures, output):
     result = json.loads((captures / "flow-result.json").read_text(encoding="utf-8"))
-    if result != {"Language": "en-US", "Findings": 4, "Offset": "0x21"}:
+    if result != {
+        "Language": "en-US", "Messages": 24, "Preview": "market-stall-map.png",
+        "Findings": 4, "Offset": "0x21",
+    }:
         raise RuntimeError(f"Unexpected README demo result: {result}")
 
     points = json.loads((captures / "clicks.json").read_text(encoding="utf-8"))
@@ -120,7 +125,8 @@ def render(captures, output):
             raise RuntimeError("The published GIF ended before the final click.")
         print(f"README GIF: {demo.n_frames} frames, {elapsed / 1000:.2f}s, {width}×{height}")
     screenshots = {name: screen for (name, _, _), screen in zip(SCENES, screens)}
-    screenshots["09-anomaly.png"].save(output / "anomaly-evidence-dark.png", optimize=True)
+    screenshots["05-preview.png"].save(output / "attachment-preview-dark.png", optimize=True)
+    screenshots["11-anomaly.png"].save(output / "anomaly-evidence-dark.png", optimize=True)
 
 
 def main():

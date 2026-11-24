@@ -12,6 +12,8 @@
 
 [![English walkthrough showing pointer clicks through search, attachment preview, anomaly evidence, and hex](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
 
+Open the [24-message sample mailbox](tests/fixtures/readme-demo/) to try the image previews and findings shown in the demo.
+
 - Browse folders, search as you type, and read the selected message in one window. Pin or bookmark messages for later.
 - Open mail files and folders together, or extract selected mail from an NTFS disk image. The Windows app also opens older PST files, Outlook Express DBX and MBX, and Apple Mail EMLX.
 - Preview attachments and inspect the headers, link destinations, or bytes behind a finding. Find other messages by exact address, URL, Message-ID, or attachment SHA-256.
@@ -104,4 +106,4 @@ dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-onl
 
 [CLI commands](docs/rust-mail-cli.md) · [Fixtures and test commands](tests/fixtures/README.md) · [UI tests](docs/ui-verification.md) · [Build the EWF DLL](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [Licenses](licenses/)
 
-Use `tools/publish-mail-evidence.ps1` to publish the Windows builds. To refresh the English README media on Windows, install Pillow and run `python tools/update-readme-media.py`.
+Use `tools/publish-mail-evidence.ps1` to publish the Windows builds. To refresh the English README media on Windows, build the preview worker as shown above, install Pillow, and run `python tools/update-readme-media.py`.

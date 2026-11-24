@@ -12,6 +12,8 @@
 
 [![전체 메일 검색부터 첨부 미리보기, 이상 징후와 HEX까지 포인터로 따라가는 영어 데모](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
 
+영어 데모에 사용한 [샘플 메일함 24통](tests/fixtures/readme-demo/)을 열어 이미지 미리보기와 이상 징후를 직접 확인할 수 있습니다.
+
 - 폴더, 메일 목록, 읽기 창을 한 화면에 두고 입력과 동시에 검색합니다. 중요한 메일은 북마크하거나 상단에 고정할 수 있습니다.
 - 메일 파일과 폴더를 함께 열고, NTFS 디스크 이미지에서 필요한 메일을 골라 추출합니다. Windows 앱에서 구형 PST, Outlook Express의 DBX·MBX, Apple Mail의 EMLX도 직접 열 수 있습니다.
 - 첨부를 미리 보고, 이상 징후에서 헤더·링크 주소·파일 바이트를 대조합니다. 같은 주소, URL, Message-ID, 첨부 SHA-256이 나온 메일을 다시 찾을 수 있습니다.
@@ -104,4 +106,4 @@ dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-onl
 
 [CLI 명령](docs/rust-mail-cli.md) · [샘플과 검증 명령](tests/fixtures/README.md) · [화면 검증](docs/ui-verification.md) · [EWF DLL 빌드](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [라이선스 고지](licenses/)
 
-Windows 배포는 `tools/publish-mail-evidence.ps1`을 사용합니다. 영어 스크린샷과 GIF는 Windows에 Pillow를 설치한 뒤 `python tools/update-readme-media.py`로 갱신할 수 있습니다.
+Windows 배포는 `tools/publish-mail-evidence.ps1`을 사용합니다. 영어 스크린샷과 GIF는 Windows에서 위 명령으로 첨부 미리보기 모듈을 빌드하고 Pillow를 설치한 뒤 `python tools/update-readme-media.py`로 갱신할 수 있습니다.
