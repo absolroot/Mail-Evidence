@@ -40,5 +40,12 @@ jobs:
       - name: Run mail evidence regression tests
         run: dotnet run --no-build --configuration Release --project tests/MailViewer.Verification -- --synthetic-only
 
-      - name: Run Rust mail reader tests
-        run: cargo test --locked --manifest-path engine/Cargo.toml
+      - name: Verify the Rust reader on the synthetic mailbox
+        run: |
+          $json = & ./engine/target/debug/mailviewer-engine.exe report tests/fixtures/synthetic/synthetic.mbox
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $report = ($json -join "`n") | ConvertFrom-Json
+          if ($report.counts.messages -ne 3 -or $report.counts.attachments -ne 1 -or $report.failures.Count -ne 0) {
+            throw 'Unexpected Rust reader result for the synthetic mailbox.'
+          }
+          Write-Output 'Rust reader found 3 messages and 1 attachment.'
