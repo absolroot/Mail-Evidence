@@ -27,19 +27,25 @@
 
 ### 메일 파일과 저장소
 
-| 확장자·저장소 | Windows 앱 | Rust CLI |
-| --- | --- | --- |
-| `.eml` | 헤더, HTML·평문 본문, MIME 첨부를 확인합니다. | `.eml`, `.nws`, `.mime`, `.rfc822`와 내용으로 식별한 개별 메일을 읽습니다. |
-| `.mbox` | 메일과 첨부를 읽고 원본 메시지 범위를 확인합니다. 직접 선택한 확장자 없는 MBOX도 봉투 줄로 식별할 수 있습니다. | 메일 경계를 확인하고 MIME 첨부를 추출합니다. 확장자가 없어도 봉투 줄로 식별합니다. |
-| `.msg` | ANSI·Unicode 전송 헤더와 CFB 첨부 스트림을 확인합니다. | 일반 첨부, 압축 RTF, 내장 MSG의 메일 정보와 읽을 수 있는 첨부를 처리합니다. |
-| `.pst` | Unicode 23, 블록 인코딩 0·1의 폴더, 메일, 헤더와 일반 첨부를 읽습니다. | 지원 조건에 맞는 ANSI·Unicode PST를 읽습니다. |
-| `.ost` | 지원 조건에 맞는 구형 ANSI와 Unicode OST에서 폴더, 메일, 남아 있는 전송 헤더와 일반 첨부를 읽습니다. | 같은 NDB 조건에서 로컬 캐시에 남은 메일과 첨부를 읽습니다. |
-| `.dbx`, `.mbx` | CLI로 열 수 있습니다. | Outlook Express 5·6의 DBX와 Outlook Express 4의 JMF6 MBX를 읽고, `Folders.dbx`, JMF9 `.idx`, `Folders.nch`를 폴더·색인 자료로 연결합니다. |
-| `.emlx`, `.partial.emlx`, `.olm` | CLI로 열 수 있습니다. | Apple Mail과 Outlook for Mac의 메일과 읽을 수 있는 첨부를 처리합니다. 부분 EMLX는 외부 첨부의 상대 경로를 대조합니다. |
-| `.mmdf`, `.babyl`, `.rmail`, Maildir, MH | CLI로 열 수 있습니다. | 메일과 MIME 첨부를 읽습니다. Babyl 레이블과 MH의 `.mh_sequences`도 기록합니다. |
-| `.zip`, `.tnef`, `winmail.dat`, `.p7m`, `.p7s` | CLI로 열 수 있습니다. | ZIP 안의 EML·EMLX·MBOX, 독립 TNEF의 첨부, DER CMS SignedData에 포함된 메일을 읽습니다. 암호화 메일의 복호화와 서명 검증은 지원 범위 밖입니다. |
+| 형식 | Windows 앱 | Rust CLI |
+| --- | :---: | :---: |
+| 인터넷 메일 `.eml` | ✓ | ✓ |
+| `.nws`, `.mime`, `.rfc822` | – | ✓ |
+| 메일함 `.mbox` | ✓ | ✓ |
+| Outlook 메일 `.msg` | ✓ | ✓ |
+| Outlook 보관함 `.pst` | ✓ | ✓ |
+| Outlook 캐시 `.ost` | ✓ | ✓ |
+| Outlook Express `.dbx`, `.mbx` | – | ✓ |
+| Outlook for Mac `.olm` | – | ✓ |
+| Apple Mail `.emlx`, `.partial.emlx` | – | ✓ |
+| `.mmdf`, `.babyl`, `.rmail`, Maildir, MH | – | ✓ |
+| 메일이 들어 있는 `.zip` | – | ✓ |
+| TNEF `.tnef`, `winmail.dat` | – | ✓ |
+| 내장 메일이 있는 CMS SignedData `.p7m`, `.p7s` | – | ✓ |
 
-**PST·OST는 파일당 최대 2 GiB입니다.** Windows 앱의 OST와 CLI의 PST·OST는 ANSI 14·15, Unicode 21·23에서 512바이트 페이지와 블록 인코딩 0·1·2를, Unicode 36에서는 4 KiB 페이지와 인코딩 0을 지원합니다. 새 Outlook 전용 캐시, 보호된 OST, 서버에만 남은 메일, 삭제 항목 복구는 현재 지원 범위 밖입니다. EDB와 NSF는 CLI에서 형식만 식별합니다. [PST 검증](docs/pst-verification.md) · [OST 검증](docs/ost-expanded-verification.md) · [CLI 세부 지원 범위](docs/rust-mail-cli.md#입력과-첨부)
+✓ 지원 · – 미지원
+
+PST·OST는 파일당 최대 **2 GiB**이며, Windows 앱의 PST는 Unicode 23(인코딩 0·1)을 지원합니다. 확장자 없는 MBOX는 직접 선택해 열 수 있습니다. [PST 판독 조건](docs/pst-verification.md) · [OST 판독 조건](docs/ost-expanded-verification.md) · [CLI 형식별 지원 범위](docs/rust-mail-cli.md#입력과-첨부)
 
 ### 디스크 이미지
 
