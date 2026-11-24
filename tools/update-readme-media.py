@@ -29,6 +29,7 @@ SCENES = (
 
 POINTER = ((0, 0), (0, 20), (5, 15), (9, 23), (13, 21), (9, 14), (16, 14))
 RING_COLOR = (60, 164, 243)
+PLAYBACK_SPEED = 1.2
 
 
 def shared_palette(screens):
@@ -79,7 +80,7 @@ def render(captures, output):
             draw.ellipse((x - ring, y - ring, x + ring, y + ring), outline=RING_COLOR, width=3)
         draw.polygon([(x + dx, y + dy) for dx, dy in POINTER], fill="white", outline=(24, 28, 34), width=2)
         frames.append(image.quantize(palette=palette, dither=Image.Dither.NONE))
-        durations.append(duration)
+        durations.append(round(duration / (10 * PLAYBACK_SPEED)) * 10)
 
     click_frames = []
     for index, ((_, target, hold), screen) in enumerate(zip(SCENES, screens)):

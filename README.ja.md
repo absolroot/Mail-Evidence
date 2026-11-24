@@ -4,7 +4,7 @@
 
 <h3 align="center">調査の進めやすさを重視したメール分析ツール</h3>
 
-[한국어](README.md) · [English](README.en.md) · [日本語](README.ja.md)
+[English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md)
 
 [Windows x64 軽量版](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-compact.zip) · [Windows x64 ランタイム同梱版](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
 
@@ -33,20 +33,23 @@ HTML 本文では外部画像、スクリプト、リンク先への移動が既
 
 ### メールファイルとメールストア
 
-Windows アプリ **1.6.0** から、次の資料を直接開けます。読み取り機能はアプリに含まれているため、CLI を別途インストールする必要はありません。
+普段見かけるメール形式のほとんどに対応しています。懐かしの Outlook Express のメールも開けます。
 
-| 資料 | 読み取れる内容 |
-| --- | --- |
-| インターネットメール `.eml`、`.nws`、`.mime`、`.rfc822` とメールボックス `.mbox` | ヘッダー、本文、MIME 添付ファイルを読み取ります。拡張子のない MBOX もエンベロープ行から識別できます。 |
-| Outlook `.msg` | ANSI・Unicode のメール、本文、配送ヘッダー、通常の添付ファイルを読み取ります。内包されたメールは個別に開けます。 |
-| Outlook `.pst`、`.ost` | 対応する ANSI・Unicode ストアから、フォルダー、ローカルのメール、残っている配送ヘッダー、通常の添付ファイルを読み取ります。 |
-| Outlook Express `.dbx`、`.mbx` | Outlook Express 5・6 の DBX と、4 の JMF6 MBX からメールと添付ファイルを読み取ります。 |
-| Outlook for Mac `.olm` | メールと紐づく添付ファイルを読み取り、ZIP 内の位置を表示します。 |
-| Apple Mail `.emlx`、`.partial.emlx` | ファイル内のメールのバイト範囲を読み取ります。部分 EMLX では、保存場所とサイズが一致する外部添付ファイルも参照できます。 |
-| `.mmdf`、`.babyl`、`.rmail`、Maildir、MH | メールと MIME 添付ファイルを読み取ります。Maildir と MH はフォルダーを選択して開きます。 |
-| メールを含む `.zip` | ZIP 内の EML、EMLX、MBOX を読み取ります。 |
-| 単体の TNEF `.tnef`、`winmail.dat` | 保存されている通常の添付ファイルを読み取ります。 |
-| CMS SignedData `.p7m`、`.p7s` | DER 形式の SignedData に内包されたメールを読み取ります。署名の検証と復号は対象外です。 |
+| 形式 | Windows アプリ | Rust CLI |
+| --- | :---: | :---: |
+| インターネットメール `.eml` | ✓ | ✓ |
+| `.nws`、`.mime`、`.rfc822` | ✓ | ✓ |
+| メールボックス `.mbox` | ✓ | ✓ |
+| Outlook メール `.msg` | ✓ | ✓ |
+| Outlook アーカイブ `.pst` | ✓ | ✓ |
+| Outlook のオフラインメール `.ost` | ✓ | ✓ |
+| Outlook Express `.dbx`、`.mbx` | ✓ | ✓ |
+| Outlook for Mac `.olm` | ✓ | ✓ |
+| Apple Mail `.emlx`、`.partial.emlx` | ✓ | ✓ |
+| `.mmdf`、`.babyl`、`.rmail`、Maildir、MH | ✓ | ✓ |
+| メールを含む `.zip` | ✓ | ✓ |
+| TNEF `.tnef`、`winmail.dat` | ✓ | ✓ |
+| メールを含む CMS SignedData `.p7m`、`.p7s` | ✓ | ✓ |
 
 PST・OST は 1 ファイルあたり最大 **2 GiB** です。512 バイトページは ANSI 14・15 と Unicode 21・23 のエンコード方式 0・1・2 に、4 KiB ページは Unicode 36 の方式 0 に対応しています。EDB・NSF は形式の識別まで対応しています。新しい Outlook 専用のキャッシュ、保護された OST、サーバーにのみ残るメール、削除済みアイテムの復元は対象外です。[Windows 版の対応範囲](docs/windows-format-coverage.md) · [CLI の形式別対応範囲](docs/rust-mail-cli.md#입력과-첨부)
 
