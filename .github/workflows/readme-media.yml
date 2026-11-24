@@ -40,6 +40,10 @@ jobs:
         with:
           python-version: "3.12"
       - name: Build the attachment preview worker
+        env:
+          CARGO_PROFILE_RELEASE_OPT_LEVEL: "0"
+          CARGO_PROFILE_RELEASE_LTO: "off"
+          CARGO_PROFILE_RELEASE_CODEGEN_UNITS: "16"
         run: |
           rustup update stable --no-self-update
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
