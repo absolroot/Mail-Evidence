@@ -10,6 +10,7 @@
 
 <p align="center">
   <a href="https://github.com/absolroot/Mail-Evidence/releases/latest"><img src="https://badgen.net/github/release/absolroot/Mail-Evidence/latest" alt="Latest release"></a>
+  <a href="https://www.codefactor.io/repository/github/absolroot/mail-evidence/issues/main"><img src="https://www.codefactor.io/repository/github/absolroot/mail-evidence/badge/main" alt="CodeFactor code quality grade"></a>
   <a href="https://github.com/absolroot/Mail-Evidence/actions/workflows/ci.yml"><img src="https://github.com/absolroot/Mail-Evidence/actions/workflows/ci.yml/badge.svg?branch=main&amp;event=push" alt="Windows build and tests"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/absolroot/Mail-Evidence?color=blue" alt="Apache 2.0 license"></a>
 </p>
