@@ -73,7 +73,7 @@ PST・OST は **1 ファイルにつき 2 GiB** までです。Windows アプリ
 
 ## 調査機能
 
-[![PNG の長さフィールドと根拠となるバイト列を表示した画面](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
+[![メール検索、添付ファイルのプレビュー、異常の根拠、該当バイトの16進表示をたどる Mail Evidence のデモ](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
 
 - **検索と照合。** 日付、読み込んだ資料、添付ファイルの有無、異常の種類で絞り込めます。同じメールアドレス、ホスト、URL、添付ファイルの SHA-256、Message-ID を持つメールも検索できます。
 - **本文と添付ファイルの確認。** HTML とプレーンテキストを切り替えられます。外部画像、スクリプト、リンク先への移動は既定でブロックされます。HTML 表示には [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution) を使います。
@@ -98,6 +98,8 @@ PST・OST は **1 ファイルにつき 2 GiB** までです。Windows アプリ
 ## 調査例と関連ツール
 
 [添付ファイル検証用メール](tests/fixtures/attachment-boundaries/02-mixed.eml) を開いて `invalid-idat.png` を選びます。PNG の IDAT には **8,200 バイト**と記録されていますが、使える領域は **37 バイト**です。**添付ファイルの 16 進表示を開く**を選ぶと、デコード後の `0x21` を確認できます。戻ると、選択していた項目がそのまま表示されます。
+
+[![PNG の長さフィールドと根拠となるバイト列を表示した画面](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
 
 | ツール | 主な用途 |
 | --- | --- |
@@ -145,3 +147,5 @@ dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-onl
 ```
 
 [CLI の使い方](docs/rust-mail-cli.md) · [検証用データ](tests/fixtures/README.md) · [EWF ライブラリのビルド](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [依存ライブラリのライセンス](licenses/)
+
+英語の画面画像と操作デモを作り直すには、Windows に Pillow をインストールして `python tools/update-readme-media.py` を実行します。

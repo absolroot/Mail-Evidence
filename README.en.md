@@ -73,7 +73,7 @@ The app finds EML, MBOX, MSG, PST, and OST files on readable NTFS volumes. Logic
 
 ## Investigation features
 
-[![Mail Evidence showing an anomalous PNG length field and the supporting bytes](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
+[![Mail Evidence walkthrough showing live search, attachment preview, anomaly evidence, and the marked bytes in hex](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
 
 - **Search and cross-reference.** Filter by date, source, attachment status, or anomaly type. Find other messages with the same address, host, URL, attachment SHA-256, or Message-ID.
 - **Read messages and attachments.** Switch between HTML and plain text. External images, scripts, and link navigation are blocked by default. HTML rendering uses [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution).
@@ -98,6 +98,8 @@ Treat findings as leads. Support services and tracking links can produce legitim
 ## Example and related tools
 
 Open the [attachment test message](tests/fixtures/attachment-boundaries/02-mixed.eml) and select `invalid-idat.png`. The PNG declares **8,200 bytes** for the IDAT chunk, where there is room for at most **37 bytes**. **Open full attachment hex** opens the decoded bytes at `0x21`. When you return, the same finding remains selected.
+
+[![Mail Evidence showing an anomalous PNG length field and the supporting bytes](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
 
 | Tool | Typical use |
 | --- | --- |
@@ -145,3 +147,5 @@ dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-onl
 ```
 
 [CLI usage](docs/rust-mail-cli.md) · [Test fixtures](tests/fixtures/README.md) · [EWF library build](third_party/ntfs-tracer/modules/EvidenceImage/Logical/Native/README.md) · [Dependency notices](licenses/)
+
+To refresh the English screenshot and walkthrough on Windows, install Pillow and run `python tools/update-readme-media.py`.

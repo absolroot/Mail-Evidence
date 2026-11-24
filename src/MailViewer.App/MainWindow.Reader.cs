@@ -351,6 +351,7 @@ public partial class MainWindow
     {
         ReaderSearchHint.Text = L("메일 검색", "Search mail");
         ReaderBackButton.Content = L("목록으로 돌아가기", "Back to messages");
+        SetStaticLabels(ReaderHeader);
         ReaderToLabel.Text = L("받는 사람", "To");
         ReaderEmptyHint.Text = L("목록에서 읽을 메일을 선택하세요.", "Select a message to read it.");
         RefreshMailboxFilterCaption();

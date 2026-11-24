@@ -75,7 +75,7 @@ Windows 앱은 읽을 수 있는 NTFS 볼륨에서 `.eml`, `.mbox`, `.msg`, `.ps
 
 ## 조사 기능
 
-[![Mail Evidence의 폴더, 메일 목록과 읽기 창. 첨부 이상 징후 목록 아래에서 PNG 길이와 문제 바이트를 대조하는 화면](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
+[![전체 메일에서 검색하고 첨부를 미리 본 뒤 이상 징후와 HEX 근거를 확인하는 Mail Evidence 사용 데모](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
 
 - **메일 찾기와 분류** 제목·발신자·수신자·본문·첨부 이름으로 검색하고, 날짜·자료·첨부 유무·이상 징후 유형으로 결과를 좁힙니다. 주소·호스트·URL·첨부 SHA-256·Message-ID가 같은 다른 메일도 찾을 수 있습니다.
 - **본문과 관련 메일** HTML 본문을 기본으로 열고 평문으로 전환할 수 있습니다. 외부 이미지와 스크립트, 링크 이동은 기본 차단되며, 본문 링크를 누르면 기록된 URL과 호스트를 확인할 수 있습니다. 관련 메일은 참조 헤더를 따라 엽니다. HTML 표시에는 [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution)이 필요합니다.
@@ -103,6 +103,8 @@ Windows 앱은 읽을 수 있는 NTFS 볼륨에서 `.eml`, `.mbox`, `.msg`, `.ps
 ## 조사 예시와 도구 비교
 
 [첨부 구조 검증 샘플](tests/fixtures/attachment-boundaries/02-mixed.eml)을 열면 이상 징후 네 건이 표시됩니다. `invalid-idat.png`를 고르면 PNG에 기록된 **8,200바이트**와 파일에 들어갈 수 있는 **최대 37바이트**를 즉시 비교할 수 있습니다. **첨부 HEX 자세히 보기**를 누르면 디코딩한 바이트의 `0x21` 위치가 열리고, 돌아오면 같은 징후가 선택됩니다.
+
+[![Mail Evidence의 폴더, 메일 목록과 읽기 창. 첨부 이상 징후 목록 아래에서 PNG 길이와 문제 바이트를 대조하는 화면](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
 
 | 도구 | 공식 문서에서 확인한 쓰임 |
 | --- | --- |
@@ -154,3 +156,5 @@ E01·Ex01용 DLL을 직접 빌드하려면 [libewf 빌드 안내](third_party/nt
 - **소스** [Windows 앱](src/MailViewer.App/) · [C# 코어](src/MailViewer.Core/) · [Rust CLI](engine/) · [첨부 미리보기 워커](preview/)
 - **검증** [EML·MBOX](docs/ui-verification.md) · [MSG](docs/msg-ui-verification.md) · [PST](docs/pst-ui-verification.md) · [OST](docs/ost-expanded-ui-verification.md) · [Rust CLI](docs/rust-mail-cli.md#검증) · [형식별 테스트 자료](tests/)
 - **고지** [XstReader](src/MailViewer.Core/ThirdParty/XstReader/NOTICE.md) · [배포 라이브러리](licenses/)
+
+README의 영어 화면과 GIF를 다시 만들려면 Windows에서 Pillow를 설치한 뒤 `python tools/update-readme-media.py`를 실행하세요.

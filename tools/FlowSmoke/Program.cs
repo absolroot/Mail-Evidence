@@ -26,7 +26,7 @@ public static partial class Program
     {
         if (args.Length is < 2 or > 4)
         {
-            Console.Error.WriteLine("FlowSmoke <Mail Evidence checkout> <new output folder> [--light|--dark] [--msg|--pst|--ost|--ost-expanded|--investigation|--mailbox-folders|--mailbox-marks|--reader-attachments]");
+            Console.Error.WriteLine("FlowSmoke <Mail Evidence checkout> <new output folder> [--light|--dark] [--msg|--pst|--ost|--ost-expanded|--investigation|--mailbox-folders|--mailbox-marks|--reader-attachments|--readme-demo]");
             return 2;
         }
         var workspace = Path.GetFullPath(args[0]);
@@ -62,6 +62,8 @@ public static partial class Program
                     await RunMailboxMarks(output, theme);
                 else if (options.Contains("--mail-fields"))
                     await RunMailFields(workspace, output, theme);
+                else if (options.Contains("--readme-demo"))
+                    await RunReadmeDemo(workspace, output);
                 else if (options.Contains("--attachment-boundaries"))
                     await RunAttachmentBoundaries(workspace, output, theme);
                 else if (options.Contains("--reader-attachments"))
