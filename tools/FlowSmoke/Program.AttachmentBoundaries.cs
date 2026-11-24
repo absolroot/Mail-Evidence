@@ -39,6 +39,7 @@ public static partial class Program
         var window = new MainWindow(paths) { ShowInTaskbar = false, Width = 1190, Height = 795 };
         window.Show();
         await Idle();
+        ClickMenu(window, "KoreanLanguageMenuItem");
         if (theme is not null) ClickMenu(window, theme == "--dark" ? "DarkThemeMenuItem" : "LightThemeMenuItem");
         Click(window, "AnalyzeButton");
         var grid = Field<DataGrid>(window, "ResultsGrid");

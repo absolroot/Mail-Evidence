@@ -13,7 +13,9 @@ public partial class MainWindow
         try
         {
             SettingsThemeBox.SelectedIndex = Appearance.Dark ? 1 : 0;
-            SettingsLanguageBox.SelectedIndex = _english ? 1 : 0;
+            SettingsLanguageBox.SelectedItem = MailText.Current;
+            foreach (MenuItem item in DisplayLanguageMenu.Items)
+                item.IsChecked = Equals(item.Tag, MailText.Current);
             SourcesTab.ToolTip = L("설정 (Ctrl+,)", "Settings (Ctrl+,)");
         }
         finally
@@ -30,8 +32,8 @@ public partial class MainWindow
 
     private void ChangeSettingsLanguage(object sender, SelectionChangedEventArgs e)
     {
-        if (!_syncingDisplaySettings && SettingsLanguageBox is { SelectedIndex: >= 0 } && CanChooseSources)
-            SetDisplayLanguage(SettingsLanguageBox.SelectedIndex == 1);
+        if (!_syncingDisplaySettings && SettingsLanguageBox?.SelectedItem is MailLocale locale && CanChooseSources)
+            SetDisplayLanguage(locale);
     }
 
     private void SetDisplayTheme(bool dark)

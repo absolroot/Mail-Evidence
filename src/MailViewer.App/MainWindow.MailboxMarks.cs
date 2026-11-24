@@ -146,8 +146,7 @@ public partial class MainWindow
         if (day == today) return L("오늘", "Today");
         if (day == today.AddDays(-1)) return L("어제", "Yesterday");
         if (day.Year == today.Year && day.Month == today.Month) return L("이번 달", "This month");
-        if (day.Year == today.Year) return L($"{day.Month}월", day.ToString("MMMM", CultureInfo.InvariantCulture));
-        return L($"{day.Year}년 {day.Month}월", day.ToString("MMMM yyyy", CultureInfo.InvariantCulture));
+        return MailText.Month(day, includeYear: day.Year != today.Year);
     }
 }
 

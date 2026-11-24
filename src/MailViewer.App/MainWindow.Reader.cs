@@ -325,7 +325,7 @@ public partial class MainWindow
     {
         int count = attachments.Count;
         BodyAttachmentsButton.Visibility = count > 0 ? Visibility.Visible : Visibility.Collapsed;
-        string countLabel = L($"첨부파일 {count:N0}개", count == 1 ? "1 attachment" : $"{count:N0} attachments");
+        string countLabel = count == 1 ? L("첨부파일 1개", "1 attachment") : L($"첨부파일 {count:N0}개", $"{count:N0} attachments");
         string? name = count == 1 ? attachments[0].Name : null;
         BodyAttachmentCount.Text = countLabel;
         BodyAttachmentName.Text = name ?? "";

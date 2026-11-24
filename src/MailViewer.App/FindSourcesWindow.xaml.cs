@@ -11,7 +11,7 @@ namespace MailViewer.App;
 
 public partial class FindSourcesWindow : Window
 {
-    private readonly Func<string, string, string> text;
+    private readonly Func<string, string, string> translate;
     private readonly OutlookLocationSet outlook;
     private sealed record LocationOption(string Label, string? Path, FolderSearchTarget? Target);
     private FoundSource[] hits = [];
@@ -22,9 +22,10 @@ public partial class FindSourcesWindow : Window
 
     internal FindSourcesWindow(Func<string, string, string> text, OutlookLocationSet outlook)
     {
-        this.text = text;
+        translate = text;
         this.outlook = outlook;
         InitializeComponent();
+        Language = JournalDesk.L.XmlLanguage;
         Appearance.ApplyToWindow(this);
         Heading.Text = Title = text("메일 파일 찾기", "Find mail sources");
         KnownLocations.Content = text("이 PC의 Outlook 저장 위치", "Outlook locations on this PC");
@@ -44,6 +45,10 @@ public partial class FindSourcesWindow : Window
         RefreshScope();
         Loaded += (_, _) => KnownLocations.Focus();
     }
+
+    private string text(string korean, string english) => translate(korean, english);
+    private string text(string korean, LocalizedMessage english) => MailText.Current.Code == "ko"
+        ? translate(korean, english.English()) : english.Translate();
 
     internal IReadOnlyList<FolderSearchHit> SelectedSources { get; private set; } = [];
 

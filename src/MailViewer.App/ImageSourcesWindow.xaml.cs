@@ -16,7 +16,7 @@ public partial class ImageSourcesWindow : Window
     internal static readonly string[] CommonFolders = [@"AppData\Local\Microsoft\Outlook", @"Documents\Outlook Files",
         @"OneDrive\Documents\Outlook Files", @"AppData\Local\Microsoft\Olk", "Desktop", "Downloads"];
     private readonly string imagePath;
-    private readonly Func<string, string, string> text;
+    private readonly Func<string, string, string> translate;
     private MailCandidate[] candidates = [];
     private CancellationTokenSource? active;
     private bool scannedEntireVolume;
@@ -24,8 +24,9 @@ public partial class ImageSourcesWindow : Window
     internal ImageSourcesWindow(string imagePath, Func<string, string, string> text)
     {
         this.imagePath = imagePath;
-        this.text = text;
+        translate = text;
         InitializeComponent();
+        Language = JournalDesk.L.XmlLanguage;
         Appearance.ApplyToWindow(this);
         Heading.Text = Title = text("이미지에서 메일 찾기", "Find mail in a disk image");
         ImageName.Text = imagePath;
@@ -39,6 +40,10 @@ public partial class ImageSourcesWindow : Window
         RefreshActions();
         Loaded += ReadImage;
     }
+
+    private string text(string korean, string english) => translate(korean, english);
+    private string text(string korean, LocalizedMessage english) => MailText.Current.Code == "ko"
+        ? translate(korean, english.English()) : english.Translate();
 
     internal IReadOnlyList<(string Path, DiskImageOrigin Origin)> ExtractedFiles { get; private set; } = [];
 

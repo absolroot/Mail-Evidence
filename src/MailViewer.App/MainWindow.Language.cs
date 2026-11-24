@@ -1,15 +1,15 @@
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
-using System.Windows.Markup;
+using System.Windows.Data;
 using MailViewer.Core;
 
 namespace MailViewer.App;
 
 public partial class MainWindow
 {
-    private static bool _english;
-
+    private static readonly ConditionalWeakTable<DependencyObject, Dictionary<string, string>> StaticLabelSources = new();
     private static readonly Dictionary<string, string> EnglishLabels = new(StringComparer.Ordinal)
     {
         ["파일(_F)"] = "_File",
@@ -128,32 +128,76 @@ public partial class MainWindow
         ["저장"] = "Save",
         ["결과 다시 검증"] = "Verify saved files",
         ["검색 결과로 돌아가기"] = "Return to search",
-        ["분석할 메일 파일을 선택하세요."] = "Choose mail files to analyze."
+        ["분석할 메일 파일을 선택하세요."] = "Choose mail files to analyze.",
+        ["검색 결과가 없습니다."] = "No results.",
+        ["돌아가기"] = "Back",
+        ["메일 목록과 읽기 창 너비 조절"] = "Resize the mail list and reading pane",
+        ["메일 정렬"] = "Sort mail",
+        ["목록에서 읽을 메일을 선택하세요."] = "Select a message to read.",
+        ["목록으로 돌아가기"] = "Back to messages",
+        ["북마크"] = "Bookmarks",
+        ["북마크 (0건)"] = "Bookmarks (0)",
+        ["설정 (Ctrl+,)"] = "Settings (Ctrl+,)",
+        ["여러 메일 선택"] = "Select multiple messages",
+        ["위치 복사"] = "Copy location",
+        ["이 파일의 모든 폴더"] = "All folders in this file",
+        ["이상 징후"] = "Anomalies",
+        ["이상 징후 (0)"] = "Anomalies (0)",
+        ["이상 징후 (0건)"] = "Anomalies (0)",
+        ["전체"] = "All mail",
+        ["전체 메일"] = "All messages",
+        ["전체 자료"] = "All sources",
+        ["첨부파일 (0)"] = "Attachments (0)",
+        ["첨부파일 근거 묶음"] = "Attachment evidence package",
+        ["취소"] = "Cancel",
+        ["크기 (B)"] = "Size (B)",
+        ["판독 문제"] = "Read issues",
+        ["평문"] = "Plain text",
+        ["폴더"] = "Folder",
+        ["필터"] = "Filters",
+        ["하위 폴더 포함"] = "Include subfolders",
+        ["현재 메일"] = "Current message"
     };
 
-    private static Dictionary<string, string> KoreanLabels { get; } =
-        EnglishLabels.ToDictionary(pair => pair.Value, pair => pair.Key, StringComparer.Ordinal);
+    private static string L(string korean, string english) => MailText.Get(korean, english);
 
-    private static string L(string korean, string english) => _english ? english : korean;
+    private static string L(string korean, LocalizedMessage english) => MailText.Get(korean, english);
+
+    private void InitializeLanguageChoices()
+    {
+        SettingsLanguageBox.ItemsSource = MailText.Locales;
+        foreach (var locale in MailText.Locales)
+        {
+            var item = new MenuItem { Header = locale.Name, Tag = locale, IsCheckable = true };
+            AutomationProperties.SetAutomationId(item, locale.Code switch
+            {
+                "ko" => "KoreanLanguageMenuItem",
+                "en" => "EnglishLanguageMenuItem",
+                "ja" => "JapaneseLanguageMenuItem",
+                _ => $"LanguageMenuItem-{locale.Code}"
+            });
+            item.Click += SwitchLanguage;
+            DisplayLanguageMenu.Items.Add(item);
+        }
+    }
 
     private void SwitchLanguage(object sender, RoutedEventArgs e)
     {
-        if (!CanChooseSources || sender is not MenuItem { Tag: string mode }) return;
-        SetDisplayLanguage(mode == "en");
+        if (!CanChooseSources || sender is not MenuItem { Tag: MailLocale locale }) return;
+        SetDisplayLanguage(locale);
+        RefreshDisplaySettings();
     }
 
-    private void SetDisplayLanguage(bool english)
+    private void SetDisplayLanguage(MailLocale locale)
     {
-        if (_english == english) return;
+        if (MailText.Current == locale) return;
 
         var field = (SearchFieldBox.SelectedItem as Choice<SearchField>)?.Value ?? SearchField.Any;
         int sourceIndex = SearchSourceBox.SelectedIndex;
         int attachment = SearchAttachmentBox.SelectedIndex;
-        _english = english;
-        JournalDesk.L.ApplyMailLanguage(english);
-        System.Globalization.CultureInfo.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(english ? "en-US" : "ko-KR");
+        MailText.Apply(locale, _persistLanguage);
         SetStaticLabels(this);
-        Language = XmlLanguage.GetLanguage(english ? "en-US" : "ko-KR");
+        Language = JournalDesk.L.XmlLanguage;
         PopulateFilters();
         SearchFieldBox.SelectedIndex = (int)field;
         SearchSourceBox.SelectedIndex = sourceIndex;
@@ -166,7 +210,6 @@ public partial class MainWindow
         RefreshMailboxTreeLanguage();
         if ((_rawSourceRecord ?? _activeRow?.Record) is { } record && RawBytesBox.ByteCount > 0)
         {
-            _rawName = TranslateStatic(_rawName);
             RawBytesBox.AddressLabel = RawAddressLabel(record);
             RawBytesBox.SelectRange(RawBytesBox.SelectionAnchor, RawBytesBox.SelectedOffset);
             RefreshRawLabels(record, new ByteRange(RawBytesBox.BaseOffset, RawBytesBox.ByteCount));
@@ -179,44 +222,49 @@ public partial class MainWindow
         UpdateCommands();
     }
 
-    private static string TranslateStatic(string label) =>
-        (_english ? EnglishLabels : KoreanLabels).GetValueOrDefault(label) ?? label;
-
     private static void SetStaticLabels(DependencyObject target)
     {
         if (target is TreeViewItem) return;
         switch (target)
         {
             case Window window:
-                window.Title = TranslateStatic(window.Title);
+                TranslateStatic(window, Window.TitleProperty);
                 break;
             case DataGrid table:
                 foreach (DataGridColumn column in table.Columns)
-                {
-                    if (column.Header is string label) column.Header = TranslateStatic(label);
-                }
+                    TranslateStatic(column, DataGridColumn.HeaderProperty);
                 break;
-            case MenuItem item when item.Header is string label:
-                item.Header = TranslateStatic(label);
+            case HeaderedItemsControl items:
+                TranslateStatic(items, HeaderedItemsControl.HeaderProperty);
                 break;
-            case HeaderedContentControl control when control.Header is string label:
-                control.Header = TranslateStatic(label);
+            case HeaderedContentControl headered:
+                TranslateStatic(headered, HeaderedContentControl.HeaderProperty);
                 break;
-            case ComboBoxItem item when item.Content is string label:
-                item.Content = TranslateStatic(label);
-                break;
-            case Button button when button.Content is string label:
-                button.Content = TranslateStatic(label);
+            case ContentControl content:
+                TranslateStatic(content, ContentControl.ContentProperty);
                 break;
             case TextBlock block:
-                block.Text = TranslateStatic(block.Text);
+                TranslateStatic(block, TextBlock.TextProperty);
                 break;
         }
-        string name = AutomationProperties.GetName(target);
-        if (!string.IsNullOrEmpty(name)) AutomationProperties.SetName(target, TranslateStatic(name));
+        TranslateStatic(target, AutomationProperties.NameProperty);
+        if (target is FrameworkElement) TranslateStatic(target, FrameworkElement.ToolTipProperty);
         foreach (object element in LogicalTreeHelper.GetChildren(target))
         {
             if (element is DependencyObject child) SetStaticLabels(child);
         }
+    }
+
+    private static void TranslateStatic(DependencyObject owner, DependencyProperty property)
+    {
+        if (BindingOperations.IsDataBound(owner, property) || owner.GetValue(property) is not string current) return;
+        if (!StaticLabelSources.TryGetValue(owner, out var sources) || !sources.TryGetValue(property.Name, out var korean))
+        {
+            if (!EnglishLabels.ContainsKey(current)) return;
+            korean = current;
+            StaticLabelSources.GetOrCreateValue(owner)[property.Name] = korean;
+        }
+        string localized = L(korean, EnglishLabels[korean]);
+        if (!StringComparer.Ordinal.Equals(current, localized)) owner.SetCurrentValue(property, localized);
     }
 }

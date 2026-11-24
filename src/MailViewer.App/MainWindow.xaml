@@ -251,10 +251,7 @@
                 <MenuItem Header="밝은 테마" Click="SwitchTheme" Tag="light" AutomationProperties.AutomationId="LightThemeMenuItem"/>
                 <MenuItem Header="어두운 테마" Click="SwitchTheme" Tag="dark" AutomationProperties.AutomationId="DarkThemeMenuItem"/>
                 <Separator/>
-                <MenuItem Header="표시 언어">
-                    <MenuItem Header="한국어" Tag="ko" Click="SwitchLanguage" AutomationProperties.AutomationId="KoreanLanguageMenuItem"/>
-                    <MenuItem Header="English" Tag="en" Click="SwitchLanguage" AutomationProperties.AutomationId="EnglishLanguageMenuItem"/>
-                </MenuItem>
+                <MenuItem x:Name="DisplayLanguageMenu" Header="표시 언어"/>
             </MenuItem>
             <MenuItem x:Name="ExportMenu" Header="내보내기(_X)" Visibility="Collapsed" AutomationProperties.AutomationId="ExportMenu">
                 <MenuItem x:Name="ExportSelectedButton" Header="현재 메일" Click="PrepareSelectedExport"/>
@@ -1356,11 +1353,9 @@
                                                 </DockPanel>
                                             </Border>
                                             <DockPanel Margin="12,4">
-                                                <ComboBox x:Name="SettingsLanguageBox" Style="{StaticResource ViewerComboBox}" DockPanel.Dock="Right" Width="165" AutomationProperties.Name="표시 언어"
-                                                          SelectionChanged="ChangeSettingsLanguage">
-                                                    <ComboBoxItem Content="한국어"/>
-                                                    <ComboBoxItem Content="English"/>
-                                                </ComboBox>
+                                                <ComboBox x:Name="SettingsLanguageBox" Style="{StaticResource ViewerComboBox}" DockPanel.Dock="Right" Width="172"
+                                                          AutomationProperties.Name="표시 언어" DisplayMemberPath="Name"
+                                                          SelectionChanged="ChangeSettingsLanguage"/>
                                                 <TextBlock Text="표시 언어" VerticalAlignment="Center"/>
                                             </DockPanel>
                                         </StackPanel>

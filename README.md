@@ -2,11 +2,13 @@
 
 <p align="center"><img src="assets/MailViewer.svg" alt="Mail Evidence 로고" width="72"></p>
 
-<h3 align="center">익숙한 메일 화면에서 이상 징후를 찾고, 원본까지 확인하세요.</h3>
+<h3 align="center">분석 경험을 고려한 사용자 친화적인 이메일 분석 도구</h3>
 
 <p align="center"><strong>메일 파일·폴더·디스크 이미지를 열어, 본문과 첨부 미리보기부터 헤더와 HEX 대조까지 한 앱에서 진행할 수 있습니다.</strong></p>
 
-[Windows x64 경량판 1.5.6](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.6/Mail-Evidence-v1.5.6-win-x64-compact.zip) · [Windows x64 런타임 포함판 1.5.6](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.6/Mail-Evidence-v1.5.6-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.6/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
+[한국어](README.md) · [English](README.en.md) · [日本語](README.ja.md)
+
+[Windows x64 경량판 1.5.7](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-compact.zip) · [Windows x64 런타임 포함판 1.5.7](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
 
 ## 왜 Mail Evidence를 쓰나요?
 
@@ -22,6 +24,8 @@
 1. **메일 자료 열기**에서 파일 또는 폴더를 선택하거나 끌어 놓고 **분석 시작**을 누르세요. 위치를 모르면 **이 PC에서 메일 파일 찾기…**로 Outlook 저장 위치나 지정한 폴더를 검색할 수 있습니다.
 2. 디스크 이미지가 있다면 **디스크 이미지…**에서 NTFS 볼륨을 고르세요. 후보 중 필요한 파일을 추출한 뒤 **분석 시작**을 누르면 됩니다. [디스크 이미지에서 메일 찾기](docs/disk-image-mail.md)
 3. **전체**에서 메일을 검색하거나 **이상 징후**에서 확인할 메일을 고르세요. 읽기 창에서 본문, 첨부, 헤더 원문과 원본 바이트를 오갈 수 있습니다. [이상 징후별 합성 메일](tests/fixtures/anomaly-ux-complete/README.md) · [회신 주소 변경 샘플](tests/fixtures/conversation-history/README.md)
+
+**설정 → 표시 언어**에서 한국어, 영어, 일본어, 독일어, 스페인어, 프랑스어, 인도네시아어, 이탈리아어, 폴란드어, 브라질 포르투갈어, 튀르키예어, 베트남어, 러시아어, 우크라이나어, 중국어 간체·번체를 선택할 수 있습니다.
 
 ## 어떤 자료를 열 수 있나요?
 

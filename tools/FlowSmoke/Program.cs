@@ -40,7 +40,9 @@ public static partial class Program
         {
             try
             {
-                if (options.Contains("--investigation"))
+                if (options.Contains("--languages"))
+                    await RunLanguages(workspace, output);
+                else if (options.Contains("--investigation"))
                 {
                     await RunInvestigation(output, theme);
                     await RunAllFindings(workspace, output, theme);

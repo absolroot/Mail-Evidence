@@ -311,7 +311,7 @@ public partial class MainWindow
         AttachmentPreviewFitButton.Visibility = AttachmentPreviewImage.Source is null ? Visibility.Collapsed : Visibility.Visible;
         bool fitWidth = _previewIsDocument ? _fitDocumentWidth : _fitImageWidth;
         AttachmentPreviewFitButton.Content = fitWidth
-            ? L("전체 맞춤", _previewIsDocument ? "Fit page" : "Fit image")
+            ? (_previewIsDocument ? L("페이지 맞춤", "Fit page") : L("이미지 맞춤", "Fit image"))
             : L("너비 맞춤", "Fit width");
         AttachmentPreviewFitButton.Tag = FindResource(fitWidth ? "Preview.FitWhole" : "Preview.FitWidth");
         AttachmentPreviewExpandButton.Content = _expandAttachmentPreview

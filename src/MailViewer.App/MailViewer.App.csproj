@@ -10,7 +10,7 @@
     <AssemblyName>MailEvidence</AssemblyName>
     <AssemblyTitle>Absolroot Mail Evidence</AssemblyTitle>
     <Product>Absolroot Mail Evidence</Product>
-    <Version>1.5.6</Version>
+    <Version>1.5.7</Version>
     <ApplicationIcon Condition="Exists('../../assets/MailViewer.ico')">../../assets/MailViewer.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
@@ -30,9 +30,9 @@
     <Compile Include="../../third_party/ntfs-tracer/gui/HexEvidenceView.xaml.cs" Link="HexEvidenceView.xaml.cs" />
     <Compile Include="../../third_party/ntfs-tracer/gui/ShellIcons.cs" Link="ShellIcons.cs" />
     <Compile Include="../../third_party/ntfs-tracer/gui/HexEvidenceField.cs" Link="HexEvidenceField.cs" />
-    <Compile Include="../../third_party/ntfs-tracer/gui/Localization.cs" Link="Localization.cs" />
     <EmbeddedResource Include="../../third_party/ntfs-tracer/gui/UiText.resx" Link="UiText.resx" ManifestResourceName="JournalDesk.UiText" />
     <EmbeddedResource Include="../../third_party/ntfs-tracer/gui/UiText.ko.resx" Link="UiText.ko.resx" ManifestResourceName="JournalDesk.UiText.ko" />
+    <EmbeddedResource Include="Locales/*.json" LogicalName="MailViewer.App.Locale.%(Filename).json" />
     <Resource Include="../../assets/MailViewer.ico" Link="Assets/MailViewer.ico" Condition="Exists('../../assets/MailViewer.ico')"/>
     <None Include="../../licenses/*.txt" Link="licenses/%(Filename)%(Extension)" CopyToPublishDirectory="PreserveNewest" />
     <EmbeddedResource Include="../../preview/target/release/mail-evidence-preview.exe"

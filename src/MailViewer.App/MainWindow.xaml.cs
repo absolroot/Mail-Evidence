@@ -20,17 +20,22 @@ public partial class MainWindow : Window
     private SearchRequest _appliedRequest = new();
     private SearchResult? _result;
     private ResultRow? _activeRow;
+    private readonly bool _persistLanguage;
 
-    public MainWindow(IReadOnlyList<string> paths, string? marksFolder = null)
+    public MainWindow(IReadOnlyList<string> paths, string? marksFolder = null, bool persistLanguage = false)
     {
+        _persistLanguage = persistLanguage;
         _mailMarks = new MailboxMarks(marksFolder);
         RefreshBookmarkScope();
         if (!Application.Current.Resources.Contains("Viewer.Canvas"))
         {
             Appearance.Apply(Application.Current, Appearance.MatchWindows());
         }
-        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(_english ? "en-US" : "ko-KR");
+        MailText.Apply(MailText.Current, save: false);
         InitializeComponent();
+        InitializeLanguageChoices();
+        SetStaticLabels(this);
+        Language = JournalDesk.L.XmlLanguage;
         Appearance.ApplyToWindow(this);
         AssignIcon();
         PopulateFilters();
@@ -377,7 +382,7 @@ public partial class MainWindow : Window
         bool updatingQuery = _searchTyping.IsEnabled || _liveSearch is not null || _composingSearch;
         string unapplied = updatingQuery ? $" · {L("검색 중…", "Searching…")}" :
             pending ? $" · {L("미적용 조건 있음", "Unapplied filters")}" : "";
-        SearchSummary.Text = $"{result.Hits.Count:N0}{L("건", " matches")}{partial}{unapplied}";
+        SearchSummary.Text = L($"{result.Hits.Count:N0}건", $"Results: {result.Hits.Count:N0}") + partial + unapplied;
         ExactSearchContext.Visibility = request.Exact is null ? Visibility.Collapsed : Visibility.Visible;
         if (request.Exact is { } key)
         {

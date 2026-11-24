@@ -17,12 +17,13 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+        MailText.LoadPreference();
         bool? requestedDark = e.Args.Contains("--light", StringComparer.OrdinalIgnoreCase) ? false
             : e.Args.Contains("--dark", StringComparer.OrdinalIgnoreCase) ? true : null;
         Appearance.Apply(this, requestedDark ?? Appearance.MatchWindows());
         string[] inputs = e.Args.Where(value => !value.Equals("--light", StringComparison.OrdinalIgnoreCase)
             && !value.Equals("--dark", StringComparison.OrdinalIgnoreCase)).ToArray();
-        MainWindow window = new(inputs);
+        MainWindow window = new(inputs, persistLanguage: true);
         Rect workArea = SystemParameters.WorkArea;
         window.Width = Math.Clamp(workArea.Width - 32, window.MinWidth, 1480);
         window.Height = Math.Clamp(workArea.Height - 32, window.MinHeight, 940);
