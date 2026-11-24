@@ -6,14 +6,14 @@
 
 [한국어](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-[Windows x64 경량판 1.5.7](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-compact.zip) · [Windows x64 런타임 포함판 1.5.7](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
+[Windows x64 경량판 1.6.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-compact.zip) · [Windows x64 런타임 포함판 1.6.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
 
 ## 조사 기능
 
-[![전체 메일 검색, 첨부 미리보기, 이상 징후와 HEX 원본을 확인하는 화면](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
+[![전체 메일 검색부터 첨부 미리보기, 이상 징후와 HEX까지 포인터로 따라가는 영어 데모](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
 
 - 폴더, 메일 목록, 읽기 창을 한 화면에 두고 입력과 동시에 검색합니다. 중요한 메일은 북마크하거나 상단에 고정할 수 있습니다.
-- 메일 파일과 폴더를 함께 열고, NTFS 디스크 이미지에서는 필요한 메일 파일을 골라 추출합니다. Rust CLI는 구형 PST와 Outlook Express의 DBX·MBX도 읽습니다.
+- 메일 파일과 폴더를 함께 열고, NTFS 디스크 이미지에서 필요한 메일을 골라 추출합니다. Windows 앱에서 구형 PST, Outlook Express의 DBX·MBX, Apple Mail의 EMLX도 직접 열 수 있습니다.
 - 첨부를 미리 보고, 이상 징후에서 헤더·링크 주소·파일 바이트를 대조합니다. 같은 주소, URL, Message-ID, 첨부 SHA-256이 나온 메일을 다시 찾을 수 있습니다.
 - 원본은 읽기 전용으로 엽니다. 메일, 검색 결과, 첨부를 내보내고 저장 파일의 길이와 SHA-256을 다시 확인할 수 있습니다.
 
@@ -31,25 +31,22 @@ HTML 본문은 외부 이미지, 스크립트와 링크 이동을 기본 차단�
 
 ### 메일 파일과 저장소
 
-| 형식 | Windows 앱 | Rust CLI |
-| --- | :---: | :---: |
-| 인터넷 메일 `.eml` | ✓ | ✓ |
-| `.nws`, `.mime`, `.rfc822` | – | ✓ |
-| 메일함 `.mbox` | ✓ | ✓ |
-| Outlook 메일 `.msg` | ✓ | ✓ |
-| Outlook 보관함 `.pst` | ✓ | ✓ |
-| Outlook 캐시 `.ost` | ✓ | ✓ |
-| Outlook Express `.dbx`, `.mbx` | – | ✓ |
-| Outlook for Mac `.olm` | – | ✓ |
-| Apple Mail `.emlx`, `.partial.emlx` | – | ✓ |
-| `.mmdf`, `.babyl`, `.rmail`, Maildir, MH | – | ✓ |
-| 메일이 들어 있는 `.zip` | – | ✓ |
-| TNEF `.tnef`, `winmail.dat` | – | ✓ |
-| 내장 메일이 있는 CMS SignedData `.p7m`, `.p7s` | – | ✓ |
+Windows 앱 **1.6.0**에서 아래 자료를 직접 열 수 있습니다. 앱에 판독기가 포함되어 있어 별도의 CLI 설치가 필요 없습니다.
 
-✓ 지원 · – 미지원
+| 자료 | 읽을 수 있는 항목 |
+| --- | --- |
+| 인터넷 메일 `.eml`, `.nws`, `.mime`, `.rfc822`와 메일함 `.mbox` | 헤더, 본문, MIME 첨부를 읽습니다. 확장자가 없는 MBOX도 봉투 줄로 식별할 수 있습니다. |
+| Outlook `.msg` | ANSI·Unicode 메일, 본문, 전송 헤더와 일반 첨부를 읽습니다. 내장 메일은 별도 항목으로 열 수 있습니다. |
+| Outlook `.pst`, `.ost` | 지원되는 ANSI·Unicode 저장소에서 폴더, 로컬 메일, 남아 있는 전송 헤더와 일반 첨부를 읽습니다. |
+| Outlook Express `.dbx`, `.mbx` | Outlook Express 5·6의 DBX와 4의 JMF6 MBX에서 메일과 첨부를 읽습니다. |
+| Outlook for Mac `.olm` | 메일과 연결된 첨부를 읽고 ZIP 내부 항목의 위치를 표시합니다. |
+| Apple Mail `.emlx`, `.partial.emlx` | 파일에 기록된 메일 범위를 읽습니다. 부분 EMLX에서 위치와 크기가 일치하는 외부 첨부도 확인할 수 있습니다. |
+| `.mmdf`, `.babyl`, `.rmail`, Maildir, MH | 메일과 MIME 첨부를 읽습니다. Maildir와 MH는 폴더를 선택해 엽니다. |
+| 메일이 들어 있는 `.zip` | ZIP 내부의 EML·EMLX·MBOX를 읽습니다. |
+| 독립 TNEF `.tnef`, `winmail.dat` | 저장된 일반 첨부를 읽습니다. |
+| CMS SignedData `.p7m`, `.p7s` | DER SignedData에 포함된 메일을 읽습니다. 서명 검증과 복호화는 지원 범위 밖입니다. |
 
-PST·OST는 파일당 최대 **2 GiB**이며, Windows 앱의 PST는 Unicode 23(인코딩 0·1)을 지원합니다. 확장자 없는 MBOX는 직접 선택해 열 수 있습니다. [PST 판독 조건](docs/pst-verification.md) · [OST 판독 조건](docs/ost-expanded-verification.md) · [CLI 형식별 지원 범위](docs/rust-mail-cli.md#입력과-첨부)
+PST·OST는 파일당 최대 **2 GiB**입니다. 512바이트 페이지는 ANSI 14·15와 Unicode 21·23에서 인코딩 0·1·2를, 4 KiB 페이지는 Unicode 36에서 인코딩 0을 읽습니다. EDB·NSF는 형식 식별까지 지원합니다. 새 Outlook 전용 캐시, 보호된 OST, 서버에만 남은 메일과 삭제된 항목 복구는 지원 범위 밖입니다. [Windows 판독과 원본 검증](docs/windows-format-coverage.md) · [CLI 형식별 지원 범위](docs/rust-mail-cli.md#입력과-첨부)
 
 ### 디스크 이미지
 
@@ -60,7 +57,7 @@ PST·OST는 파일당 최대 **2 GiB**이며, Windows 앱의 PST는 Unicode 23(�
 | QEMU·가상 디스크 | `.qcow`, `.qcow2`, `.qcow3`, `.vhd`, `.vhdx`, `.vmdk` |
 | AFF1 | `.aff` |
 
-Windows 앱은 읽을 수 있는 NTFS 볼륨에서 `.eml`, `.mbox`, `.msg`, `.pst`, `.ost`를 찾습니다. 형식에 따라 분할·압축 방식에 제약이 있으며, 잠긴 BitLocker와 논리 EWF(`.l01`, `.lx01`)는 이 메일 추출 흐름의 지원 범위 밖입니다. [메일 추출 절차](docs/disk-image-mail.md) · [NTFS Tracer 이미지 모듈의 상세 지원 조건](third_party/ntfs-tracer/modules/EvidenceImage/README.md)
+Windows 앱은 읽을 수 있는 NTFS 볼륨에서 EML·MBOX·MSG·PST·OST와 DBX·EMLX·OLM 등 지원 형식을 찾습니다. 형식에 따라 분할·압축 방식에 제약이 있으며, 잠긴 BitLocker와 논리 EWF(`.l01`, `.lx01`)는 이 메일 추출 흐름의 지원 범위 밖입니다. [메일 추출 절차](docs/disk-image-mail.md) · [NTFS Tracer 이미지 모듈의 상세 지원 조건](third_party/ntfs-tracer/modules/EvidenceImage/README.md)
 
 ### 첨부 미리보기
 
@@ -100,8 +97,8 @@ Windows 앱에는 .NET 10 SDK가 필요합니다. 첨부 미리보기 워커와 
 
 ```powershell
 cargo build --manifest-path preview/Cargo.toml --release --locked
-dotnet build MailViewer.slnx -c Release
 cargo build --manifest-path engine/Cargo.toml --release --locked
+dotnet build MailViewer.slnx -c Release
 dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-only
 ```
 

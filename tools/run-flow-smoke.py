@@ -13,7 +13,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("output", type=Path)
     parser.add_argument("--theme", choices=("light", "dark"))
-    parser.add_argument("--scenario", choices=("readme-demo", "mail", "msg", "pst", "ost", "ost-expanded", "investigation", "mailbox-folders", "mailbox-marks", "attachment-boundaries", "reader-attachments", "mail-fields", "startup-focus", "find-sources", "disk-image", "languages"), default="mail")
+    parser.add_argument("--scenario", choices=("formats", "readme-demo", "mail", "msg", "pst", "ost", "ost-expanded", "investigation", "mailbox-folders", "mailbox-marks", "attachment-boundaries", "reader-attachments", "mail-fields", "startup-focus", "find-sources", "disk-image", "languages"), default="mail")
     parser.add_argument("--executable", type=Path)
     args = parser.parse_args()
     smoke = args.executable.resolve() if args.executable else workspace / "tools/FlowSmoke/bin/Release/net10.0-windows/FlowSmoke.exe"

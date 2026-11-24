@@ -7,43 +7,120 @@ import subprocess
 import sys
 from tempfile import TemporaryDirectory
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 
-FRAMES = (
-    ("01-mail.png", "Browse the imported messages", 2400),
-    ("02-search.png", "Find a message as you type", 2800),
-    ("03-attachment.png", "Preview the selected attachment", 3400),
-    ("04-anomaly.png", "Compare the declared length with the available bytes", 5200),
-    ("05-hex.png", "Open the marked byte range at 0x21", 4000),
-    ("06-return.png", "Return to the same finding", 2300),
+# A target is recorded in the screenshot that precedes the action.
+SCENES = (
+    ("01-mail.png", None, 950),
+    ("02-typing.png", "search", 230),
+    ("03-search.png", None, 1080),
+    ("04-attachments.png", "attachments", 450),
+    ("05-preview.png", "preview", 1700),
+    ("06-all.png", "reset", 350),
+    ("07-anomaly-mailbox.png", "anomaly-mailbox", 620),
+    ("08-findings.png", "anomaly-tab", 450),
+    ("09-anomaly.png", "png-length", 2600),
+    ("10-hex.png", "hex", 2200),
+    ("11-return.png", "back", 1050),
 )
+
+POINTER = ((0, 0), (0, 20), (5, 15), (9, 23), (13, 21), (9, 14), (16, 14))
+RING_COLOR = (60, 164, 243)
+
+
+def shared_palette(screens):
+    width, height = screens[0].size
+    thumb_size = (width // 4, height // 4)
+    samples = Image.new("RGB", (thumb_size[0] * 4, thumb_size[1] * ((len(screens) + 3) // 4)))
+    for index, screen in enumerate(screens):
+        thumb = screen.resize(thumb_size, Image.Resampling.NEAREST)
+        samples.paste(thumb, ((index % 4) * thumb_size[0], (index // 4) * thumb_size[1]))
+    colors = samples.quantize(colors=253).getpalette()[:253 * 3]
+    palette = Image.new("P", (1, 1))
+    palette.putpalette(colors + [255, 255, 255, 24, 28, 34, *RING_COLOR])
+    return palette
 
 
 def render(captures, output):
     result = json.loads((captures / "flow-result.json").read_text(encoding="utf-8"))
     if result != {"Language": "en-US", "Findings": 4, "Offset": "0x21"}:
         raise RuntimeError(f"Unexpected README demo result: {result}")
-    output.mkdir(parents=True, exist_ok=True)
-    font = ImageFont.truetype(str(Path(os.environ["WINDIR"]) / "Fonts/seguisb.ttf"), 19)
-    frames = []
-    for name, caption, _ in FRAMES:
+
+    points = json.loads((captures / "clicks.json").read_text(encoding="utf-8"))
+    if set(points) != {target for _, target, _ in SCENES if target}:
+        raise RuntimeError("Click targets do not match the GIF sequence.")
+    screens = []
+    for name, _, _ in SCENES:
         with Image.open(captures / name) as raw:
             if raw.width < 1000 or raw.height < 600:
                 raise RuntimeError(f"README capture is too small: {name}")
             screen = raw.convert("RGB")
             screen.thumbnail((1280, 860), Image.Resampling.LANCZOS)
-        if name == "04-anomaly.png":
-            screen.save(output / "anomaly-evidence-dark.png", optimize=True)
-        card = Image.new("RGB", (screen.width, screen.height + 38), "#181b21")
-        card.paste(screen)
-        draw = ImageDraw.Draw(card)
-        draw.line((0, screen.height, screen.width, screen.height), fill="#555d6a")
-        draw.text((16, screen.height + 18), caption, font=font, anchor="lm", fill="#f2f4f7")
-        frames.append(card.quantize(colors=192))
-    frames[0].save(output / "full-app-walkthrough-dark.gif", save_all=True,
-                   append_images=frames[1:], duration=[ms for _, _, ms in FRAMES],
-                   optimize=True, loop=0)
+        screens.append(screen)
+
+    width, height = screens[0].size
+    if any(screen.size != (width, height) for screen in screens):
+        raise RuntimeError("The capture changed size during the demo.")
+    palette = shared_palette(screens)
+    frames, durations = [], []
+    position = (width - 46, 69)
+
+    def frame(screen, duration, ring=None):
+        image = screen.copy()
+        draw = ImageDraw.Draw(image)
+        x, y = position
+        if ring is not None:
+            draw.ellipse((x - ring, y - ring, x + ring, y + ring), outline=RING_COLOR, width=3)
+        draw.polygon([(x + dx, y + dy) for dx, dy in POINTER], fill="white", outline=(24, 28, 34), width=2)
+        frames.append(image.quantize(palette=palette, dither=Image.Dither.NONE))
+        durations.append(duration)
+
+    click_frames = []
+    for index, ((_, target, hold), screen) in enumerate(zip(SCENES, screens)):
+        if target:
+            point = points[target]
+            if not (0 <= point["X"] < 1 and 0 <= point["Y"] < 1):
+                raise RuntimeError(f"Click target outside the capture: {target}")
+            before = screens[index - 1]
+            start = position
+            end = (round(point["X"] * width), round(point["Y"] * height))
+            for step in range(1, 6):
+                ease = step / 5
+                ease = ease ** 2 * (3 - 2 * ease)
+                position = tuple(round(a + (b - a) * ease) for a, b in zip(start, end))
+                frame(before, 50)
+            click_frames.append((len(frames), position))
+            frame(before, 90, ring=9)
+            frame(screen, 90, ring=14)
+        frame(screen, hold)
+
+    output.mkdir(parents=True, exist_ok=True)
+    gif = output / "full-app-walkthrough-dark.gif"
+    frames[0].save(gif, save_all=True, append_images=frames[1:],
+                   duration=durations, optimize=True, loop=0)
+    # Verify the click indicator survives GIF encoding and RGB palette conversion.
+    with Image.open(gif) as demo:
+        if demo.n_frames < 40 or demo.size != (width, height):
+            raise RuntimeError("The published GIF lost the pointer movement frames.")
+        # Duplicate state frames can merge during encoding, so check the clicks by time.
+        elapsed = 0
+        click_times = {sum(durations[:index]) + 20: point for index, point in click_frames}
+        for index in range(demo.n_frames):
+            demo.seek(index)
+            end = elapsed + demo.info["duration"]
+            for when, (x, y) in list(click_times.items()):
+                if elapsed <= when < end:
+                    crop = demo.convert("RGB").crop((x - 10, y - 10, x + 11, y + 11))
+                    if RING_COLOR not in crop.getdata():
+                        raise RuntimeError(f"Missing click indicator at {when} ms.")
+                    del click_times[when]
+            elapsed = end
+        if click_times:
+            raise RuntimeError("The published GIF ended before the final click.")
+        print(f"README GIF: {demo.n_frames} frames, {elapsed / 1000:.2f}s, {width}×{height}")
+    screenshots = {name: screen for (name, _, _), screen in zip(SCENES, screens)}
+    screenshots["09-anomaly.png"].save(output / "anomaly-evidence-dark.png", optimize=True)
 
 
 def main():

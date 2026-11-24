@@ -43,8 +43,8 @@ public static class ExportService
         {
             throw new InvalidOperationException("내보낼 메일이 없습니다.");
         }
-        if (request.Kind == ExportKind.MessageBytes && records.Any(record => record.Format.IsFolderStore()))
-            throw new InvalidOperationException("PST·OST 메시지는 근거 묶음 또는 CSV로 저장해 주세요.");
+        if (request.Kind == ExportKind.MessageBytes && records.Any(record => !record.CanReadMessage))
+            throw new InvalidOperationException("원본 메시지 바이트를 저장할 수 없는 항목은 근거 묶음 또는 CSV로 저장해 주세요.");
         if (request.Kind is ExportKind.PstEvidence or ExportKind.OstEvidence)
         {
             var format = request.Kind == ExportKind.PstEvidence ? MailFormat.Pst : MailFormat.Ost;
@@ -77,7 +77,8 @@ public static class ExportService
                 {
                     ct.ThrowIfCancellationRequested();
                     var record = records[i];
-                    var (name, nature) = record.Format switch
+                    var (name, nature) = record.ContainerMessage is not null
+                        ? ("stored-message.bin", "stored-message-bytes") : record.Format switch
                     {
                         MailFormat.Eml => ("original.eml", "eml-original"),
                         MailFormat.Msg => ("original.msg", "msg-original"),
@@ -85,12 +86,16 @@ public static class ExportService
                         _ => throw new InvalidDataException("지원하지 않는 원본 형식입니다.")
                     };
                     var path = Reserve($"{i + 1:D5}-{name}");
-                    WriteNewFile(path, session.ReadRange(record.SourceId, record.MessageRange, ct));
+                    WriteNewFile(path, session.ReadRecordedMessage(record.Id, ct));
                     var item = Describe(path, nature, record.Id, ct);
-                    if (record.Format != MailFormat.Mbox && !item.Sha256.Equals(sourceById[record.SourceId].Sha256,
-                            StringComparison.OrdinalIgnoreCase))
+                    if (record.ContainerMessage is null && record.Format != MailFormat.Mbox &&
+                        !item.Sha256.Equals(sourceById[record.SourceId].Sha256, StringComparison.OrdinalIgnoreCase))
                         throw new IOException("저장한 파일이 확인한 원본 SHA-256과 다릅니다.");
-                    items.Add(item with { InputRange = record.MessageRange });
+                    items.Add(item with
+                    {
+                        InputRange = record.ContainerMessage is { } location ? location.FileRange : record.MessageRange,
+                        ContainerLocation = record.ContainerMessage
+                    });
                 }
             }
             else if (request.Kind is ExportKind.PstEvidence or ExportKind.OstEvidence)
@@ -110,14 +115,13 @@ public static class ExportService
                     }, Json));
                     items.Add(Describe(metadataPath, $"{kind}-message-metadata", record.Id, ct));
 
-                    if (record.TransportHeaderProperty is not { } header ||
+                    if ((record.TransportHeaderProperty is null && record.ContainerHeaders is not { CanRead: true }) ||
                         record.TransportHeaderState is not (HeaderEvidenceState.Present or HeaderEvidenceState.Empty))
                         continue;
                     var headerPath = Reserve($"{i + 1:D5}-transport-header.bin");
-                    WriteNewFile(headerPath, session.ReadPstPropertyRange(record.SourceId, header,
-                        new ByteRange(0, header.Length), ct));
+                    WriteNewFile(headerPath, session.ReadRecordedHeader(record.Id, record.HeaderRange, ct));
                     items.Add(Describe(headerPath, $"{kind}-transport-header-property", record.Id, ct)
-                        with { PstProperty = header });
+                        with { PstProperty = record.TransportHeaderProperty, ContainerLocation = record.ContainerHeaders });
                 }
             }
             else
@@ -140,7 +144,8 @@ public static class ExportService
                         InputRange = attachment.EncodedRange, OriginalName = attachment.Name,
                         TransferEncoding = attachment.TransferEncoding,
                         CompoundStream = attachment.CompoundStream,
-                        PstProperty = attachment.PstProperty
+                        PstProperty = attachment.PstProperty,
+                        ContainerLocation = attachment.ContainerLocation
                     });
                 }
             }
@@ -465,14 +470,19 @@ public static class ExportService
         HeaderEvidenceState? TransportHeaderState, string? TransportHeaderDetail,
         PstMessageLocator? PstMessage, PstPropertyLocator? TransportHeaderProperty)
     {
+        public ContainerEvidence? ContainerMessage { get; init; }
+        public ContainerEvidence? ContainerHeaders { get; init; }
+        public string? LogicalFolderPath { get; init; }
+
         public static RecordEntry FromRecord(MailRecord r) => new(r.Id, r.SourceId,
-            r.Format.IsFolderStore() ? null : r.MessageRange,
-            r.Format.IsFolderStore() && r.TransportHeaderProperty is null ? null : r.HeaderRange,
+            r.ContainerMessage is { } location ? location.FileRange : r.Format.IsFolderStore() ? null : r.MessageRange,
+            r.Format.IsFolderStore() && r.TransportHeaderProperty is null && r.ContainerHeaders is null ? null : r.HeaderRange,
             r.EnvelopeRange, r.SeparatorRange, r.Subject, r.From, r.To, r.Cc, r.Bcc, r.MessageId, r.DateRaw,
             r.Date, r.Attachments.Count, r.Format, r.TransportHeaderStream, r.TransportHeaderState, r.TransportHeaderDetail,
-            r.PstMessage, r.TransportHeaderProperty);
+            r.PstMessage, r.TransportHeaderProperty)
+            { ContainerMessage = r.ContainerMessage, ContainerHeaders = r.ContainerHeaders, LogicalFolderPath = r.LogicalFolder?.Path };
 
-        public string HeaderRangeKind => Format switch
+        public string HeaderRangeKind => ContainerHeaders?.Kind ?? Format switch
         {
             MailFormat.Pst => TransportHeaderProperty is null ? "unavailable" : "pst-property-offset",
             MailFormat.Ost => TransportHeaderProperty is null ? "unavailable" : "ost-property-offset",

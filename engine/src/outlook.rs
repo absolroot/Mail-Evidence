@@ -251,6 +251,11 @@ fn msg_record<R: Read + Seek>(
         record.date_raw = field(&fields, "Date");
         record.headers = Some(HeaderBlock {
             representation: "stored_cfb_stream",
+            code_page: Some(if tag == 0x007d001f {
+                1200
+            } else {
+                cp.unwrap_or(1252)
+            }),
             location: Location::CompoundStream {
                 path,
                 property_tag: tag,
@@ -345,6 +350,8 @@ fn msg_record<R: Read + Seek>(
                     .view
                     .issue("msg_attachment_unavailable", error, Some(fallback.clone()));
                 record.attachments.push(Attachment {
+                    media_type: None,
+                    content_id: None,
                     name: None,
                     location: Some(fallback),
                     representation: "attachment_payload_unavailable",
@@ -383,6 +390,8 @@ fn msg_attachment<R: Read + Seek>(
             ));
         }
         return Ok(Attachment {
+            media_type: None,
+            content_id: None,
             name,
             location: Some(Location::CompoundStream {
                 path: raw,
@@ -433,6 +442,8 @@ fn msg_attachment<R: Read + Seek>(
         }
     }
     Ok(Attachment {
+        media_type: None,
+        content_id: None,
         name,
         location,
         representation,
@@ -558,6 +569,17 @@ impl StoreMessage {
                 Ok(UnicodeAttachment::read(message.clone(), nid.into(), None)?)
             }
             Self::Ansi(message) => Ok(AnsiAttachment::read(message.clone(), nid.into(), None)?),
+        }
+    }
+
+    pub(crate) fn transport_headers(&self, expected_type: u16) -> io::Result<Vec<u8>> {
+        match self.message().raw_transport_header().map_err(invalid)? {
+            Some((ty, bytes)) if ty == expected_type && bytes.len() as u64 <= MESSAGE_LIMIT => {
+                Ok(bytes.to_vec())
+            }
+            _ => Err(invalid(
+                "The recorded transport-header property is unavailable.",
+            )),
         }
     }
 
@@ -730,6 +752,7 @@ fn describe_message(
             record.date_raw = field(&fields, "Date");
             record.headers = Some(HeaderBlock {
                 representation: "decoded_mapi_property",
+                code_page: Some(if ty == 0x1f { 1200 } else { cp.unwrap_or(1252) }),
                 location: property(tag, None),
                 bytes: bytes.len() as u64,
                 sha256: digest(bytes),
@@ -766,6 +789,8 @@ fn describe_message(
                         .or_else(|| string_prop(props.get(0x3704), cp));
                     match (attachment.data(), props.attachment_method().ok()) {
                         (Some(AttachmentData::Binary(value)), Some(1)) => Some(Attachment {
+                            media_type: None,
+                            content_id: None,
                             name,
                             location: Some(property(0x37010102, Some(id))),
                             representation: "decoded_mapi_property",
@@ -773,6 +798,8 @@ fn describe_message(
                             sha256: Some(digest(value.buffer())),
                         }),
                         _ => Some(Attachment {
+                            media_type: None,
+                            content_id: None,
                             name,
                             location: None,
                             representation: "attachment_payload_unavailable",
@@ -791,6 +818,8 @@ fn describe_message(
                         }),
                     );
                     Some(Attachment {
+                        media_type: None,
+                        content_id: None,
                         name: None,
                         location: None,
                         representation: "attachment_payload_unavailable",

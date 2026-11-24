@@ -11,6 +11,7 @@ mod outlook;
 mod profile;
 mod relations;
 mod rtf;
+mod viewer;
 
 use collect::{Candidate, Failure, Source, discover};
 use model::{ByteRange, Format, Inspection, Location};
@@ -247,6 +248,12 @@ fn run() -> io::Result<()> {
     let mut out = BufWriter::new(io::stdout().lock());
     let rest = args.collect::<Vec<_>>();
     match op.as_ref().and_then(|op| op.to_str()) {
+        Some("viewer-inspect") if rest.len() == 1 => {
+            viewer::inspect(Path::new(&rest[0]), &mut out)?;
+        }
+        Some("viewer-bytes") if rest.len() == 1 => {
+            viewer::read(Path::new(&rest[0]), &mut out)?;
+        }
         Some("report") if !rest.is_empty() => {
             let csv = rest[0] == "--csv";
             if rest.len() == usize::from(csv) {

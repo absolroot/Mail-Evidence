@@ -164,9 +164,9 @@ public partial class MainWindow
         foreach (MailRecord record in _session?.Records ?? [])
         {
             _sourceMailCounts[record.SourceId] = _sourceMailCounts.GetValueOrDefault(record.SourceId) + 1;
-            if (record.PstMessage is { } message)
+            if (record.FolderNodeId is { } folderId)
             {
-                var key = (record.SourceId, message.FolderNodeId);
+                var key = (record.SourceId, folderId);
                 _directMailCounts[key] = _directMailCounts.GetValueOrDefault(key) + 1;
             }
         }
@@ -233,9 +233,10 @@ public partial class MainWindow
     private static TreeViewItem FolderNode(PstFolder folder, bool duplicateName, string? sourcePath, bool expanded)
     {
         string name = string.IsNullOrWhiteSpace(folder.Name) ? folder.Path : folder.Name;
-        string nid = $"NID 0x{folder.NodeId:X8}";
-        string identity = sourcePath is null ? $"{folder.Path} · {nid}" : $"{folder.Path} · {nid} · {sourcePath}";
-        return CreateFolderItem(duplicateName ? $"{name} · {nid}" : name, identity, folder, expanded);
+        string locator = folder.IsLogicalPath ? folder.Path : $"NID 0x{folder.NodeId:X8}";
+        string identity = folder.IsLogicalPath ? folder.Path : $"{folder.Path} · {locator}";
+        if (sourcePath is not null) identity += $" · {sourcePath}";
+        return CreateFolderItem(duplicateName ? $"{name} · {locator}" : name, identity, folder, expanded);
     }
 
     private static TreeViewItem CreateFolderItem(string name, string identity, object scope, bool expanded, string icon = "Lucide.Folder")
@@ -539,10 +540,10 @@ public partial class MainWindow
             return group.DirectoryPath is { } directory ? (fullPath ? directory : Path.GetFileName(Path.TrimEndingDirectorySeparator(directory)))
                 : L("개별 메일", "Message files");
         SourceInfo? source = SourceForScope(request.SourceId);
-        if (source is null || !source.Format.IsFolderStore())
+        if (source is null || !source.Format.IsFolderStore() && request.PstFolderNodeId is null)
             return source is null ? L("전체 자료", "All sources") : fullPath ? source.Path : ScopeSourceName(source);
         string scope = PstSearchPath(request, fullPath) ?? L("모든 폴더", "All folders");
-        if (fullPath && request.PstFolderNodeId is { } nid)
+        if (fullPath && source.Format.IsFolderStore() && request.PstFolderNodeId is { } nid)
             scope += $" · NID 0x{nid:X8}";
         string file = fullPath ? source.Path : ScopeSourceName(source);
         return $"{file} · {scope}";
@@ -556,7 +557,7 @@ public partial class MainWindow
             : fullPath || string.IsNullOrWhiteSpace(selected.Name) ? selected.Path : selected.Name;
         if (!fullPath && selected is not null && session.PstFolders.Count(folder => folder.SourceId == request.SourceId &&
                 string.Equals(folder.Name, selected.Name, StringComparison.OrdinalIgnoreCase)) > 1)
-            path += $" · NID 0x{nid:X8}";
+            path += selected.IsLogicalPath ? $" · {selected.Path}" : $" · NID 0x{nid:X8}";
         return request.IncludePstSubfolders ? path + L(" · 하위 포함", " · includes subfolders") : path;
     }
 

@@ -8,7 +8,7 @@ using MimeKit.Text;
 namespace MailViewer.Core;
 
 public sealed record EvidenceLocation(ByteRange Range, CompoundStreamLocator? Stream = null,
-    PstPropertyLocator? Property = null);
+    PstPropertyLocator? Property = null, ContainerEvidence? Container = null);
 public sealed record ObservedLink(string Target, string Display, string Key, string Host,
     EvidenceLocation Location, int Line, int Column, string Part, bool DomainMismatch, bool DomainComparisonUnavailable);
 public sealed record AttachmentObservation(EvidenceLocation? NameLocation, string NameField,

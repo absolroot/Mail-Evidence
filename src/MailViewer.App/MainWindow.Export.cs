@@ -171,7 +171,7 @@ public partial class MainWindow
     {
         if (rows.All(row => row.Record.Format == MailFormat.Pst)) return ExportKind.PstEvidence;
         if (rows.All(row => row.Record.Format == MailFormat.Ost)) return ExportKind.OstEvidence;
-        return rows.Any(row => row.Record.Format.IsFolderStore()) ? ExportKind.Csv : ExportKind.MessageBytes;
+        return rows.Any(row => !row.Record.CanReadMessage) ? ExportKind.Csv : ExportKind.MessageBytes;
     }
 
     private static Choice<ExportKind>[] ExportFormats(ExportScope scope, IReadOnlyList<ResultRow> rows)
@@ -191,7 +191,8 @@ public partial class MainWindow
                 L("PST 메시지 근거 (JSON · 원본 헤더)", "PST message evidence (JSON · original header)"))],
             ExportKind.OstEvidence => [csv, new(ExportKind.OstEvidence,
                 L("OST 메시지 근거 (JSON · 저장된 전송 헤더)", "OST message evidence (JSON · stored transport header)"))],
-            ExportKind.MessageBytes => [csv, new(ExportKind.MessageBytes, OriginalFormatNames(rows))],
+            ExportKind.MessageBytes => [csv, new(ExportKind.MessageBytes, rows.Any(row => row.Record.ContainerMessage is not null)
+                ? L("저장된 메시지 바이트와 매니페스트", "Stored message bytes and manifest") : OriginalFormatNames(rows))],
             _ => [csv]
         };
     }

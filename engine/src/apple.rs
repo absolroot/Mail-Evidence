@@ -99,6 +99,11 @@ pub fn attachments(
         };
         let attachment = match recovered {
             Ok((location, bytes, sha256)) => Attachment {
+                media_type: part.content_type().and_then(|kind| {
+                    kind.subtype()
+                        .map(|subtype| format!("{}/{}", kind.ctype(), subtype))
+                }),
+                content_id: part.content_id().map(str::to_owned),
                 name,
                 sha256: Some(sha256),
                 bytes: Some(bytes),
@@ -112,6 +117,11 @@ pub fn attachments(
                     Some(stored.clone()),
                 );
                 Attachment {
+                    media_type: part.content_type().and_then(|kind| {
+                        kind.subtype()
+                            .map(|subtype| format!("{}/{}", kind.ctype(), subtype))
+                    }),
+                    content_id: part.content_id().map(str::to_owned),
                     name,
                     location: Some(stored),
                     representation: "attachment_payload_unavailable",

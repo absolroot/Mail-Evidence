@@ -4,7 +4,7 @@
 2. Outlook 폴더, 바탕 화면, 다운로드 폴더에서 후보를 찾습니다. 다른 위치에 저장한 파일은 **볼륨 전체 검색**을 사용하세요.
 3. 필요한 파일을 체크하고 **선택한 파일 추출…**을 누릅니다. 출력 폴더를 지정한 뒤 **분석 시작**을 누릅니다.
 
-EML·MSG·MBOX·PST·OST를 찾습니다. 숨김·시스템 파일도 검색하며, 같은 NTFS 파일을 가리키는 하드 링크는 후보 하나로 셉니다. 2 GiB를 넘는 PST·OST는 목록에 표시되고 추출은 비활성화됩니다.
+EML·MSG·MBOX·PST·OST, DBX·EMLX·OLM 등 지원 형식을 찾습니다. 숨김·시스템 파일도 검색하며, 같은 NTFS 파일을 가리키는 하드 링크는 후보 하나로 셉니다. 2 GiB를 넘는 PST·OST는 목록에 표시되고 추출은 비활성화됩니다.
 
 RAW·E01·Ex01·가상 디스크의 세부 조건은 이미지 모듈 문서에서 확인할 수 있습니다. E01·Ex01을 열 때는 `NtfsTracer.libewf.dll`을 실행 파일과 같은 폴더에 둡니다. 잠긴 BitLocker, 논리 EWF, 삭제 파일 복구, 새 Outlook 전용 캐시는 이 검색 범위 밖입니다. [이미지 형식과 제한](../third_party/ntfs-tracer/modules/EvidenceImage/README.md)
 

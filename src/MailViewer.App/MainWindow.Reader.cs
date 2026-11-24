@@ -316,7 +316,8 @@ public partial class MainWindow
                 } : null;
                 OpenInvestigationSource(observation, returnFocus);
             }
-            else if (_rawRange.Length == 0 && record.Format is MailFormat.Eml or MailFormat.Mbox)
+            else if (_rawRange.Length == 0 && record.CanReadMessage &&
+                (record.ContainerMessage is not null || record.Format is MailFormat.Eml or MailFormat.Mbox))
                 OpenMessageBytes(sender, e);
         }
     }

@@ -6,14 +6,14 @@
 
 [한국어](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-[Windows x64 compact](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-compact.zip) · [Windows x64 with runtime](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
+[Windows x64 compact](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-compact.zip) · [Windows x64 with runtime](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
 
 ## Investigation features
 
-[![Mail Evidence walkthrough covering search, attachment preview, findings, and hex](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
+[![English walkthrough showing pointer clicks through search, attachment preview, anomaly evidence, and hex](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
 
 - Browse folders, search as you type, and read the selected message in one window. Pin or bookmark messages for later.
-- Open mail files and folders together, or extract selected mail from a readable NTFS disk image. The Rust CLI also reads older PST and Outlook Express DBX and MBX files.
+- Open mail files and folders together, or extract selected mail from an NTFS disk image. The Windows app also opens older PST files, Outlook Express DBX and MBX, and Apple Mail EMLX.
 - Preview attachments and inspect the headers, link destinations, or bytes behind a finding. Find other messages by exact address, URL, Message-ID, or attachment SHA-256.
 - Open evidence read-only. Export selected messages, search results, or attachments and verify the saved sizes and SHA-256 hashes.
 
@@ -31,25 +31,22 @@ HTML messages block external images, scripts, and link navigation by default. HT
 
 ### Mail files and stores
 
-| Format | Windows app | Rust CLI |
-| --- | :---: | :---: |
-| Internet mail `.eml` | ✓ | ✓ |
-| `.nws`, `.mime`, `.rfc822` | – | ✓ |
-| Mailbox `.mbox` | ✓ | ✓ |
-| Outlook message `.msg` | ✓ | ✓ |
-| Outlook data file `.pst` | ✓ | ✓ |
-| Outlook offline data file `.ost` | ✓ | ✓ |
-| Outlook Express `.dbx`, `.mbx` | – | ✓ |
-| Outlook for Mac `.olm` | – | ✓ |
-| Apple Mail `.emlx`, `.partial.emlx` | – | ✓ |
-| `.mmdf`, `.babyl`, `.rmail`, Maildir, MH | – | ✓ |
-| `.zip` containing supported mail | – | ✓ |
-| TNEF `.tnef`, `winmail.dat` | – | ✓ |
-| CMS SignedData with an embedded message `.p7m`, `.p7s` | – | ✓ |
+The Windows app can open the inputs below directly starting with **1.6.0**. The readers are bundled with the app, so a separate CLI installation is unnecessary.
 
-✓ Supported · – Unsupported
+| Input | What the app can read |
+| --- | --- |
+| Internet mail `.eml`, `.nws`, `.mime`, `.rfc822` and mailbox `.mbox` | Headers, bodies, and MIME attachments. An MBOX envelope can identify a mailbox without an extension. |
+| Outlook `.msg` | ANSI and Unicode messages, bodies, transport headers, and regular attachments. Embedded messages can be opened as separate entries. |
+| Outlook `.pst`, `.ost` | Folders, local mail, available transport headers, and regular attachments from supported ANSI and Unicode stores. |
+| Outlook Express `.dbx`, `.mbx` | Mail and attachments from Outlook Express 5–6 DBX and Outlook Express 4 JMF6 MBX. |
+| Outlook for Mac `.olm` | Mail and linked attachments, with the location inside the ZIP archive. |
+| Apple Mail `.emlx`, `.partial.emlx` | The stored message byte range. Partial EMLX also supports external attachments with matching locations and sizes. |
+| `.mmdf`, `.babyl`, `.rmail`, Maildir, MH | Mail and MIME attachments. Open Maildir and MH by selecting the folder. |
+| Mail archives `.zip` | EML, EMLX, and MBOX members inside the ZIP. |
+| Standalone TNEF `.tnef`, `winmail.dat` | Stored regular attachments. |
+| CMS SignedData `.p7m`, `.p7s` | Mail embedded in DER SignedData. Signature verification and decryption are outside the supported coverage. |
 
-PST and OST files are limited to **2 GiB each**. The Windows app reads Unicode 23 PST files with block encoding 0 or 1. Select extensionless MBOX files directly. [PST variants](docs/pst-verification.md) · [OST variants](docs/ost-expanded-verification.md) · [CLI format details](docs/rust-mail-cli.md)
+PST and OST files are limited to **2 GiB** each. The app reads 512-byte pages in ANSI 14–15 and Unicode 21 and 23 with encodings 0–2, and 4 KiB pages in Unicode 36 with encoding 0. EDB and NSF support stops at format identification. The new Outlook cache, protected OST files, server-only mail, and deleted-item recovery are outside the supported coverage. [Windows format coverage](docs/windows-format-coverage.md) · [CLI format notes](docs/rust-mail-cli.md#입력과-첨부)
 
 ### Disk images
 
@@ -60,7 +57,7 @@ PST and OST files are limited to **2 GiB each**. The Windows app reads Unicode 2
 | Virtual disks | `.qcow`, `.qcow2`, `.qcow3`, `.vhd`, `.vhdx`, `.vmdk` |
 | AFF1 | `.aff` |
 
-The app finds EML, MBOX, MSG, PST, and OST files on readable NTFS volumes. Logical EWF and locked BitLocker volumes are outside this workflow. [Image format limits](third_party/ntfs-tracer/modules/EvidenceImage/README.md)
+On readable NTFS volumes the app finds supported formats including EML, MBOX, MSG, PST, OST, DBX, EMLX, and OLM. Logical EWF and locked BitLocker volumes are outside this workflow. [Image format limits](third_party/ntfs-tracer/modules/EvidenceImage/README.md)
 
 ### Attachment previews
 
@@ -100,8 +97,8 @@ Build the Windows app with the .NET 10 SDK. The attachment preview worker and CL
 
 ```powershell
 cargo build --manifest-path preview/Cargo.toml --release --locked
-dotnet build MailViewer.slnx -c Release
 cargo build --manifest-path engine/Cargo.toml --release --locked
+dotnet build MailViewer.slnx -c Release
 dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-only
 ```
 

@@ -62,6 +62,8 @@ public static partial class Program
                     await RunMailboxMarks(output, theme);
                 else if (options.Contains("--mail-fields"))
                     await RunMailFields(workspace, output, theme);
+                else if (options.Contains("--formats"))
+                    await RunFormats(output, theme);
                 else if (options.Contains("--readme-demo"))
                     await RunReadmeDemo(workspace, output);
                 else if (options.Contains("--attachment-boundaries"))

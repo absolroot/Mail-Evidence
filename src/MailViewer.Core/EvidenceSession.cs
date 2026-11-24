@@ -77,16 +77,29 @@ public sealed class EvidenceSession : IDisposable
                     var actualPath = GetActualPath(path, handle);
                     var length = RandomAccess.GetLength(handle);
                     var format = FindFormat(actualPath, handle);
+                    EngineSourceReader.ParsedSource? engine = null;
+                    StoreLayoutInfo? storeLayout = null;
+                    if (format is { } storage && storage.IsFolderStore())
+                    {
+                        try { storeLayout = PstReader.ValidateHeader(handle, length, storage, ct); }
+                        catch (InvalidDataException) when (storage == MailFormat.Pst && EngineSourceReader.CanUseWorker)
+                        { format = null; }
+                    }
+
+                    var sha256 = HashFile(handle, length, ct);
+                    if (format is null && EngineSourceReader.CanUseWorker)
+                    {
+                        engine = EngineSourceReader.Inspect(path, length, sha256, ct);
+                        format = engine.Format;
+                        storeLayout = engine.StoreLayout;
+                    }
                     if (format is null)
                     {
                         issues.Add(new ReadIssue(PathIdentity(path), "unsupported-format",
-                            $"{path}: 지원하는 EML, MBOX, MSG, PST 또는 OST 형식으로 확인되지 않았습니다."));
+                            $"{path}: 지원하는 메일 형식으로 확인되지 않았습니다.")
+                            { SourcePath = path });
                         continue;
                     }
-
-                    var storeLayout = format.Value.IsFolderStore()
-                        ? PstReader.ValidateHeader(handle, length, format.Value, ct) : null;
-                    var sha256 = HashFile(handle, length, ct);
                     DiskImageOrigin? imageOrigin = imageOrigins?.GetValueOrDefault(path);
                     if (imageOrigin is not null && !string.Equals(sha256, imageOrigin.ExtractedSha256, StringComparison.OrdinalIgnoreCase))
                         throw new InvalidDataException("The selected file does not match the SHA-256 recorded during image extraction.");
@@ -94,25 +107,42 @@ public sealed class EvidenceSession : IDisposable
                     if (handles.ContainsKey(sourceId))
                         continue;
                     source = new SourceInfo(sourceId, actualPath, format.Value, length, sha256,
-                        format switch
+                        engine is not null ? $"rust-inspection/1/{engine.Detected}" : format switch
                         {
                             MailFormat.Mbox => MboxReader.BoundaryRule,
                             MailFormat.Msg => MsgReader.BoundaryRule,
                             MailFormat.Pst => PstReader.BoundaryRule,
                             MailFormat.Ost => PstReader.BoundaryRuleForOst(storeLayout!),
                             _ => "eml-entire-file-v1"
-                        }, path) { StoreLayout = storeLayout, ImageOrigin = imageOrigin };
+                        }, path)
+                        { StoreLayout = storeLayout, ImageOrigin = imageOrigin, DetectedFormat = engine?.Detected, IndexSummary = engine?.IndexSummary() };
 
                     var sourceRecords = new List<MailRecord>();
                     var sourceFolders = new List<PstFolder>();
-                    if (format == MailFormat.Eml)
+                    if (engine is not null)
+                        engine.AddRecords(source, sourceRecords, sourceFolders, issues, ct);
+                    else if (format == MailFormat.Eml)
                     {
                         ParseRecord(source, handle, new ByteRange(0, length), null, null, sourceRecords, issues, ct);
                     }
                     else if (format == MailFormat.Msg)
                     {
                         if (MsgReader.Parse(source, handle, issues, ct) is { } msg)
+                        {
                             sourceRecords.Add(msg);
+                            if (EngineSourceReader.CanUseWorker && msg.Attachments.Any(attachment => attachment.CompoundStoragePath is not null))
+                            {
+                                try
+                                {
+                                    EngineSourceReader.Inspect(path, length, sha256, ct)
+                                        .AddRecords(source, sourceRecords, sourceFolders, issues, ct, embeddedOnly: true);
+                                }
+                                catch (IOException error)
+                                {
+                                    issues.Add(new(source.Id, "embedded-msg", error.Message) { SourcePath = path });
+                                }
+                            }
+                        }
                     }
                     else if (format.Value.IsFolderStore())
                     {
@@ -310,7 +340,7 @@ public sealed class EvidenceSession : IDisposable
             ct.ThrowIfCancellationRequested();
             if (!ContainsSource(record.SourceId) || bookmarks is not null && !bookmarks.Contains(record.Id))
                 continue;
-            if (folderScope is not null && (record.PstMessage is not { } pst || !folderScope.Contains(pst.FolderNodeId)))
+            if (folderScope is not null && (record.FolderNodeId is not { } folderId || !folderScope.Contains(folderId)))
                 continue;
             examined++;
             if (recordKey is not null && record.Id != recordKey.Value) continue;
@@ -377,7 +407,9 @@ public sealed class EvidenceSession : IDisposable
         ObjectDisposedException.ThrowIf(disposed, this);
         ct.ThrowIfCancellationRequested();
         var record = recordsById[recordId];
-        var source = record.BodyParts.FirstOrDefault(part => part.PartPath == partPath)?.HtmlSource;
+        var body = record.BodyParts.FirstOrDefault(part => part.PartPath == partPath);
+        if (body?.EngineHtml is { } html) return html;
+        var source = body?.HtmlSource;
         if (source is null) return null;
         if (source.Location.Range.Length > 2 * 1024 * 1024)
             throw new InvalidDataException("HTML 본문이 미리보기 한도를 초과했습니다.");
@@ -418,7 +450,9 @@ public sealed class EvidenceSession : IDisposable
         if (attachment.Issue is not null || attachment.DecodedLength is null || attachment.Sha256 is null)
             throw new InvalidDataException(attachment.Issue ?? "첨부파일의 원본 위치를 확인할 수 없습니다.");
         byte[] bytes;
-        if (record.Format == MailFormat.Msg && attachment.CompoundStream is { } locator)
+        if (attachment.EngineAttachment is not null)
+            bytes = EngineSourceReader.ReadAttachment(sourcesById[record.SourceId], attachment, ct);
+        else if (record.Format == MailFormat.Msg && attachment.CompoundStream is { } locator)
             bytes = ReadCompoundRange(record.SourceId, locator, new ByteRange(0, locator.Length), ct);
         else if (record.Format.IsFolderStore() && attachment.PstProperty is { } pstProperty)
             bytes = ReadPstPropertyRange(record.SourceId, pstProperty, new ByteRange(0, pstProperty.Length), ct);
@@ -430,6 +464,40 @@ public sealed class EvidenceSession : IDisposable
             || !string.Equals(Convert.ToHexStringLower(SHA256.HashData(bytes)), attachment.Sha256, StringComparison.Ordinal))
             throw new InvalidDataException("첨부파일을 다시 읽은 결과가 분석 때 기록한 길이 또는 해시와 다릅니다.");
         return bytes;
+    }
+
+    public byte[] ReadContainerRange(string sourceId, ContainerEvidence location, ByteRange range, CancellationToken ct = default)
+    {
+        ObjectDisposedException.ThrowIf(disposed, this);
+        ct.ThrowIfCancellationRequested();
+        if (range.Offset < 0 || range.Length < 0 || range.Offset > location.Length || range.Length > location.Length - range.Offset)
+            throw new InvalidDataException("The requested range is outside the recorded location.");
+        if (location.FileRange is { } file)
+            return ReadRange(sourceId, new ByteRange(checked(file.Offset + range.Offset), range.Length), ct);
+        return EngineSourceReader.Read(sourcesById[sourceId], location, range, ct);
+    }
+
+    public byte[] ReadRecordedHeader(string recordId, ByteRange range, CancellationToken ct = default)
+    {
+        ObjectDisposedException.ThrowIf(disposed, this);
+        var record = recordsById[recordId];
+        if (record.ContainerHeaders is { } header)
+            return ReadContainerRange(record.SourceId, header, new ByteRange(range.Offset - record.HeaderRange.Offset, range.Length), ct);
+        if (record.TransportHeaderProperty is { } property)
+            return ReadPstPropertyRange(record.SourceId, property, range, ct);
+        if (record.TransportHeaderStream is { } stream)
+            return ReadCompoundRange(record.SourceId, stream, range, ct);
+        return ReadRange(record.SourceId, range, ct);
+    }
+
+    public byte[] ReadRecordedMessage(string recordId, CancellationToken ct = default)
+    {
+        ObjectDisposedException.ThrowIf(disposed, this);
+        var record = recordsById[recordId];
+        if (!record.CanReadMessage) throw new InvalidDataException("The original message bytes are unavailable.");
+        return record.ContainerMessage is { } location
+            ? ReadContainerRange(record.SourceId, location, new ByteRange(0, location.Length), ct)
+            : ReadRange(record.SourceId, record.MessageRange, ct);
     }
 
     public byte[] ReadCompoundRange(string sourceId, CompoundStreamLocator locator, ByteRange range,
@@ -468,7 +536,7 @@ public sealed class EvidenceSession : IDisposable
             return null;
         if (request.SourceId is null ||
             !PstFolders.Any(folder => folder.SourceId == request.SourceId && folder.NodeId == id))
-            throw new ArgumentException("PST·OST 폴더 검색에는 해당 원본과 폴더 NID가 필요합니다.", nameof(request));
+            throw new ArgumentException("선택한 자료에 해당 폴더가 없습니다.", nameof(request));
         var found = new HashSet<uint> { id };
         if (!request.IncludePstSubfolders)
             return found;
@@ -511,10 +579,23 @@ public sealed class EvidenceSession : IDisposable
         }
     }
 
+    public static IReadOnlyList<string> MailFileExtensions => EngineSourceReader.Extensions;
+
+    public static bool IsExtensionlessMailbox(string path)
+    {
+        if (Path.HasExtension(path)) return false;
+        try
+        {
+            using var handle = File.OpenHandle(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, FileOptions.RandomAccess);
+            return MboxReader.HasEnvelopePrefix(handle);
+        }
+        catch (Exception error) when (error is IOException or UnauthorizedAccessException) { return false; }
+    }
+
     private static MailFormat? FindFormat(string path, SafeFileHandle handle)
     {
         var extension = Path.GetExtension(path);
-        if (extension.Equals(".eml", StringComparison.OrdinalIgnoreCase))
+        if (EngineSourceReader.LooksLikeMime(path))
             return MailFormat.Eml;
         if (extension.Equals(".msg", StringComparison.OrdinalIgnoreCase) && MsgReader.HasSignature(handle))
             return MailFormat.Msg;

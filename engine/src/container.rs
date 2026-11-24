@@ -172,6 +172,8 @@ pub fn olm<R: Read + Seek>(input: R, view: &mut Inspection) -> io::Result<()> {
                         .filter(|path| !duplicates.contains(*path))
                         .and_then(|path| members.get(path).map(|member| (path, *member)));
                     let mut result = Attachment {
+                        media_type: None,
+                        content_id: None,
                         name,
                         location: None,
                         representation: "attachment_payload_unavailable",
@@ -483,6 +485,8 @@ fn flush_tnef(
 ) {
     if let Some((name, range)) = pending {
         record.attachments.push(Attachment {
+            media_type: None,
+            content_id: None,
             name,
             location: range.map(|range| Location::File { range }),
             representation: if range.is_some() {
@@ -549,6 +553,8 @@ pub fn cms(input: &mut (impl Read + Seek), size: u64, view: &mut Inspection) -> 
         let range = ByteRange::between(start, start + mail.len() as u64);
         let mut record = Record::new("cms_signed_payload", Location::File { range });
         record.attachments.push(Attachment {
+            media_type: None,
+            content_id: None,
             name: None,
             location: Some(Location::File { range }),
             representation: "unverified_cms_payload",

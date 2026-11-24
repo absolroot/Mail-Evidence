@@ -44,12 +44,26 @@ enum Backend {
 
 impl Reader {
     pub fn new(input: &File, source: &Source) -> io::Result<Self> {
+        Self::open(
+            input,
+            source.identification.format,
+            source.bytes,
+            source.identification.ndb,
+        )
+    }
+
+    pub(crate) fn open(
+        input: &File,
+        format: Format,
+        size: u64,
+        layout: Option<crate::model::NdbLayout>,
+    ) -> io::Result<Self> {
         let mut clone = input.try_clone()?;
         clone.seek(SeekFrom::Start(0))?;
-        let backend = match source.identification.format {
+        let backend = match format {
             Format::Msg => Backend::Compound(CompoundFile::open(clone)?),
             Format::Pst | Format::Ost => Backend::Store {
-                store: MailStore::read(input, source.bytes, source.identification.ndb)?,
+                store: MailStore::read(input, size, layout)?,
                 current: None,
             },
             Format::Zip | Format::Olm => Backend::Archive(Box::new(Archive {
@@ -72,14 +86,7 @@ impl Reader {
         message: Option<&mail_parser::Message<'_>>,
     ) -> io::Result<Vec<u8>> {
         let location = attachment.location.as_ref().ok_or_else(unavailable)?;
-        let data = if attachment.representation == MIME_PART {
-            let part = message
-                .and_then(|message| message.attachments().nth(index))
-                .ok_or_else(unavailable)?;
-            mime::decoded_attachment(part)?
-        } else {
-            self.raw(location)?
-        };
+        let data = self.attachment_bytes(attachment.representation, location, index, message)?;
         if Some(data.len() as u64) != attachment.bytes
             || attachment.sha256.as_deref() != Some(&digest(&data))
         {
@@ -89,6 +96,22 @@ impl Reader {
             ));
         }
         Ok(data)
+    }
+
+    pub(crate) fn attachment_bytes(
+        &mut self,
+        representation: &str,
+        location: &Location,
+        index: usize,
+        message: Option<&mail_parser::Message<'_>>,
+    ) -> io::Result<Vec<u8>> {
+        if representation == MIME_PART {
+            let part = message
+                .and_then(|message| message.attachments().nth(index))
+                .ok_or_else(unavailable)?;
+            return mime::decoded_attachment(part);
+        }
+        self.raw(location)
     }
 
     fn raw(&mut self, location: &Location) -> io::Result<Vec<u8>> {
@@ -129,19 +152,22 @@ impl Reader {
                 Backend::Store { store, current },
                 Location::StoreProperty {
                     message_nid,
-                    attachment_nid: Some(attachment),
-                    property_tag: 0x37010102,
+                    attachment_nid,
+                    property_tag,
                     ..
                 },
             ) => {
                 if current.as_ref().is_none_or(|(nid, _)| nid != message_nid) {
                     *current = Some((*message_nid, store.open_message(*message_nid)?));
                 }
-                current
-                    .as_ref()
-                    .ok_or_else(unavailable)?
-                    .1
-                    .binary_attachment(*attachment)
+                let message = &current.as_ref().ok_or_else(unavailable)?.1;
+                match (attachment_nid, property_tag) {
+                    (Some(attachment), 0x37010102) => message.binary_attachment(*attachment),
+                    (None, 0x007d001e | 0x007d001f) => {
+                        message.transport_headers((*property_tag & 0xffff) as u16)
+                    }
+                    _ => Err(unavailable()),
+                }
             }
             (
                 _,

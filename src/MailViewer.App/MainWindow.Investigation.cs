@@ -317,7 +317,7 @@ public partial class MainWindow
         string label = row.SourceNote is { } note ? $"{ClueField(row)} · {DecodedBodyLocation(note)}" : ClueField(row);
         var sourceRecord = row.EvidenceRecordId is { } id ? _session?.GetRecord(id) : null;
         OpenEvidenceBytes(InvestigationCluesTab, location.Range, label, location.Stream, location.Property,
-            sourceRecord: sourceRecord, returnFocus: returnFocus);
+            sourceRecord: sourceRecord, returnFocus: returnFocus, container: location.Container);
     }
 
     private void RefreshReplyComparison()

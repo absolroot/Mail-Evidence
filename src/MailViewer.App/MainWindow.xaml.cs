@@ -334,8 +334,8 @@ public partial class MainWindow : Window
             }
         }
         ResultRow[] rows = result.Hits.Select(hit => new ResultRow(hit, _checkedRecords.Contains(hit.Record.Id),
-            hit.Record.PstMessage is { } message
-                ? folders.GetValueOrDefault((hit.Record.SourceId, message.FolderNodeId)) ?? message.FolderPath : null)).ToArray();
+            hit.Record.FolderNodeId is { } folderId
+                ? folders.GetValueOrDefault((hit.Record.SourceId, folderId)) ?? hit.Record.FolderPath : null)).ToArray();
         foreach (ResultRow row in rows)
         {
             row.SetMarks(_mailMarks.IsBookmarked(row.Record.Id), _mailMarks.IsPinned(row.Record.Id));
@@ -550,18 +550,19 @@ public partial class MainWindow : Window
         ExportAttachmentButton.Header = L("첨부파일 근거 묶음", "Attachment evidence package");
 
         bool headerAvailable = _activeRow?.Record is { } record
-            && (record.Format switch
+            && (record.ContainerHeaders is { Length: > 0, CanRead: true } || (record.Format switch
             {
                 MailFormat.Msg => record.TransportHeaderStream is { Length: > 0 },
                 MailFormat.Pst or MailFormat.Ost => record.TransportHeaderProperty is { Length: > 0 },
-                _ => record.HeaderRange.Length > 0
-            });
+                _ => record.ContainerMessage is null && record.HeaderRange.Length > 0
+            }));
         bool attachmentBytesAvailable = AttachmentsGrid.SelectedItem is MailAttachment attachment
             && (attachment.CompoundStream is { Length: > 0 } || attachment.EncodedRange is { Length: > 0 }
-                || attachment.PstProperty is { Length: > 0 });
+                || attachment.PstProperty is { Length: > 0 } || attachment.ContainerLocation is { Length: > 0, CanRead: true });
         bool attachmentExportAvailable = AttachmentsGrid.SelectedItem is MailAttachment
             { Sha256: not null, DecodedLength: not null, Issue: null } exportAttachment
-            && (_activeRow?.Record.Format.IsFolderStore() != true || exportAttachment.PstProperty is not null);
+            && (_activeRow?.Record.Format.IsFolderStore() != true || exportAttachment.PstProperty is not null ||
+                exportAttachment.ContainerLocation is { CanRead: true });
         if (_headerSourceBytes is { } headerButton)
             SetEvidenceAction(headerButton, headerAvailable);
         SetEvidenceAction(OpenAttachmentBytesButton, attachmentBytesAvailable);
@@ -573,9 +574,12 @@ public partial class MainWindow : Window
             : null;
         ExportMenu.IsEnabled = canExportSearch || canExportSelected || canExportAttachment;
         bool rawWholeAvailable = _rawDecodedBytes is null && (_rawSourceRecord ?? _activeRow?.Record) is { } activeRecord &&
-            (activeRecord.Format.IsFolderStore()
-                ? _rawPstProperty is { } property && _rawRange != new ByteRange(0, property.Length)
-                : _rawStream is not null || _rawRange != activeRecord.MessageRange);
+            (activeRecord.ContainerMessage is { } message
+                ? activeRecord.CanReadMessage && (_rawContainer != (message.FileRange is null ? message : null) ||
+                    _rawRange != (message.FileRange ?? new ByteRange(0, message.Length)))
+                : activeRecord.Format.IsFolderStore()
+                    ? _rawPstProperty is { } property && _rawRange != new ByteRange(0, property.Length)
+                    : _rawStream is not null || _rawRange != activeRecord.MessageRange);
         if (_rawSourceRecord is { } rawSource)
             RawMessageButton.Content = rawSource.Format.IsFolderStore() ? L("전체 속성", "Whole property")
                 : rawSource.Format == MailFormat.Msg ? L("전체 MSG", "Whole MSG") : L("메시지 범위", "Message range");
@@ -731,7 +735,9 @@ public partial class MainWindow : Window
         if (PstSearchPath(request) is { } folder && request.PstFolderNodeId is { } nid)
         {
             string? format = SourceForScope(request.SourceId)?.Format.ToString().ToUpperInvariant();
-            values.Add($"{format} {L("폴더", "folder")}  {folder} · NID 0x{nid:X8}");
+            string identity = _session?.PstFolders.Any(item => item.SourceId == request.SourceId && item.NodeId == nid && item.IsLogicalPath) == true
+                ? "" : $" · NID 0x{nid:X8}";
+            values.Add($"{format} {L("폴더", "folder")}  {folder}{identity}");
         }
         if (request.From is { } from) values.Add($"보낸 사람  {from}");
         if (request.To is { } to) values.Add($"받는 사람  {to}");
@@ -772,10 +778,19 @@ public partial class MainWindow : Window
         var text = new StringBuilder();
         foreach (SourceInfo source in sources)
         {
-            text.AppendLine(source.Path).Append("  ").Append(StoreFormatName(source.Format));
+            text.AppendLine(source.Path).Append("  ").Append(source.Format == MailFormat.MailboxIndex
+                ? source.DetectedFormat ?? L("메일함 색인", "Mailbox index") : StoreFormatName(source.Format));
             if (source.StoreLayout is { } layout) text.Append(" · ").Append(DescribeStoreLayout(layout));
             text.AppendLine(L($" · {source.Length:N0}바이트", $" · {source.Length:N0} bytes"))
-                .Append("  SHA-256  ").AppendLine(source.Sha256).Append("  ").AppendLine(source.BoundaryRule).AppendLine();
+                .Append("  SHA-256  ").AppendLine(source.Sha256).Append("  ").AppendLine(source.BoundaryRule);
+            if (source.IndexSummary is { } index)
+            {
+                text.Append("  ").AppendLine(L(
+                    $"폴더 {index.FolderCount:N0} · 색인 항목 {index.EntryCount:N0} · MH 시퀀스 {index.SequenceCount:N0}",
+                    $"Folders {index.FolderCount:N0} · index entries {index.EntryCount:N0} · MH sequences {index.SequenceCount:N0}"));
+                foreach (string name in index.Names) text.Append("    ").AppendLine(name);
+            }
+            text.AppendLine();
         }
         var ids = sources.Select(source => source.Id).ToHashSet(StringComparer.Ordinal);
         var unread = issues.Where(issue => !ids.Contains(issue.SourceId)).ToArray();

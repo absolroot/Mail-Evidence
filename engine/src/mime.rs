@@ -208,6 +208,7 @@ fn message(
     let range = ByteRange::between(0, max_end);
     record.headers = Some(HeaderBlock {
         representation: "stored_message_headers",
+        code_page: None,
         location: at(range),
         bytes: range.length,
         sha256: digest(&data[..max_end as usize]),
@@ -251,6 +252,11 @@ fn message(
         if !decode.is_empty() {
             view.issue("mime_attachment_decode", format!("{decode:?}"), location);
             record.attachments.push(Attachment {
+                media_type: part.content_type().and_then(|kind| {
+                    kind.subtype()
+                        .map(|subtype| format!("{}/{}", kind.ctype(), subtype))
+                }),
+                content_id: part.content_id().map(str::to_owned),
                 name: part.attachment_name().map(str::to_owned),
                 location: None,
                 representation: "unreadable",
@@ -259,6 +265,11 @@ fn message(
             });
         } else {
             record.attachments.push(Attachment {
+                media_type: part.content_type().and_then(|kind| {
+                    kind.subtype()
+                        .map(|subtype| format!("{}/{}", kind.ctype(), subtype))
+                }),
+                content_id: part.content_id().map(str::to_owned),
                 name: part.attachment_name().map(str::to_owned),
                 location,
                 representation: "decoded_mime_part",

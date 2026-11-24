@@ -1,4 +1,4 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "snake_case")]
@@ -74,7 +74,7 @@ pub struct NdbLayout {
     pub block_encoding: Option<u8>,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ByteRange {
     pub offset: u64,
     pub length: u64,
@@ -89,7 +89,7 @@ impl ByteRange {
     }
 }
 
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum Location {
     File {
@@ -141,6 +141,8 @@ pub struct Header {
 
 #[derive(Debug, Serialize)]
 pub struct HeaderBlock {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub code_page: Option<i32>,
     pub representation: &'static str,
     pub location: Location,
     pub bytes: u64,
@@ -151,6 +153,10 @@ pub struct HeaderBlock {
 #[derive(Debug, Serialize)]
 pub struct Attachment {
     pub name: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub media_type: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub content_id: Option<String>,
     pub location: Option<Location>,
     pub representation: &'static str,
     pub bytes: Option<u64>,

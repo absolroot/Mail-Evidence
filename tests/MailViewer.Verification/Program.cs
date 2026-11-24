@@ -51,6 +51,8 @@ internal static partial class Program
             AddOstChecks(cases, root, work.Path, args.Contains("--ost", StringComparer.Ordinal));
             AddExpandedOstChecks(cases, root, work.Path, args.Contains("--ost-expanded", StringComparer.Ordinal));
         }
+        if (args.Contains("--formats", StringComparer.Ordinal))
+            cases.Add(("shared Rust mail formats and original evidence", () => TestSharedFormatReaders(root, work.Path)));
         if (args.Contains("--large", StringComparer.Ordinal))
             cases.Add(("MBOX message starting past the 4 GiB boundary", () => TestLargeMbox(syntheticEml, work.Path)));
 

@@ -540,8 +540,9 @@ public partial class MainWindow
         _headerSourceEmpty.Visibility = reason.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
     }
 
-    private string HeaderSourceOffsetLabel(MailRecord record) => record.TransportHeaderProperty is not null
-        ? PropertyOffsetLabel(record)
+    private string HeaderSourceOffsetLabel(MailRecord record) => record.ContainerHeaders is { FileRange: null }
+        ? L("저장 항목 기준 오프셋", "Stored evidence offset")
+        : record.TransportHeaderProperty is not null ? PropertyOffsetLabel(record)
         : record.TransportHeaderStream is not null
             ? L("스트림 오프셋", "Stream offset") : L("파일 오프셋", "File offset");
 
@@ -549,9 +550,7 @@ public partial class MainWindow
         EncoderFallback.ExceptionFallback, DecoderFallback.ExceptionFallback);
 
     private static byte[] ReadHeaderSourceRange(EvidenceSession session, MailRecord record, ByteRange range) =>
-        record.TransportHeaderProperty is { } property ? session.ReadPstPropertyRange(record.SourceId, property, range)
-        : record.TransportHeaderStream is { } stream ? session.ReadCompoundRange(record.SourceId, stream, range)
-        : session.ReadRange(record.SourceId, range);
+        session.ReadRecordedHeader(record.Id, range);
 
     private void SelectHeaderSourceOccurrence(MailHeader? header)
     {
@@ -607,6 +606,8 @@ public partial class MainWindow
         var range = _selectedSourceHeader?.Range ?? record.HeaderRange;
         _headerSourceStatus!.Visibility = Visibility.Visible;
         _headerSourceStatus.Text = $"{selected}{HeaderSourceOffsetLabel(record)} {FormatVisibleRange(range)} · {encoding.WebName}";
+        if (record.ContainerHeaders is { FileRange: null } container)
+            _headerSourceStatus.Text += $" · {container.Description}";
         if (!string.IsNullOrEmpty(record.TransportHeaderDetail))
             _headerSourceStatus.Text += $" · {record.TransportHeaderDetail}";
     }

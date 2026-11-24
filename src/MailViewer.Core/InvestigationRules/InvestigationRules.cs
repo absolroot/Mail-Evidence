@@ -45,7 +45,8 @@ internal sealed class InvestigationEvaluation(bool collectEvidence)
 
     internal void AddHeader(MailRecord record, MailHeader header, string field, string value,
         InvestigationKey? key = null, InvestigationClue clue = InvestigationClue.None, int finding = 0) =>
-        Add(new(field, value, new(header.Range, record.TransportHeaderStream, record.TransportHeaderProperty),
+        Add(new(field, value, new(header.Range, record.TransportHeaderStream, record.TransportHeaderProperty,
+            record.ContainerHeaders is { FileRange: null } location ? location : null),
             key, clue, finding));
 
     internal InvestigationReport ToReport() => new(observations!.AsReadOnly(), Unavailable);

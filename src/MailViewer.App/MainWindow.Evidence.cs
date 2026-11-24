@@ -17,6 +17,7 @@ public partial class MainWindow
     private string _rawName = "";
     private HexField? _rawField;
     private CompoundStreamLocator? _rawStream;
+    private ContainerEvidence? _rawContainer;
     private PstPropertyLocator? _rawPstProperty;
     private TabItem? _rawReturnTab;
     private FrameworkElement? _rawReturnFocus;
@@ -40,6 +41,7 @@ public partial class MainWindow
         _rawField = null;
         _rawPage = 0;
         _rawStream = null;
+        _rawContainer = null;
         _rawPstProperty = null;
         _rawReturnTab = null;
         _rawReturnFocus = null;
@@ -64,8 +66,9 @@ public partial class MainWindow
                 AttachmentsGrid.SelectedItem = record.Attachments.FirstOrDefault(attachment => attachment.PartPath == matchingPart)
                     ?? record.Attachments[0];
             }
-            if (record.Format is MailFormat.Eml or MailFormat.Mbox && DetailTabs.SelectedItem == RawTab)
-                SetRawRange(record.MessageRange, L("메시지 범위", "Message range"));
+            if (record.CanReadMessage && DetailTabs.SelectedItem == RawTab &&
+                (record.ContainerMessage is not null || record.Format is MailFormat.Eml or MailFormat.Mbox))
+                OpenMessageBytes(this, new RoutedEventArgs());
             else
                 ShowRawEmpty(record.Format);
         }
@@ -120,6 +123,8 @@ public partial class MainWindow
             fields.Add(new(L("폴더 NID", "Folder NID"), pstMessage.FolderNid));
             fields.Add(new(L("메시지 NID", "Message NID"), pstMessage.MessageNid));
         }
+        else if (record.ContainerMessage is { } messageLocation)
+            fields.Add(new(L("메시지 원본 위치", "Message source location"), messageLocation.Description));
         else if (!folderStore)
             fields.Add(new(msg ? L("MSG 파일 범위", "MSG file range") : L("메시지 범위", "Message range"), record.MessageRange.ToString()));
         if (record.EnvelopeRange is { } envelope) fields.Add(new(L("MBOX 봉투 줄", "MBOX envelope"), envelope.ToString()));
@@ -202,7 +207,7 @@ public partial class MainWindow
     {
         "text/plain" => L("평문", "Plain text"),
         "text/html" => "HTML",
-        "text/rtf" => L("RTF 텍스트", "RTF text"),
+        "text/rtf" or "application/rtf" => L("RTF 텍스트", "RTF text"),
         _ => part.MediaType
     };
 
@@ -245,6 +250,8 @@ public partial class MainWindow
                 location.AddRange(StreamLocationFields(stream));
             else if (attachment.CompoundStoragePath is { } storage)
                 location.Add(new(L("저장소 경로", "Storage path"), "/" + string.Join("/", storage)));
+            else if (attachment.ContainerLocation is { } container)
+                location.Add(new(L("첨부 원본 위치", "Attachment source location"), container.Description));
             else if (record.Format is MailFormat.Eml or MailFormat.Mbox)
             {
                 location.Add(new(L("MIME 파트", "MIME part"), attachment.PartPath));
@@ -331,7 +338,8 @@ public partial class MainWindow
         HexField? field = header is not null && range.Length is > 0 and <= RawPageBytes
             ? new HexField(0, (int)range.Length, header.Name, header.Value)
             : null;
-        OpenEvidenceBytes(HeadersTab, range, header?.Name ?? L("전송 헤더", "Transport headers"), stream, property, field);
+        OpenEvidenceBytes(HeadersTab, range, header?.Name ?? L("전송 헤더", "Transport headers"), stream, property, field,
+            container: row.Record.ContainerHeaders is { FileRange: null } container ? container : null);
     }
 
     private void OpenAttachmentBytes(object sender, RoutedEventArgs e)
@@ -346,18 +354,21 @@ public partial class MainWindow
         {
             OpenEvidenceBytes(AttachmentsTab, new ByteRange(0, stream.Length), L("첨부 스트림", "Attachment stream"), stream);
         }
+        else if (attachment.ContainerLocation is { FileRange: null, Length: > 0, CanRead: true } container)
+            OpenEvidenceBytes(AttachmentsTab, new ByteRange(0, container.Length), L("첨부 원본 바이트", "Stored attachment bytes"),
+                null, container: container);
         else if (attachment.EncodedRange is { } range)
             OpenEvidenceBytes(AttachmentsTab, range, $"{L("인코딩 원본", "Encoded source")} · MIME {attachment.PartPath}", null);
     }
 
     private void OpenEvidenceBytes(TabItem origin, ByteRange range, string label, CompoundStreamLocator? stream,
         PstPropertyLocator? property = null, HexField? field = null, MailRecord? sourceRecord = null,
-        FrameworkElement? returnFocus = null)
+        FrameworkElement? returnFocus = null, ContainerEvidence? container = null)
     {
         _rawReturnTab = origin;
         _rawReturnFocus = returnFocus;
         _rawSourceRecord = sourceRecord;
-        SetRawRange(range, label, stream, property, field);
+        SetRawRange(range, label, stream, property, field, container: container);
         _openingEvidenceBytes = true;
         try { DetailTabs.SelectedItem = RawTab; }
         finally { _openingEvidenceBytes = false; }
@@ -423,12 +434,15 @@ public partial class MainWindow
     private void OpenMessageBytes(object sender, RoutedEventArgs e)
     {
         if ((_rawSourceRecord ?? _activeRow?.Record) is not { } record) return;
-        if (record.Format.IsFolderStore())
+        if (record.ContainerMessage is { Length: > 0, CanRead: true } stored)
+            SetRawRange(stored.FileRange ?? new ByteRange(0, stored.Length),
+                L("저장된 메시지 바이트", "Stored message bytes"), container: stored.FileRange is null ? stored : null);
+        else if (record.Format.IsFolderStore())
         {
             if (_rawPstProperty is { } property)
                 SetRawRange(new ByteRange(0, property.Length), L("전체 속성", "Whole property"), property: property);
         }
-        else
+        else if (record.CanReadMessage)
             SetRawRange(record.MessageRange, record.Format == MailFormat.Msg
                 ? L("MSG 파일 바이트", "MSG file bytes") : L("메시지 범위", "Message range"));
         if (ReferenceEquals(sender, RawMessageButton))
@@ -437,8 +451,10 @@ public partial class MainWindow
 
     private void SetRawRange(ByteRange range, string label, CompoundStreamLocator? stream = null,
         PstPropertyLocator? property = null, HexField? field = null, byte[]? decoded = null,
-        MailAttachment? decodedAttachment = null, AttachmentBoundary? boundary = null, ByteRange? decodedPeHeader = null)
+        MailAttachment? decodedAttachment = null, AttachmentBoundary? boundary = null, ByteRange? decodedPeHeader = null,
+        ContainerEvidence? container = null)
     {
+        _rawContainer = container;
         _rawRange = range;
         _rawField = field;
         _rawDecodedBytes = decoded;
@@ -490,6 +506,7 @@ public partial class MainWindow
             byte[] bytes = _rawDecodedBytes is { } decoded ? decoded.AsSpan((int)page.Offset, (int)page.Length).ToArray()
                 : _rawPstProperty is { } property ? session.ReadPstPropertyRange(record.SourceId, property, page)
                 : _rawStream is { } cfbStream ? session.ReadCompoundRange(record.SourceId, cfbStream, page)
+                : _rawContainer is { } container ? session.ReadContainerRange(record.SourceId, container, page)
                 : session.ReadRange(record.SourceId, page);
             RawBytesBox.AddressLabel = RawAddressLabel(record);
             var fields = _rawField is { } field ? new List<HexField> { field } : [];
@@ -525,6 +542,7 @@ public partial class MainWindow
 
     private string RawAddressLabel(MailRecord record) => _rawDecodedBytes is not null
         ? L("디코딩한 첨부 오프셋", "Decoded attachment offset")
+        : _rawContainer is not null ? L("저장 항목 기준 오프셋", "Stored evidence offset")
         : _rawPstProperty is not null ? PropertyOffsetLabel(record)
         : _rawStream is not null ? L("스트림 오프셋", "Stream offset") : L("파일 오프셋", "File offset");
 
@@ -549,6 +567,10 @@ public partial class MainWindow
             if (decodedFile.CompoundStream is { } storedStream) fields.AddRange(StreamLocationFields(storedStream));
             if (decodedFile.Sha256 is { } attachmentHash)
                 fields.Add(new(L("첨부 SHA-256", "Attachment SHA-256"), attachmentHash, IsDigest: true));
+        }
+        else if (_rawContainer is { } container)
+        {
+            fields.Add(new(L("원본 위치", "Source location"), container.Description));
         }
         else if (_rawPstProperty is { } property)
         {

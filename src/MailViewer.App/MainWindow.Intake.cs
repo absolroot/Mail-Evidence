@@ -170,8 +170,9 @@ public partial class MainWindow
         var dialog = new OpenFileDialog
         {
             Title = L("원본 메일 파일 선택", "Select original mail files"),
-            Filter = L("메일 파일 (*.eml;*.mbox;*.msg;*.pst;*.ost)", "Mail files (*.eml;*.mbox;*.msg;*.pst;*.ost)")
-                + "|*.eml;*.mbox;*.msg;*.pst;*.ost|" + DiskImageFilter() + "|"
+            Filter = L("메일 파일과 저장소", "Mail files and stores") + "|"
+                + string.Join(';', EvidenceSession.MailFileExtensions.Select(ext => "*" + ext).Append("winmail.dat").Append(".mh_sequences"))
+                + "|" + DiskImageFilter() + "|"
                 + L("모든 파일 (*.*)", "All files (*.*)") + "|*.*",
             Multiselect = true,
             CheckFileExists = true
@@ -414,8 +415,10 @@ public partial class MainWindow
             {
                 _unappliedSourceReport = (candidate.Sources, candidate.Issues);
                 RefreshSourceReport();
-                WorkStatus.Text = L("읽을 수 있는 메일이 없습니다. 분석 결과를 확인하세요.",
-                    "No mail was read. See the read details below.");
+                WorkStatus.Text = candidate.Sources.Any(source => source.IndexSummary is not null)
+                    ? L("메일함 색인 정보는 분석 결과에서 확인할 수 있습니다.", "The read details show the mailbox index information.")
+                    : L("읽을 수 있는 메일이 없습니다. 분석 결과를 확인하세요.",
+                        "No mail was read. See the read details below.");
                 return;
             }
             if (candidate.Issues.Count > 0 && !ConfirmPartialSources(candidate))
@@ -554,8 +557,9 @@ public partial class MainWindow
         public DiskImageOrigin? ImageOrigin { get; } = imageOrigin;
         public string Kind => System.IO.Path.GetExtension(Path).ToLowerInvariant() switch
         {
-            ".eml" or ".msg" => L("개별 메일", "Message file"),
-            ".mbox" or ".pst" or ".ost" => L("메일함 파일", "Mailbox file"),
+            ".eml" or ".msg" or ".emlx" or ".nws" or ".mime" or ".rfc822" => L("개별 메일", "Message file"),
+            ".mbox" or ".pst" or ".ost" or ".dbx" or ".mbx" or ".olm" or ".mmdf" or ".babyl" or ".rmail" => L("메일함 파일", "Mailbox file"),
+            ".zip" or ".tnef" or ".p7m" or ".p7s" => L("컨테이너", "Container"),
             _ => L("형식을 확인할 수 없음", "Format unconfirmed")
         };
         public string Origin => ImageOrigin is not null ? L("이미지에서 추출", "Extracted from image")

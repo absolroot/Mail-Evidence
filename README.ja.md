@@ -6,14 +6,14 @@
 
 [한국어](README.md) · [English](README.en.md) · [日本語](README.ja.md)
 
-[Windows x64 軽量版](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-compact.zip) · [Windows x64 ランタイム同梱版](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-v1.5.7-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
+[Windows x64 軽量版](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-compact.zip) · [Windows x64 ランタイム同梱版](https://github.com/absolroot/Mail-Evidence/releases/download/v1.6.0/Mail-Evidence-v1.6.0-win-x64-standalone.zip) · [Rust CLI 0.4.0](https://github.com/absolroot/Mail-Evidence/releases/download/v1.5.7/Mail-Evidence-CLI-v0.4.0-win-x64.zip)
 
 ## 調査機能
 
-[![メール検索、添付ファイルのプレビュー、異常の根拠と16進表示](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
+[![ポインターでメール検索、添付ファイルのプレビュー、異常の根拠から16進表示までをたどる英語版の操作デモ](docs/media/full-app-walkthrough-dark.gif)](docs/media/full-app-walkthrough-dark.gif)
 
 - フォルダー、メール一覧、閲覧ペインを一つの画面に表示します。入力に合わせて検索結果が絞られ、後で確認するメールは固定したり、ブックマークを付けたりできます。
-- メールファイルやフォルダーをまとめて開きます。読み取り可能な NTFS ディスクイメージからも必要なメールを抽出できます。Rust CLI は旧形式の PST や Outlook Express の DBX・MBX にも対応します。
+- メールファイルやフォルダーをまとめて開きます。NTFS イメージから必要なメールも抽出できます。Windows アプリでは旧形式の PST、Outlook Express の DBX・MBX、Apple Mail の EMLX も開けます。
 - 添付ファイルをプレビューし、異常の根拠となったヘッダー、リンク先、バイト列を確認できます。同じアドレス、URL、Message-ID、添付ファイルの SHA-256 で別のメールを探せます。
 - 元の資料は読み取り専用で開きます。メールや検索結果、添付ファイルを書き出し、保存したファイルのサイズと SHA-256 を検証できます。
 
@@ -31,25 +31,22 @@ HTML 本文では外部画像、スクリプト、リンク先への移動が既
 
 ### メールファイルとメールストア
 
-| 形式 | Windows アプリ | Rust CLI |
-| --- | :---: | :---: |
-| インターネットメール `.eml` | ✓ | ✓ |
-| `.nws`、`.mime`、`.rfc822` | – | ✓ |
-| メールボックス `.mbox` | ✓ | ✓ |
-| Outlook メッセージ `.msg` | ✓ | ✓ |
-| Outlook データファイル `.pst` | ✓ | ✓ |
-| Outlook オフラインデータファイル `.ost` | ✓ | ✓ |
-| Outlook Express `.dbx`、`.mbx` | – | ✓ |
-| Outlook for Mac `.olm` | – | ✓ |
-| Apple Mail `.emlx`、`.partial.emlx` | – | ✓ |
-| `.mmdf`、`.babyl`、`.rmail`、Maildir、MH | – | ✓ |
-| 対応するメールを含む `.zip` | – | ✓ |
-| TNEF `.tnef`、`winmail.dat` | – | ✓ |
-| メールを内包する CMS SignedData `.p7m`、`.p7s` | – | ✓ |
+Windows アプリ **1.6.0** から、次の資料を直接開けます。読み取り機能はアプリに含まれているため、CLI を別途インストールする必要はありません。
 
-✓ 対応 · – 非対応
+| 資料 | 読み取れる内容 |
+| --- | --- |
+| インターネットメール `.eml`、`.nws`、`.mime`、`.rfc822` とメールボックス `.mbox` | ヘッダー、本文、MIME 添付ファイルを読み取ります。拡張子のない MBOX もエンベロープ行から識別できます。 |
+| Outlook `.msg` | ANSI・Unicode のメール、本文、配送ヘッダー、通常の添付ファイルを読み取ります。内包されたメールは個別に開けます。 |
+| Outlook `.pst`、`.ost` | 対応する ANSI・Unicode ストアから、フォルダー、ローカルのメール、残っている配送ヘッダー、通常の添付ファイルを読み取ります。 |
+| Outlook Express `.dbx`、`.mbx` | Outlook Express 5・6 の DBX と、4 の JMF6 MBX からメールと添付ファイルを読み取ります。 |
+| Outlook for Mac `.olm` | メールと紐づく添付ファイルを読み取り、ZIP 内の位置を表示します。 |
+| Apple Mail `.emlx`、`.partial.emlx` | ファイル内のメールのバイト範囲を読み取ります。部分 EMLX では、保存場所とサイズが一致する外部添付ファイルも参照できます。 |
+| `.mmdf`、`.babyl`、`.rmail`、Maildir、MH | メールと MIME 添付ファイルを読み取ります。Maildir と MH はフォルダーを選択して開きます。 |
+| メールを含む `.zip` | ZIP 内の EML、EMLX、MBOX を読み取ります。 |
+| 単体の TNEF `.tnef`、`winmail.dat` | 保存されている通常の添付ファイルを読み取ります。 |
+| CMS SignedData `.p7m`、`.p7s` | DER 形式の SignedData に内包されたメールを読み取ります。署名の検証と復号は対象外です。 |
 
-PST・OST は **1 ファイルにつき 2 GiB** までです。Windows アプリの PST は Unicode 23 のブロックエンコード 0・1 に対応します。拡張子のない MBOX は直接選択できます。[PST の条件](docs/pst-verification.md) · [OST の条件](docs/ost-expanded-verification.md) · [CLI の対応範囲](docs/rust-mail-cli.md)
+PST・OST は 1 ファイルあたり最大 **2 GiB** です。512 バイトページは ANSI 14・15 と Unicode 21・23 のエンコード方式 0・1・2 に、4 KiB ページは Unicode 36 の方式 0 に対応しています。EDB・NSF は形式の識別まで対応しています。新しい Outlook 専用のキャッシュ、保護された OST、サーバーにのみ残るメール、削除済みアイテムの復元は対象外です。[Windows 版の対応範囲](docs/windows-format-coverage.md) · [CLI の形式別対応範囲](docs/rust-mail-cli.md#입력과-첨부)
 
 ### ディスクイメージ
 
@@ -60,7 +57,7 @@ PST・OST は **1 ファイルにつき 2 GiB** までです。Windows アプリ
 | 仮想ディスク | `.qcow`、`.qcow2`、`.qcow3`、`.vhd`、`.vhdx`、`.vmdk` |
 | AFF1 | `.aff` |
 
-読み取れる NTFS ボリュームから EML、MBOX、MSG、PST、OST を検索します。論理 EWF と BitLocker でロックされたボリュームは、この手順の対象外です。[イメージ形式ごとの条件](third_party/ntfs-tracer/modules/EvidenceImage/README.md)
+読み取れる NTFS ボリュームから EML、MBOX、MSG、PST、OST、DBX、EMLX、OLM などを検索します。論理 EWF と BitLocker でロックされたボリュームは、この手順の対象外です。[イメージ形式ごとの条件](third_party/ntfs-tracer/modules/EvidenceImage/README.md)
 
 ### 添付ファイルのプレビュー
 
@@ -100,8 +97,8 @@ Windows アプリのビルドには .NET 10 SDK が必要です。添付ファ�
 
 ```powershell
 cargo build --manifest-path preview/Cargo.toml --release --locked
-dotnet build MailViewer.slnx -c Release
 cargo build --manifest-path engine/Cargo.toml --release --locked
+dotnet build MailViewer.slnx -c Release
 dotnet run --project tests/MailViewer.Verification -c Release -- --synthetic-only
 ```
 

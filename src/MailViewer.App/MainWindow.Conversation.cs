@@ -240,7 +240,7 @@ public partial class MainWindow
                     {
                         if (_work is null)
                             OpenEvidenceBytes(ConversationTab, reference.Location.Range, reference.Header.Name, reference.Location.Stream,
-                                reference.Location.Property, sourceRecord: source, returnFocus: value);
+                                reference.Location.Property, sourceRecord: source, returnFocus: value, container: reference.Location.Container);
                     };
                     value.ContextMenu.Items.Add(copy);
                     value.ContextMenu.Items.Add(original);

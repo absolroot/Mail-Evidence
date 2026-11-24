@@ -29,6 +29,7 @@ public static partial class Program
         var window = new MainWindow([mail, attachments]) { ShowInTaskbar = false };
         window.Show();
         await Idle();
+        ClickMenu(window, "KoreanLanguageMenuItem");
         if (theme is not null)
         {
             ClickMenu(window, theme == "--dark" ? "DarkThemeMenuItem" : "LightThemeMenuItem");
@@ -40,7 +41,7 @@ public static partial class Program
         var details = Field<TabControl>(window, "DetailTabs");
         var raw = Field<HexEvidenceView>(window, "RawBytesBox");
         await WaitFor(() => tabs.SelectedItem == Field<TabItem>(window, "InvestigationTab") &&
-            grid.Items.Count == 2, "공개 MSG 두 건 읽기");
+            grid.Items.Count == 3, "공개 MSG 두 건과 내장 메시지 읽기");
         var menuHeight = Field<Menu>(window, "MainMenu").ActualHeight;
         grid.UpdateLayout();
         double rowHeight = (grid.ItemContainerGenerator.ContainerFromIndex(0) as DataGridRow)?.ActualHeight ?? 0;
@@ -192,7 +193,7 @@ public static partial class Program
             Package = msgPackage, SelectedRecordPreserved = true, EnterOpenedSelectedHeaders = true });
 
         await ReturnToMailboxList(window);
-        await Search(window, SearchField.Any, "", 2);
+        await Search(window, SearchField.Any, "", 3);
         var ansiRow = grid.Items.Cast<object>().Select((row, index) => (Record: RecordFromRow(row), Index: index))
             .Single(item => item.Record.Id == ansi.Id).Index;
         grid.SelectedIndex = ansiRow;

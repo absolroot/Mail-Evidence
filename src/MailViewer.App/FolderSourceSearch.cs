@@ -1,4 +1,5 @@
 using System.IO;
+using MailViewer.Core;
 
 namespace MailViewer.App;
 
@@ -8,10 +9,7 @@ internal sealed record FolderSearchResult(IReadOnlyList<FolderSearchHit> Hits, I
 
 internal static class FolderSourceSearch
 {
-    private static readonly HashSet<string> Extensions = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ".eml", ".mbox", ".msg", ".pst", ".ost"
-    };
+    private static readonly HashSet<string> Extensions = new(EvidenceSession.MailFileExtensions, StringComparer.OrdinalIgnoreCase);
 
     public static FolderSearchResult Scan(IReadOnlyList<string> roots, bool recurse, CancellationToken cancellationToken) =>
         Scan(roots.Select(root => new FolderSearchTarget(root, recurse)).ToArray(), outlookDataOnly: false, cancellationToken);
@@ -76,12 +74,26 @@ internal static class FolderSourceSearch
 
         void AddFile(string file, string root)
         {
-            bool supported = outlookDataOnly ? IsOutlookDataFile(file) : Extensions.Contains(Path.GetExtension(file));
+            bool supported = outlookDataOnly ? IsOutlookDataFile(file) : IsMailCandidate(file);
             if (supported && paths.Add(file)) hits.Add(new FolderSearchHit(file, root));
         }
 
         FolderSearchResult Finish(bool canceled) =>
             new(hits.OrderBy(hit => hit.Path, StringComparer.OrdinalIgnoreCase).ToArray(), issues, canceled);
+    }
+
+    private static bool IsMailCandidate(string path)
+    {
+        if (Extensions.Contains(Path.GetExtension(path))) return true;
+        string name = Path.GetFileName(path);
+        if (name.Equals("winmail.dat", StringComparison.OrdinalIgnoreCase) || name == ".mh_sequences") return true;
+        if (Path.GetDirectoryName(path) is not { } parent) return false;
+        string directory = Path.GetFileName(parent);
+        if (directory is "cur" or "new" && Path.GetDirectoryName(parent) is { } root
+            && Directory.Exists(Path.Combine(root, "cur")) && Directory.Exists(Path.Combine(root, "new")))
+            return true;
+        return name.All(char.IsAsciiDigit) && (File.Exists(Path.Combine(parent, ".mh_sequences")) ||
+            File.Exists(Path.Combine(parent, ".mh_profile"))) || EvidenceSession.IsExtensionlessMailbox(path);
     }
 
     public static bool IsOutlookDataFile(string path) =>

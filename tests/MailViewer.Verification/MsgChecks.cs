@@ -179,7 +179,7 @@ internal static partial class Program
     private static MailRecord ValidateMsgFile(EvidenceSession session, string path, MsgOracle oracle)
     {
         var source = session.Sources.Single(x => string.Equals(x.Path, path, StringComparison.OrdinalIgnoreCase));
-        var record = session.Records.Single(x => x.SourceId == source.Id);
+        var record = session.Records.Single(x => x.SourceId == source.Id && x.ContainerMessage is null);
         Equal(MailFormat.Msg, source.Format, "source recognized as MSG");
         Equal(MailFormat.Msg, record.Format, "record recognized as MSG");
         Equal(oracle.FileLength, source.Length, "actual source file length");

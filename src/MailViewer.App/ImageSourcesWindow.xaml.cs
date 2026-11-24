@@ -12,7 +12,7 @@ namespace MailViewer.App;
 
 public partial class ImageSourcesWindow : Window
 {
-    internal static readonly string[] MailExtensions = [".eml", ".msg", ".pst", ".ost", ".mbox"];
+    internal static readonly string[] MailExtensions = EvidenceSession.MailFileExtensions.ToArray();
     internal static readonly string[] CommonFolders = [@"AppData\Local\Microsoft\Outlook", @"Documents\Outlook Files",
         @"OneDrive\Documents\Outlook Files", @"AppData\Local\Microsoft\Olk", "Desktop", "Downloads"];
     private readonly string imagePath;

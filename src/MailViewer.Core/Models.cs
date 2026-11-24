@@ -1,6 +1,9 @@
 namespace MailViewer.Core;
 
-public enum MailFormat { Eml, Mbox, Msg, Pst, Ost }
+public enum MailFormat
+{
+    Eml, Mbox, Msg, Pst, Ost, Emlx, Mmdf, Babyl, Dbx, Mbx, Olm, Zip, Tnef, Cms, MailboxIndex, Ics, Vcf, Edb, Nsf
+}
 
 public static class MailFormatExtensions
 {
@@ -22,7 +25,10 @@ public sealed record CompoundStreamLocator(
     public string TagHex => $"0x{PropertyTag:X8}";
 }
 
-public sealed record PstFolder(string SourceId, uint NodeId, uint? ParentNodeId, string Name, string Path);
+public sealed record PstFolder(string SourceId, uint NodeId, uint? ParentNodeId, string Name, string Path)
+{
+    public bool IsLogicalPath { get; init; }
+}
 
 public sealed record PstMessageLocator(uint FolderNodeId, uint MessageNodeId, string FolderPath)
 {
@@ -51,9 +57,14 @@ public sealed record SourceInfo(
     string? SelectedPath = null)
 {
     public StoreLayoutInfo? StoreLayout { get; init; }
+    public string? DetectedFormat { get; init; }
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public MailIndexSummary? IndexSummary { get; init; }
     [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
     public DiskImageOrigin? ImageOrigin { get; init; }
 }
+
+public sealed record MailIndexSummary(int FolderCount, int EntryCount, int SequenceCount, IReadOnlyList<string> Names);
 
 public sealed record ReadIssue(
     string SourceId, string Code, string Detail, ByteRange? Range = null,
@@ -69,6 +80,7 @@ public sealed record MailBodyPart(string PartPath, string MediaType, string Text
 {
     public IReadOnlyList<ObservedLink> Links { get; init; } = [];
     internal HtmlBodySource? HtmlSource { get; init; }
+    internal string? EngineHtml { get; init; }
 }
 
 internal sealed record HtmlBodySource(EvidenceLocation Location, string? TransferEncoding = null, string? Charset = null, int CodePage = 1252);
@@ -81,6 +93,8 @@ public sealed record MailAttachment(
 {
     public AttachmentObservation? Analysis { get; init; }
     internal string? ContentId { get; init; }
+    public ContainerEvidence? ContainerLocation { get; init; }
+    internal EngineAttachment? EngineAttachment { get; init; }
 }
 
 public sealed record MailRecord(
@@ -94,6 +108,12 @@ public sealed record MailRecord(
     HeaderEvidenceState? TransportHeaderState = null, string? TransportHeaderDetail = null,
     PstMessageLocator? PstMessage = null, PstPropertyLocator? TransportHeaderProperty = null)
 {
+    public PstFolder? LogicalFolder { get; init; }
+    public uint? FolderNodeId => PstMessage?.FolderNodeId ?? LogicalFolder?.NodeId;
+    public string? FolderPath => PstMessage?.FolderPath ?? LogicalFolder?.Path;
+    public ContainerEvidence? ContainerMessage { get; init; }
+    public ContainerEvidence? ContainerHeaders { get; init; }
+    public bool CanReadMessage => MessageRange.Length > 0 || ContainerMessage is { Length: > 0, CanRead: true };
     public int? TransportHeaderCodePage { get; init; }
     public IReadOnlyList<StoredMailField> StoredFields { get; init; } = [];
 }
@@ -144,7 +164,11 @@ public sealed record ExportItem(
     string RelativePath, string Nature, long Length, string Sha256, string? RecordId,
     string? AttachmentId = null, string? PartPath = null, ByteRange? InputRange = null,
     string? OriginalName = null, string? TransferEncoding = null,
-    CompoundStreamLocator? CompoundStream = null, PstPropertyLocator? PstProperty = null);
+    CompoundStreamLocator? CompoundStream = null, PstPropertyLocator? PstProperty = null)
+{
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public ContainerEvidence? ContainerLocation { get; init; }
+}
 
 public sealed record ExportResult(string PackageDirectory, Guid JobId, IReadOnlyList<ExportItem> Items);
 

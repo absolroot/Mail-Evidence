@@ -234,7 +234,8 @@ internal sealed partial class ConversationIndex
     }
 
     private static EvidenceLocation Location(MailRecord record, MailHeader header) =>
-        new(header.Range, record.TransportHeaderStream, record.TransportHeaderProperty);
+        new(header.Range, record.TransportHeaderStream, record.TransportHeaderProperty,
+            record.ContainerHeaders is { FileRange: null } location ? location : null);
 
     private static void Add<T>(Dictionary<string, List<T>> index, string key, T value)
     {
