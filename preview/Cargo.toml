@@ -10,9 +10,12 @@ publish = false
 cfb = "=0.16.0"
 hayro = "=0.9.0"
 image = { version = "=0.25.10", default-features = false, features = ["jpeg", "png"] }
+office_oxide = "=0.1.17"
 rdocx = "=0.17.0"
 resvg = { version = "=0.50.0", default-features = false, features = ["text", "system-fonts", "raster-images"] }
 rhwp = { version = "=0.9.1", default-features = false }
+sevenz-rust2 = "=0.25.0"
+tar = "0.4.46"
 zip = { version = "4.6", default-features = false, features = ["deflate"] }
 
 [profile.release]

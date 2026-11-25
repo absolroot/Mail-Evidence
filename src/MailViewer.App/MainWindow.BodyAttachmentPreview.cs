@@ -112,7 +112,7 @@ public partial class MainWindow
     private void UpdateBodyAttachmentPreviewStatus()
     {
         var preview = _bodyAttachmentContent;
-        string status = preview.State == PreviewState.Ready && (BodyAttachmentPreviewText.Visibility == Visibility.Visible ||
+        string status = preview.State == PreviewState.Ready && (preview.Text is { Kind: AttachmentTextKind.Plain, Text.Length: > 0 } ||
             preview.Image is not null && !preview.IsDocument) ? "" :
             AttachmentPreviewStatusText(preview.State, preview.Text, preview.IsDocument);
         BodyAttachmentPreviewStatus.Text = status;

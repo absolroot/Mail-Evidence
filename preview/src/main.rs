@@ -4,6 +4,8 @@ use hayro::{PixmapSettings, RenderCache, RenderSettings, hayro_interpret::Interp
 use image::{ImageFormat, ImageReader, Limits};
 use resvg::{tiny_skia, usvg};
 
+mod listing;
+
 const MAX_INPUT: u64 = 24 * 1024 * 1024;
 const MAX_EDGE: u32 = 1600;
 const MAX_ZIP_DATA: u64 = 96 * 1024 * 1024;
@@ -15,12 +17,17 @@ enum Format {
     Pdf,
     Docx,
     Hwp,
+    Office(office_oxide::DocumentFormat),
+    Zip,
+    Tar,
+    SevenZip,
 }
 #[derive(Clone, Copy)]
 enum Status {
     Unsupported = 1,
     Unreadable = 2,
     Limit = 3,
+    PasswordRequired = 5,
 }
 type Result<T> = std::result::Result<T, Status>;
 
@@ -45,11 +52,25 @@ fn identify(data: &[u8]) -> Result<Format> {
         let storage = cfb::CompoundFile::open(Cursor::new(data)).map_err(|_| Status::Unreadable)?;
         return if storage.is_stream("/FileHeader") && storage.is_storage("/BodyText") {
             Ok(Format::Hwp)
+        } else if storage.is_stream("/EncryptionInfo") && storage.is_stream("/EncryptedPackage") {
+            Err(Status::PasswordRequired)
+        } else if storage.is_stream("/WordDocument") {
+            Ok(Format::Office(office_oxide::DocumentFormat::Doc))
+        } else if storage.is_stream("/PowerPoint Document") {
+            Ok(Format::Office(office_oxide::DocumentFormat::Ppt))
+        } else if storage.is_stream("/Workbook") || storage.is_stream("/Book") {
+            Ok(Format::Office(office_oxide::DocumentFormat::Xls))
         } else {
             Err(Status::Unsupported)
         };
     }
-    if !data.starts_with(b"PK\x03\x04") {
+    if data.starts_with(b"7z\xbc\xaf\x27\x1c") {
+        return Ok(Format::SevenZip);
+    }
+    if listing::is_tar(data) {
+        return Ok(Format::Tar);
+    }
+    if !data.starts_with(b"PK\x03\x04") && !data.starts_with(b"PK\x05\x06") {
         return Err(Status::Unsupported);
     }
 
@@ -57,25 +78,38 @@ fn identify(data: &[u8]) -> Result<Format> {
     if archive.len() > 4096 {
         return Err(Status::Limit);
     }
+    let format = if archive.index_for_name("[Content_Types].xml").is_some() {
+        if archive.index_for_name("word/document.xml").is_some() {
+            Format::Docx
+        } else if archive.index_for_name("ppt/presentation.xml").is_some() {
+            Format::Office(office_oxide::DocumentFormat::Pptx)
+        } else if archive.index_for_name("xl/workbook.xml").is_some() {
+            Format::Office(office_oxide::DocumentFormat::Xlsx)
+        } else {
+            Format::Zip
+        }
+    } else if archive.index_for_name("Contents/content.hpf").is_some()
+        && archive.index_for_name("Contents/section0.xml").is_some()
+    {
+        Format::Hwp
+    } else {
+        Format::Zip
+    };
+    if matches!(format, Format::Zip) {
+        return Ok(format);
+    }
     let mut total = 0u64;
     for i in 0..archive.len() {
         let member = archive.by_index_raw(i).map_err(|_| Status::Unreadable)?;
+        if member.encrypted() {
+            return Err(Status::PasswordRequired);
+        }
         total = total.checked_add(member.size()).ok_or(Status::Limit)?;
         if total > MAX_ZIP_DATA {
             return Err(Status::Limit);
         }
     }
-    if archive.index_for_name("[Content_Types].xml").is_some()
-        && archive.index_for_name("word/document.xml").is_some()
-    {
-        return Ok(Format::Docx);
-    }
-    if archive.index_for_name("Contents/content.hpf").is_some()
-        && archive.index_for_name("Contents/section0.xml").is_some()
-    {
-        return Ok(Format::Hwp);
-    }
-    Err(Status::Unsupported)
+    Ok(format)
 }
 
 fn scale(width: f32, height: f32) -> Result<f32> {
@@ -191,8 +225,8 @@ fn render_hwp(data: &[u8]) -> Result<Frame> {
     })
 }
 
-fn render(data: Vec<u8>) -> Result<Frame> {
-    match identify(&data)? {
+fn render(format: Format, data: Vec<u8>) -> Result<Frame> {
+    match format {
         Format::Png => decode_image(&data, ImageFormat::Png, false),
         Format::Jpeg => decode_image(&data, ImageFormat::Jpeg, false),
         Format::Pdf => render_pdf(data),
@@ -219,6 +253,7 @@ fn render(data: Vec<u8>) -> Result<Frame> {
                 .ok_or(Status::Unreadable)?;
             decode_image(&png, ImageFormat::Png, true)
         }
+        _ => unreachable!("text previews are sent separately"),
     }
 }
 
@@ -228,12 +263,22 @@ fn main() -> io::Result<()> {
         .lock()
         .take(MAX_INPUT + 1)
         .read_to_end(&mut data)?;
-    let result = if data.len() as u64 > MAX_INPUT {
+    let format = if data.len() as u64 > MAX_INPUT {
         Err(Status::Limit)
     } else {
-        render(data)
+        identify(&data)
     };
     let mut output = io::BufWriter::new(io::stdout().lock());
+    let result = match format {
+        Ok(Format::Office(format)) => {
+            return listing::write(&mut output, listing::office(data, format));
+        }
+        Ok(Format::Zip) => return listing::write(&mut output, listing::zip(&data)),
+        Ok(Format::Tar) => return listing::write(&mut output, listing::tar(&data)),
+        Ok(Format::SevenZip) => return listing::write(&mut output, listing::seven_zip(&data)),
+        Ok(format) => render(format, data),
+        Err(status) => Err(status),
+    };
     match result {
         Ok(mut frame)
             if (1..=MAX_EDGE).contains(&frame.width) && (1..=MAX_EDGE).contains(&frame.height) =>

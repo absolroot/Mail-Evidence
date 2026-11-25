@@ -6,14 +6,15 @@ using System.IO.Pipes;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using System.Text;
 using Microsoft.Win32.SafeHandles;
 
 namespace MailViewer.App;
 
-internal enum PreviewState { Empty, Loading, Ready, Unsupported, Unreadable, Limit, Unavailable, TimedOut }
+internal enum PreviewState { Empty, Loading, Ready, Unsupported, Unreadable, Limit, Unavailable, TimedOut, PasswordRequired }
 
 internal sealed record PreviewFrame(int Width, int Height, bool IsDocument, byte[] Pixels);
-internal sealed record PreviewResult(PreviewState State, PreviewFrame? Frame = null);
+internal sealed record PreviewResult(PreviewState State, PreviewFrame? Frame = null, AttachmentTextPreview? Text = null);
 
 internal sealed class AttachmentPreviewRenderer : IDisposable
 {
@@ -50,6 +51,20 @@ internal sealed class AttachmentPreviewRenderer : IDisposable
             input.Close();
             byte[] header = new byte[10];
             await output.ReadExactlyAsync(header.AsMemory(0, 1), timeout.Token).ConfigureAwait(false);
+            if (header[0] == 4)
+            {
+                await output.ReadExactlyAsync(header.AsMemory(1, 5), timeout.Token).ConfigureAwait(false);
+                int flags = header[1];
+                int length = BinaryPrimitives.ReadInt32LittleEndian(header.AsSpan(2, 4));
+                if ((flags & ~7) != 0 || length is < 0 or > 64 * 1024)
+                    return new(PreviewState.Unreadable);
+                var utf8 = new byte[length];
+                await output.ReadExactlyAsync(utf8, timeout.Token).ConfigureAwait(false);
+                timeout.Token.ThrowIfCancellationRequested();
+                return new(PreviewState.Ready, Text: AttachmentTextPreview.CreateListing(
+                    Encoding.UTF8.GetString(utf8), archive: (flags & 1) != 0,
+                    encrypted: (flags & 2) != 0, truncated: (flags & 4) != 0));
+            }
             if (header[0] != 0)
             {
                 return new(header[0] switch
@@ -57,6 +72,7 @@ internal sealed class AttachmentPreviewRenderer : IDisposable
                     1 => PreviewState.Unsupported,
                     2 => PreviewState.Unreadable,
                     3 => PreviewState.Limit,
+                    5 => PreviewState.PasswordRequired,
                     _ => PreviewState.Unreadable
                 });
             }

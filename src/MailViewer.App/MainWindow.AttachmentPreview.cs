@@ -89,10 +89,20 @@ public partial class MainWindow
     }
 
     private static bool CanPreviewAttachment(MailAttachment attachment) => IsTextPreviewCandidate(attachment) ||
-        Path.GetExtension(attachment.Name).ToLowerInvariant() is ".pdf" or ".hwp" or ".hwpx" or ".docx" or ".jpg" or ".jpeg" or ".png"
+        Path.GetExtension(attachment.Name).ToLowerInvariant() is ".pdf" or ".hwp" or ".hwpx" or ".docx"
+            or ".jpg" or ".jpeg" or ".png"
+        || IsStructuredPreviewCandidate(attachment)
         || attachment.MediaType.ToLowerInvariant() is "application/pdf" or "application/x-hwp" or "application/haansofthwp"
             or "application/hwp+zip" or "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             or "image/jpeg" or "image/png";
+
+    private static bool IsStructuredPreviewCandidate(MailAttachment attachment) =>
+        Path.GetExtension(attachment.Name).ToLowerInvariant() is ".doc" or ".pptx" or ".ppt" or ".xlsx" or ".xls"
+            or ".zip" or ".tar" or ".7z"
+        || attachment.MediaType.ToLowerInvariant() is "application/msword" or "application/vnd.ms-powerpoint" or "application/vnd.ms-excel"
+            or "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            or "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            or "application/zip" or "application/x-zip-compressed" or "application/x-tar" or "application/x-7z-compressed";
 
     private static bool IsTextPreviewCandidate(MailAttachment attachment) =>
         Path.GetExtension(attachment.Name).ToLowerInvariant() is ".txt" or ".bin" or ".dat" or ".log" or ".csv" or ".tsv"
@@ -107,25 +117,24 @@ public partial class MainWindow
         try
         {
             await Task.Delay(220, ct);
-            bool renderText = IsTextPreviewCandidate(attachment);
-            var result = await Task.Run<(PreviewResult? Raster, AttachmentTextPreview? Text)>(async () =>
+            bool renderText = IsTextPreviewCandidate(attachment) && !IsStructuredPreviewCandidate(attachment);
+            var result = await Task.Run(async () =>
             {
                 byte[] bytes = session.ReadAttachment(recordId, attachment.Id, ct);
                 ct.ThrowIfCancellationRequested();
-                if (renderText) return (null, AttachmentTextPreview.Create(bytes));
-                return (await _attachmentRenderer.RenderAsync(bytes, ct).ConfigureAwait(false), null);
+                if (renderText) return new PreviewResult(PreviewState.Ready, Text: AttachmentTextPreview.Create(bytes));
+                return await _attachmentRenderer.RenderAsync(bytes, ct).ConfigureAwait(false);
             }, ct);
 
             ct.ThrowIfCancellationRequested();
             BitmapSource? image = null;
-            if (result.Raster?.Frame is { } frame)
+            if (result.Frame is { } frame)
             {
                 image = BitmapSource.Create(frame.Width, frame.Height, 96, 96, PixelFormats.Pbgra32,
                     null, frame.Pixels, frame.Width * 4);
                 image.Freeze();
             }
-            var preview = new PreparedAttachmentPreview(result.Raster?.State ?? PreviewState.Ready, image, result.Text,
-                result.Raster?.Frame?.IsDocument == true);
+            var preview = new PreparedAttachmentPreview(result.State, image, result.Text, result.Frame?.IsDocument == true);
             if (preview.State == PreviewState.Ready) _lastPreparedPreview = (key, preview);
             return preview;
         }
@@ -334,11 +343,21 @@ public partial class MainWindow
             PreviewState.Limit => L("첨부파일이 미리보기 판독 한도를 초과했습니다.", "This attachment exceeded a preview limit."),
             PreviewState.Unavailable => L("격리된 미리보기를 시작하지 못했습니다.", "The isolated preview could not start."),
             PreviewState.TimedOut => L("미리보기 처리 시간이 초과되었습니다.", "Preview rendering timed out."),
+            PreviewState.PasswordRequired => L("이 첨부파일은 암호가 필요합니다.", "This attachment requires a password."),
             _ => ""
         };
 
     private static string AttachmentTextStatus(AttachmentTextPreview text)
     {
+        if (text.Kind != AttachmentTextKind.Plain)
+        {
+            string label = text.Kind == AttachmentTextKind.Archive
+                ? (text.Text.Length == 0 ? L("빈 압축 파일", "Empty archive") : L("압축 파일 목록", "Archive contents"))
+                : (text.Text.Length == 0 ? L("표시할 텍스트가 없습니다.", "No text to display.") : L("문서 텍스트", "Document text"));
+            if (text.Encrypted) label += L(" · 암호로 보호됨", " · Password protected");
+            if (text.Truncated) label += L(" · 일부만 표시", " · Partial preview");
+            return label;
+        }
         if (text.BytesShown == 0) return L("비어 있는 파일입니다.", "This file is empty.");
         string mode = text.EncodingName is { } encoding
             ? L($"텍스트 · {encoding}", $"Text · {encoding}")
