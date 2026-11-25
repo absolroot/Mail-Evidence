@@ -27,7 +27,7 @@ public static partial class Program
         string[] paths = [Path.Combine(fixtures, "Inbox.mbox"), Path.Combine(fixtures, "Sent.mbox")];
         var window = new MainWindow(paths, Path.Combine(output, "marks"))
         {
-            Width = 1440,
+            Width = 1280,
             Height = 770,
             ShowInTaskbar = false
         };
@@ -92,14 +92,26 @@ public static partial class Program
             await WaitFor(() => attachments.Items.Count == 3 && ShowsImage(previewImage, posterName, 960, 485),
                 "README attachment poster");
             var map = attachments.Items.Cast<MailAttachment>().Single(attachment => attachment.Name == mapName);
-            Mark("preview", await ReadmeDemoRow(attachments, map, "README booth map row"), 55);
-            Capture(window, output, "04-attachments.png");
-            attachments.SelectedItem = map;
+            var attachmentPicker = Field<ComboBox>(window, "AttachmentPicker");
+            await WaitFor(() => attachments.IsVisible || attachmentPicker.IsVisible, "README attachment selector");
+            bool docked = attachments.IsVisible;
+            if (docked)
+            {
+                Mark("preview", await ReadmeDemoRow(attachments, map, "README booth map row"), 55);
+                Capture(window, output, "04-attachments.png");
+                attachments.SelectedItem = map;
+            }
+            else
+            {
+                Mark("preview", attachmentPicker);
+                Capture(window, output, "04-attachments.png");
+                attachmentPicker.SelectedItem = map;
+            }
             bool MapReady() => ShowsImage(previewImage, mapName, 960, 545);
             await WaitFor(MapReady, "README booth map preview");
             Capture(window, output, "05-preview.png");
 
-            double dockedImageWidth = previewImage.ActualWidth;
+            double initialImageWidth = previewImage.ActualWidth;
             var expand = Field<Button>(window, "AttachmentPreviewExpandButton");
             var resultsPane = Field<Grid>(window, "MailboxResultsPane");
             Mark("expand", expand);
@@ -110,7 +122,10 @@ public static partial class Program
             var fileInfo = Field<Expander>(window, "AttachmentInfoToggle");
             Mark("file-info", fileInfo, fileInfo.ActualWidth - 22, 21);
             fileInfo.IsExpanded = false;
-            await WaitFor(() => previewImage.ActualWidth > dockedImageWidth * 1.25, "README larger image preview");
+            await WaitFor(() => MapReady() && (docked
+                    ? previewImage.ActualWidth > initialImageWidth * 1.25
+                    : previewImage.ActualWidth >= initialImageWidth),
+                "README image preview without file information");
             Capture(window, output, "06b-image.png");
 
             Mark("restore", expand);
