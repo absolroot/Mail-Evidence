@@ -15,6 +15,9 @@ namespace JournalDesk;
 
 public partial class HexEvidenceView : UserControl
 {
+    public static GridLength CopyGutterWidth { get; } = new(24);
+    internal double RequiredByteViewportWidth => Math.Ceiling(Body.ByteTableWidth) + SystemParameters.VerticalScrollBarWidth + CopyGutterWidth.Value;
+
     private byte[] bytes = [];
     private IReadOnlyList<HexField> fields = [];
     private HexField? comparisonField;
@@ -210,7 +213,12 @@ public partial class HexEvidenceView : UserControl
     private void RevealIntegerValues(object sender, RoutedEventArgs e)
     {
         if (IsVisible)
-            Dispatcher.BeginInvoke(DispatcherPriority.Loaded, () => ShowNumbers.BringIntoView());
+            Dispatcher.BeginInvoke(DispatcherPriority.Loaded, () =>
+            {
+                if (ShowNumbers.IsExpanded && InspectorScroll.ViewportHeight > 0)
+                    ShowNumbers.BringIntoView(new Rect(0, 0, ShowNumbers.ActualWidth,
+                        Math.Min(ShowNumbers.ActualHeight, InspectorScroll.ViewportHeight)));
+            });
     }
     private void UpdateIntegers()
     {
@@ -231,7 +239,7 @@ public partial class HexEvidenceView : UserControl
         if (ActualWidth <= 0)
             return;
         bool shallow = ActualHeight is > 0 and < 118;
-        double byteWidth = Math.Ceiling(Body.ByteTableWidth) + SystemParameters.VerticalScrollBarWidth;
+        double byteWidth = RequiredByteViewportWidth;
         double inspectorMinimum = shallow ? 190 : 224;
         bool below = ActualWidth < byteWidth + inspectorMinimum && !(shallow && ActualWidth >= 440);
         bool showField = FieldControl.Visibility == Visibility.Visible;

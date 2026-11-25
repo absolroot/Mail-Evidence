@@ -1,6 +1,6 @@
 <Window x:Class="MailViewer.App.ImageSourcesWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:desk="clr-namespace:JournalDesk"
         Width="760" Height="540" MinWidth="550" MinHeight="420"
         WindowStartupLocation="CenterOwner" ShowInTaskbar="False" UseLayoutRounding="True"
         FontFamily="Segoe UI, Malgun Gothic" Closing="OnClosing"
@@ -13,8 +13,11 @@
         </Grid.RowDefinitions>
         <StackPanel Margin="0,0,0,12">
             <TextBlock x:Name="Heading" FontSize="21" FontWeight="SemiBold"/>
-            <TextBlock x:Name="ImageName" TextTrimming="CharacterEllipsis" Margin="0,4,0,0"
+            <TextBlock x:Name="ImageName" TextTrimming="CharacterEllipsis" FontWeight="SemiBold" Margin="0,4,0,0"
                        ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+            <desk:CopyText x:Name="ImagePath" Style="{StaticResource CopyField}" TextWrapping="NoWrap"
+                           Padding="0" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"
+                           Foreground="{DynamicResource Viewer.Muted}"/>
         </StackPanel>
         <Grid Grid.Row="1" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
@@ -22,11 +25,11 @@
             </Grid.ColumnDefinitions>
             <Label x:Name="VolumeLabel" Target="{Binding ElementName=Volumes}" VerticalAlignment="Center" Padding="0,0,10,0"/>
             <ComboBox x:Name="Volumes" Grid.Column="1" DisplayMemberPath="Label" Style="{StaticResource ViewerComboBox}"
-                      Height="{StaticResource FormInputHeight}" MinHeight="0"
+                      Height="{StaticResource Desk.FormControlHeight}" MinHeight="0"
                       HorizontalAlignment="Stretch" SelectionChanged="OnVolumeChanged"
                       AutomationProperties.AutomationId="ImageVolumeSelector"/>
-            <Button x:Name="WholeVolumeButton" Grid.Column="2" Style="{StaticResource Action}" Tag="&#xE721;"
-                    Click="SearchWholeVolume" Height="{StaticResource FormInputHeight}" Margin="8,0,0,0"
+            <Button x:Name="WholeVolumeButton" Grid.Column="2" Style="{StaticResource FormAction}" Tag="&#xE721;"
+                    Click="SearchWholeVolume" Height="{StaticResource Desk.FormControlHeight}" Margin="8,0,0,0"
                     AutomationProperties.AutomationId="SearchImageVolume"/>
         </Grid>
         <DataGrid x:Name="Candidates" Grid.Row="2" Style="{StaticResource EvidenceGrid}" RowHeight="26"
@@ -61,8 +64,8 @@
             <ProgressBar x:Name="Progress" Height="3" Margin="0,5,0,0" Visibility="Collapsed" IsIndeterminate="True"/>
         </StackPanel>
         <WrapPanel Grid.Row="4" HorizontalAlignment="Right" Margin="0,10,0,0">
-            <Button x:Name="CloseButton" Style="{StaticResource Action}" Click="CloseOrCancel"/>
-            <Button x:Name="ExtractButton" Style="{StaticResource PrimaryAction}" Click="ExtractSelected"
+            <Button x:Name="CloseButton" Style="{StaticResource FormAction}" Margin="0,0,8,0" Click="CloseOrCancel"/>
+            <Button x:Name="ExtractButton" Style="{StaticResource PrimaryFormAction}" Click="ExtractSelected"
                     IsEnabled="False" AutomationProperties.AutomationId="ExtractImageMail"/>
         </WrapPanel>
       </Grid>

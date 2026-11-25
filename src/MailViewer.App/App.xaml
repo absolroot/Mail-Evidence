@@ -35,7 +35,6 @@
             </ContentPresenter>
         </ControlTemplate>
         <Thickness x:Key="EvidencePaneInset">8,4,8,6</Thickness>
-        <sys:Double x:Key="FormInputHeight">30</sys:Double>
         <Style x:Key="EvidenceToolbar" TargetType="DockPanel">
             <Setter Property="MinHeight" Value="28"/>
             <Setter Property="Margin" Value="0,0,0,4"/>
@@ -44,21 +43,31 @@
         <Style x:Key="PaneHeading" TargetType="Border">
             <Setter Property="Height" Value="{StaticResource WorkspaceRailHeight}"/>
             <Setter Property="Padding" Value="10,3"/>
-            <Setter Property="Background" Value="{DynamicResource Viewer.Section}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource Viewer.Rule}"/>
-            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Background" Value="{DynamicResource Viewer.Canvas}"/>
+        </Style>
+        <Style x:Key="MailboxWorkspacePane" TargetType="Border" BasedOn="{StaticResource Desk.WorkspacePane}">
+            <Setter Property="Background" Value="{DynamicResource Viewer.Canvas}"/>
+            <Setter Property="BorderThickness" Value="1,0,1,1"/>
+            <Setter Property="CornerRadius" Value="0,0,7,7"/>
+        </Style>
+        <Style x:Key="MailboxWorkspaceTab" TargetType="TabItem" BasedOn="{StaticResource Desk.WorkspaceTab}">
+            <Setter Property="Background" Value="{DynamicResource Viewer.Canvas}"/>
         </Style>
         <Style x:Key="WorkspaceTabs" TargetType="TabControl">
-            <Setter Property="ItemContainerStyle" Value="{StaticResource Desk.WorkspaceTab}"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource MailboxWorkspaceTab}"/>
+            <Setter Property="Background" Value="{DynamicResource Viewer.Canvas}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TabControl">
                         <DockPanel KeyboardNavigation.TabNavigation="Local">
-                            <Border DockPanel.Dock="Top" Background="{DynamicResource Viewer.Inset}"
-                                    BorderBrush="{DynamicResource Viewer.Rule}" BorderThickness="0,0,0,1">
+                            <Grid DockPanel.Dock="Top">
+                                <Border Background="{DynamicResource Viewer.TabRail}" BorderBrush="{DynamicResource Viewer.TabRule}"
+                                        BorderThickness="0,0,0,1" CornerRadius="5,5,0,0" SnapsToDevicePixels="True"/>
                                 <DockPanel IsItemsHost="True" LastChildFill="False" KeyboardNavigation.TabNavigation="Once"/>
+                            </Grid>
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent"/>
                             </Border>
-                            <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent"/>
                         </DockPanel>
                     </ControlTemplate>
                 </Setter.Value>
@@ -95,6 +104,27 @@
             <Setter Property="Foreground" Value="{DynamicResource Viewer.Text}"/>
             <Setter Property="CaretBrush" Value="{DynamicResource Viewer.Text}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource Viewer.Rule}"/>
+        </Style>
+        <DataTemplate x:Key="FormActionCaption">
+            <StackPanel Orientation="Horizontal">
+                <ContentControl x:Name="FormGlyph" Content="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}"
+                                Template="{StaticResource CommandIcon}" Margin="0,0,6,0" VerticalAlignment="Center"
+                                Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                Focusable="False" IsTabStop="False"/>
+                <TextBlock Text="{Binding}" VerticalAlignment="Center"
+                           Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            </StackPanel>
+            <DataTemplate.Triggers>
+                <Trigger SourceName="FormGlyph" Property="Content" Value="{x:Null}">
+                    <Setter TargetName="FormGlyph" Property="Visibility" Value="Collapsed"/>
+                </Trigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+        <Style x:Key="FormAction" TargetType="Button" BasedOn="{StaticResource Desk.FormButton}">
+            <Setter Property="ContentTemplate" Value="{StaticResource FormActionCaption}"/>
+        </Style>
+        <Style x:Key="PrimaryFormAction" TargetType="Button" BasedOn="{StaticResource Desk.FormPrimary}">
+            <Setter Property="ContentTemplate" Value="{StaticResource FormActionCaption}"/>
         </Style>
         <Style x:Key="Action" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="MinHeight" Value="27"/>
@@ -268,42 +298,8 @@
             <Setter Property="FontFamily" Value="Consolas, Segoe UI"/>
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
-        <Style x:Key="EvidenceTab" TargetType="TabItem">
-            <Setter Property="Foreground" Value="{DynamicResource Viewer.Muted}"/>
-            <Setter Property="FocusVisualStyle" Value="{StaticResource Desk.KeyboardOutline}"/>
-            <Setter Property="Padding" Value="9,0"/>
+        <Style x:Key="EvidenceTab" TargetType="TabItem" BasedOn="{StaticResource Desk.SecondaryTab}">
             <Setter Property="MinHeight" Value="{StaticResource WorkspaceRailHeight}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabItem">
-                        <Grid x:Name="TabFace" Background="Transparent">
-                            <ContentPresenter x:Name="TabLabel" ContentSource="Header" RecognizesAccessKey="True"
-                                              VerticalAlignment="Center" Margin="{TemplateBinding Padding}"
-                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
-                            <Border x:Name="Underline" Height="2" Margin="7,0" VerticalAlignment="Bottom"
-                                    Background="Transparent" IsHitTestVisible="False"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="True"/>
-                                    <Condition Property="IsSelected" Value="False"/>
-                                    <Condition Property="IsEnabled" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="TabFace" Property="Background" Value="{DynamicResource Viewer.TabHover}"/>
-                                <Setter Property="Foreground" Value="{DynamicResource Viewer.TabHoverText}"/>
-                            </MultiTrigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Foreground" Value="{DynamicResource Viewer.Text}"/>
-                                <Setter TargetName="Underline" Property="Background" Value="{DynamicResource Viewer.Accent}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="{DynamicResource Viewer.Disabled}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
         <Style x:Key="EvidenceTabs" TargetType="TabControl">
             <Setter Property="ItemContainerStyle" Value="{StaticResource EvidenceTab}"/>
@@ -312,31 +308,12 @@
                     <ControlTemplate TargetType="TabControl">
                         <Grid KeyboardNavigation.TabNavigation="Local">
                             <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
-                            <Border Background="{DynamicResource Viewer.Section}" BorderBrush="{DynamicResource Viewer.Rule}" BorderThickness="0,0,0,1"/>
+                            <Border Background="{DynamicResource Viewer.Canvas}" BorderBrush="{DynamicResource Viewer.TabRule}"
+                                    BorderThickness="0,0,0,1" SnapsToDevicePixels="True"/>
                             <WrapPanel x:Name="EvidenceTabRail" IsItemsHost="True" Margin="6,0,6,0" KeyboardNavigation.TabIndex="1" KeyboardNavigation.TabNavigation="Once"/>
                             <ContentPresenter Grid.Row="1" Content="{TemplateBinding Tag}"/>
-                            <ContentPresenter Grid.Row="2" x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="0,2,0,0"/>
+                            <ContentPresenter Grid.Row="2" x:Name="PART_SelectedContentHost" ContentSource="SelectedContent"/>
                         </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="EvidenceSplitter" TargetType="GridSplitter">
-            <Setter Property="Cursor" Value="SizeNS"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="GridSplitter">
-                        <Grid Background="Transparent">
-                            <Border x:Name="Rule" Height="1" VerticalAlignment="Center" Background="{DynamicResource Viewer.Rule}"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Rule" Property="Background" Value="{DynamicResource Viewer.Accent}"/>
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="Rule" Property="Background" Value="{DynamicResource Viewer.Accent}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -359,7 +336,7 @@
                                 <Setter TargetName="Rule" Property="Width" Value="3"/>
                                 <Setter TargetName="Rule" Property="Background" Value="{DynamicResource Viewer.Accent}"/>
                             </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Trigger Property="IsDragging" Value="True">
                                 <Setter TargetName="Rule" Property="Width" Value="3"/>
                                 <Setter TargetName="Rule" Property="Background" Value="{DynamicResource Viewer.Accent}"/>
                             </Trigger>

@@ -8,7 +8,7 @@ internal static partial class Program
 {
     private static void AddMsgChecks(List<(string Name, Action Test)> cases, string root, string output)
     {
-        var json = File.ReadAllText(Path.Combine(root, "tests", "fixtures", "msg-oracle.json"));
+        var json = File.ReadAllText(Path.Combine(root, "Mail-Viewer", "tests", "fixtures", "msg-oracle.json"));
         var independent = JsonSerializer.Deserialize<Dictionary<string, MsgOracle>>(json, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true

@@ -13,7 +13,7 @@ public static partial class Program
 {
     private static async Task RunAllFindings(string workspace, string output, string? theme)
     {
-        string folder = Path.Combine(workspace, "tests", "fixtures", "anomaly-ux-complete");
+        string folder = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "anomaly-ux-complete");
         string[] inputs = Directory.GetFiles(folder, "*.eml");
         Require(inputs.Length == 10, "Expected ten reusable synthetic UX samples");
         var window = new MainWindow(inputs) { ShowInTaskbar = false };

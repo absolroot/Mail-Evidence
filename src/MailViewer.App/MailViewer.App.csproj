@@ -10,7 +10,7 @@
     <AssemblyName>MailEvidence</AssemblyName>
     <AssemblyTitle>Absolroot Mail Evidence</AssemblyTitle>
     <Product>Absolroot Mail Evidence</Product>
-    <Version>1.6.1</Version>
+    <Version>1.6.2</Version>
     <ApplicationIcon Condition="Exists('../../assets/MailViewer.ico')">../../assets/MailViewer.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4314.35" />
     <Page Include="../../third_party/ntfs-tracer/gui/CompactMenu.xaml" Link="CompactMenu.xaml" />
     <Page Include="../../third_party/ntfs-tracer/gui/WorkspaceChrome.xaml" Link="WorkspaceChrome.xaml" />
+    <Compile Include="../../third_party/ntfs-tracer/gui/PaneSplitter.cs" Link="PaneSplitter.cs" />
     <Compile Include="../../third_party/ntfs-tracer/gui/CopyText.cs" Link="CopyText.cs" />
     <Page Include="../../third_party/ntfs-tracer/gui/TableHeader.xaml" Link="TableHeader.xaml" />
     <Compile Include="../../third_party/ntfs-tracer/gui/SortCycle.cs" Link="SortCycle.cs" />

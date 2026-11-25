@@ -30,7 +30,6 @@ SCENES = (
 POINTER = ((0, 0), (0, 20), (5, 15), (9, 23), (13, 21), (9, 14), (16, 14))
 RING_COLOR = (60, 164, 243)
 PLAYBACK_SPEED = 1.2
-POST_CLICK_HOLD_SCALE = 0.85
 
 
 def shared_palette(screens):
@@ -100,7 +99,6 @@ def render(captures, output):
             click_frames.append((len(frames), position))
             frame(before, 90, ring=9)
             frame(screen, 90, ring=14)
-            hold *= POST_CLICK_HOLD_SCALE
         frame(screen, hold)
 
     output.mkdir(parents=True, exist_ok=True)

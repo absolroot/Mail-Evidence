@@ -15,11 +15,11 @@ public static partial class Program
 {
     private static async Task RunPst(string workspace, string output, string? theme)
     {
-        var fixtures = Path.Combine(workspace, "tests", "fixtures");
+        var fixtures = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures");
         using var oracle = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(fixtures, "pst-oracle.json")));
         var tika = oracle.RootElement.GetProperty("tika");
         var attachmentSample = oracle.RootElement.GetProperty("attachment");
-        var tikaPath = Path.Combine(workspace, "tests", "fixtures", "external", tika.GetProperty("file").GetString()!);
+        var tikaPath = Path.Combine(workspace, "Mail-Viewer-Research", "fixtures", tika.GetProperty("file").GetString()!);
         var attachmentPath = Path.Combine(fixtures, "pst", attachmentSample.GetProperty("file").GetString()!);
         var originalHashes = new[] { tikaPath, attachmentPath }.ToDictionary(path => path, Hash);
         Require(originalHashes[tikaPath] == tika.GetProperty("sha256").GetString() &&
@@ -29,6 +29,8 @@ public static partial class Program
         var steps = new List<object>();
         var window = new MainWindow([tikaPath, attachmentPath]) { ShowInTaskbar = false };
         window.Show();
+        await Idle();
+        ClickMenu(window, "KoreanLanguageMenuItem");
         await Idle();
         if (theme is not null)
         {
@@ -183,9 +185,15 @@ public static partial class Program
         locationDisclosure.IsExpanded = true;
         await Task.Delay(550);
         await Idle();
-        Require(Field<ItemsControl>(window, "AttachmentLocationFields").IsVisible &&
+        var locationFields = Field<ItemsControl>(window, "AttachmentLocationFields");
+        var locationScroll = Field<ScrollViewer>(window, "AttachmentInfoScroll");
+        var firstLocation = locationFields.ItemContainerGenerator.ContainerFromIndex(0) as FrameworkElement;
+        double firstLocationTop = firstLocation?.TranslatePoint(new Point(), locationScroll).Y ?? double.PositiveInfinity;
+        Require(firstLocation is { IsVisible: true } && firstLocationTop >= -1 &&
+            firstLocationTop + Math.Min(firstLocation.ActualHeight, locationScroll.ViewportHeight) <= locationScroll.ViewportHeight + 1 &&
             EvidenceFields(window, "AttachmentLocationFields").Any(field => field.Value == matched!.PstProperty!.AttachmentNid),
-            "the location disclosure shows the selected attachment's NID");
+            $"the selected attachment's location starts at {firstLocationTop:F1} DIP in the {locationScroll.ViewportHeight:F1} DIP viewport");
+        Console.WriteLine($"Attachment source first row: {firstLocationTop:F1} DIP in {locationScroll.ViewportHeight:F1} DIP viewport.");
         Capture(window, output, "04b-attachment-source-location.png");
         locationDisclosure.IsExpanded = false;
         var hexButton = Field<Button>(window, "OpenAttachmentBytesButton");
@@ -223,6 +231,30 @@ public static partial class Program
         steps.Add(new { Check = "PST folder scope, attachment and verified return", attachmentLocation,
             Attachment = matched.Name, Bytes = attachmentBytes.Length, matched.Sha256,
             Property = matched.PstProperty, Package = attachmentPackage, ReturnVerified = true });
+
+        var readerSplitter = Field<GridSplitter>(window, "MailboxSplitter");
+        var readerSource = PresentationSource.FromVisual(readerSplitter);
+        var resultsPane = Field<Grid>(window, "MailboxResultsPane");
+        double originalResultsWidth = resultsPane.ActualWidth;
+        for (int i = 0; i < 3; i++)
+        {
+            readerSplitter.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, readerSource, Environment.TickCount, Key.Right)
+                { RoutedEvent = Keyboard.KeyDownEvent });
+            readerSplitter.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, readerSource, Environment.TickCount, Key.Right)
+                { RoutedEvent = Keyboard.KeyUpEvent });
+        }
+        await Idle();
+        double keyboardResultsWidth = resultsPane.ActualWidth;
+        double windowWidth = window.Width;
+        window.Width += 100;
+        await Idle();
+        double resizedResultsWidth = resultsPane.ActualWidth;
+        Require(keyboardResultsWidth > originalResultsWidth + 5 && Math.Abs(resizedResultsWidth - keyboardResultsWidth) < 1,
+            $"Mail list width changed {originalResultsWidth:F1} → {keyboardResultsWidth:F1} → {resizedResultsWidth:F1} DIP.");
+        Console.WriteLine($"Mail list width persisted: {originalResultsWidth:F1} → {keyboardResultsWidth:F1} → {resizedResultsWidth:F1} DIP.");
+        Capture(window, output, "07c-pst-results-width-preserved.png");
+        window.Width = windowWidth;
+        await Idle();
 
         var folderSplitter = Field<GridSplitter>(window, "MailboxFolderSplitter");
         var folderPane = Field<Border>(window, "PstFolderPane");

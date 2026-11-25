@@ -16,7 +16,7 @@ public static partial class Program
 {
     private static async Task RunOst(string workspace, string output, string? theme)
     {
-        var fixtures = Path.Combine(workspace, "tests", "fixtures");
+        var fixtures = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures");
         using var oracle = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(fixtures, "ost-oracle.json")));
         using var pstOracle = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(fixtures, "pst-oracle.json")));
         var sample = oracle.RootElement.GetProperty("primary");
@@ -27,7 +27,7 @@ public static partial class Program
         Directory.CreateDirectory(Path.GetDirectoryName(secondPath)!);
         File.Copy(secondaryFixture, secondPath);
         var pstSample = pstOracle.RootElement.GetProperty("tika");
-        var pstPath = Path.Combine(workspace, "tests", "fixtures", "external", pstSample.GetProperty("file").GetString()!);
+        var pstPath = Path.Combine(workspace, "Mail-Viewer-Research", "fixtures", pstSample.GetProperty("file").GetString()!);
         var originalHashes = new[] { ostPath, secondPath, pstPath }.ToDictionary(path => path, Hash);
         Require(originalHashes[ostPath] == sample.GetProperty("sha256").GetString() &&
             originalHashes[secondPath] == secondary.GetProperty("sha256").GetString() &&

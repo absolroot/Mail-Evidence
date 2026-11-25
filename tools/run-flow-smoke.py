@@ -9,19 +9,19 @@ from pathlib import Path
 
 
 def main():
-    workspace = Path(__file__).resolve().parents[1]
+    workspace = Path(__file__).resolve().parents[2]
     parser = argparse.ArgumentParser()
     parser.add_argument("output", type=Path)
     parser.add_argument("--theme", choices=("light", "dark"))
-    parser.add_argument("--scenario", choices=("formats", "readme-demo", "mail", "msg", "pst", "ost", "ost-expanded", "investigation", "mailbox-folders", "mailbox-marks", "attachment-boundaries", "reader-attachments", "mail-fields", "startup-focus", "find-sources", "disk-image", "languages"), default="mail")
+    parser.add_argument("--scenario", choices=("readme-demo", "mail", "msg", "pst", "ost", "ost-expanded", "investigation", "mailbox-folders", "mailbox-marks", "attachment-boundaries", "reader-attachments", "mail-fields", "startup-focus", "find-sources", "disk-image", "formats"), default="mail")
     parser.add_argument("--executable", type=Path)
     args = parser.parse_args()
-    smoke = args.executable.resolve() if args.executable else workspace / "tools/FlowSmoke/bin/Release/net10.0-windows/FlowSmoke.exe"
+    smoke = args.executable.resolve() if args.executable else workspace / "Mail-Viewer/tools/FlowSmoke/bin/Release/net10.0-windows/FlowSmoke.exe"
     if not smoke.is_file():
         parser.error(f"Build FlowSmoke in Release first: {smoke}")
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
-    launcher = runpy.run_path(str(workspace / "tools/probe-windows-desktop.py"))
+    launcher = runpy.run_path(str(workspace / "Mail-Viewer-Research/fixtures/probe-windows-desktop.py"))
     desktop_name = f"MailViewerSmoke_{os.getpid()}_{uuid.uuid4().hex}"
     desktop = launcher["create_desktop"](desktop_name, None, None, 0, 0x01FF, None)
     if not desktop:

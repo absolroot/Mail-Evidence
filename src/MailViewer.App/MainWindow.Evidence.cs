@@ -266,7 +266,11 @@ public partial class MainWindow
                 fields.Add(new(L("파일 구조", "File structure"), DescribeBoundary(boundary)));
             else if (attachment.Analysis?.BoundaryLimited == true)
                 fields.Add(new(L("파일 구조", "File structure"), L("일부 구조를 확인할 수 없습니다.", "Some structure could not be assessed.")));
-            if (attachment.Issue is { } issue)
+            if (attachment.PstObject is { } pstObject)
+                fields.Add(new(L("첨부 유형", "Attachment type"), pstObject == PstObjectAttachment.EmbeddedMessage
+                    ? L("내장 메시지 · 내용 열기 및 내보내기 미지원", "Embedded message · opening and export unavailable")
+                    : L("응용 프로그램 개체 · 내용 열기 및 내보내기 미지원", "Application object · opening and export unavailable")));
+            else if (attachment.Issue is { } issue)
                 fields.Add(new(L("판독 상태", "Read status"), issue));
             else if (attachment.Sha256 is null && attachment.CompoundStoragePath is null)
                 fields.Add(new("SHA-256", L("확인되지 않음", "Unavailable")));
@@ -584,12 +588,6 @@ public partial class MainWindow
             summary += $" · MAPI {stream.TagHex}";
             fields.AddRange(StreamLocationFields(stream));
         }
-        else if (_rawSourceRecord is null)
-        {
-            ClearRawLocation();
-            return;
-        }
-
         fields.Add(new(L("원본 경로", "Source path"), record.SourcePath));
         if (_session?.Sources.FirstOrDefault(source => source.Id == record.SourceId)?.Sha256 is { } sha256)
             fields.Add(new(L("원본 파일 SHA-256", "Source file SHA-256"), sha256, IsDigest: true));

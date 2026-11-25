@@ -85,6 +85,8 @@ public sealed record MailBodyPart(string PartPath, string MediaType, string Text
 
 internal sealed record HtmlBodySource(EvidenceLocation Location, string? TransferEncoding = null, string? Charset = null, int CodePage = 1252);
 
+public enum PstObjectAttachment { EmbeddedMessage, ApplicationObject }
+
 public sealed record MailAttachment(
     string Id, string PartPath, string Name, string MediaType, string TransferEncoding,
     ByteRange? EncodedRange, long? DecodedLength, string? Sha256, string? Issue = null,
@@ -92,6 +94,7 @@ public sealed record MailAttachment(
     PstPropertyLocator? PstProperty = null)
 {
     public AttachmentObservation? Analysis { get; init; }
+    public PstObjectAttachment? PstObject { get; init; }
     internal string? ContentId { get; init; }
     public ContainerEvidence? ContainerLocation { get; init; }
     internal EngineAttachment? EngineAttachment { get; init; }

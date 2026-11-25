@@ -18,6 +18,9 @@ public partial class MainWindow
     private readonly Dictionary<string, int> _sourceMailCounts = new(StringComparer.Ordinal);
     private readonly Dictionary<(string SourceId, uint NodeId), int> _directMailCounts = [];
     private readonly Dictionary<PstFolder, FolderMailCount> _folderMailCounts = [];
+    private EvidenceSession? _countBadgeSession;
+    private bool _countBadgesShowAnomalies;
+    private int? _countBadgeAnomalies;
 
     public static readonly DependencyProperty MailboxCountProperty = DependencyProperty.RegisterAttached(
         "MailboxCount", typeof(string), typeof(MainWindow), new PropertyMetadata(""));
@@ -36,6 +39,7 @@ public partial class MainWindow
     private void RebuildPstFolderTree()
     {
         if (_syncingPstTree) return;
+        _countBadgeSession = null;
         var expanded = MailboxNodes().Where(entry => entry.Node.HasItems)
             .ToDictionary(entry => MailboxNodeKey(entry.Node), entry => entry.Node.IsExpanded);
         var sources = _session?.Sources ?? [];
@@ -472,7 +476,7 @@ public partial class MainWindow
         AllMailScopeButton.Visibility = expanded ? Visibility.Visible : Visibility.Collapsed;
         AllMailScopeButton.IsChecked = SelectedSourceId is null && _selectedPstFolder is null &&
             _selectedPstFile is null && _selectedSourceGroup is null;
-        SetMailboxCount(AllMailScopeButton, $"[{(_session?.Records.Count ?? 0):N0}]");
+        RefreshMailboxCounts();
         PstFolderPane.IsEnabled = CanChooseSources;
         PstFoldersToggle.IsEnabled = CanChooseSources;
         var draft = CaptureSearch();
@@ -506,6 +510,46 @@ public partial class MainWindow
         PstAllSourcesButton.Visibility = scopePending || scoped ? Visibility.Visible : Visibility.Collapsed;
         RefreshMailboxFilterCaption();
         SynchronizeNarrowReader();
+    }
+
+    private void RefreshMailboxCounts()
+    {
+        var session = _session;
+        bool anomalies = ActiveMailboxTab == AnomalyMailboxTab;
+        int? anomalyCount = anomalies ? session?.AnomalousMailCount : null;
+        if (ReferenceEquals(_countBadgeSession, session) && _countBadgesShowAnomalies == anomalies &&
+            _countBadgeAnomalies == anomalyCount) return;
+        _countBadgeSession = session;
+        _countBadgesShowAnomalies = anomalies;
+        _countBadgeAnomalies = anomalyCount;
+
+        var flagged = anomalyCount is null ? [] : session!.Records.Where(record => session.HasKnownAnomaly(record.Id)).ToArray();
+        var sources = anomalies ? flagged.ToLookup(record => record.SourceId) : null;
+        var folders = flagged.ToLookup(record => (record.SourceId, record.FolderNodeId));
+        var totals = new Dictionary<TreeViewItem, int>();
+        SetMailboxCount(AllMailScopeButton, FormatCount(anomalies ? anomalyCount ?? 0 : session?.Records.Count ?? 0));
+        foreach (var (node, _) in MailboxNodes().Reverse())
+        {
+            switch (node.DataContext)
+            {
+                case PstFolder folder:
+                    var original = _folderMailCounts[folder];
+                    int direct = anomalies ? folders[(folder.SourceId, folder.NodeId)].Count() : original.Direct;
+                    int total = direct + node.Items.OfType<TreeViewItem>().Sum(child => totals[child]);
+                    totals[node] = total;
+                    SetMailboxCount(node, FormatCount(original.IncludesChildrenByDefault ? total : direct));
+                    break;
+                case MailboxNavigationGroup group:
+                    SetMailboxCount(node, FormatCount(group.SourceIds.Sum(SourceCount)));
+                    break;
+                case PstFileScope file when !string.IsNullOrEmpty(AutomationProperties.GetHelpText(node)):
+                    SetMailboxCount(node, FormatCount(SourceCount(file.SourceId)));
+                    break;
+            }
+        }
+
+        int SourceCount(string id) => sources is null ? _sourceMailCounts.GetValueOrDefault(id) : sources[id].Count();
+        string FormatCount(int count) => anomalies && anomalyCount is null ? "" : $"[{count:N0}]";
     }
 
     private SourceInfo? SourceForScope(string? sourceId) =>

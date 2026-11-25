@@ -26,6 +26,8 @@ internal static class PstReader
     private const ushort Unicode = 0x001f;
     private const ushort Ansi = 0x001e;
     private const ushort Binary = 0x0102;
+    private const ushort Object = 0x000d;
+    private const ushort AttachMethod = 0x3705;
     private const ushort TransportHeaders = 0x007d;
     private const ushort AttachData = 0x3701;
     private static readonly Encoding Utf16 = new UnicodeEncoding(false, false, true);
@@ -474,8 +476,28 @@ internal static class PstReader
                         break;
                     }
                     mediaType = NonBlank(ReadString(metadata, 0x370e, encoding)) ?? mediaType;
-                    if (metadata.Find(0x3705) is not null && InlineValue(metadata, 0x3705) != 1)
-                        throw new NotSupportedException("파일 데이터를 저장하지 않는 첨부 방식이거나 지원하지 않는 첨부 종류입니다.");
+                    if (metadata.Find(AttachMethod) is { } method)
+                    {
+                        if (method.Type != 0x0003)
+                            throw new InvalidDataException("첨부 방식 속성(0x3705)의 유형이 올바르지 않습니다.");
+                        if (method.Value is 5 or 6)
+                        {
+                            if (metadata.Find(AttachData) is not { Type: Object, Value: not 0 })
+                                throw new InvalidDataException("첨부 개체 속성(0x3701000D)이 없거나 올바르지 않습니다.");
+                            var kind = method.Value == 5 ? PstObjectAttachment.EmbeddedMessage : PstObjectAttachment.ApplicationObject;
+                            string status = kind == PstObjectAttachment.EmbeddedMessage
+                                ? "내장 메시지입니다. 내장 메시지 내용을 열거나 파일로 내보내는 기능은 지원하지 않습니다."
+                                : "응용 프로그램 개체입니다. 개체 내용을 열거나 파일로 내보내는 기능은 지원하지 않습니다.";
+                            found.Add(new MailAttachment(attachmentId, locationText, name, mediaType, "", null, null, null, status)
+                            {
+                                PstObject = kind,
+                                Analysis = InvestigationArtifacts.InspectAttachment(name, nameLocation, nameField, null)
+                            });
+                            continue;
+                        }
+                        if (method.Value != 1)
+                            throw new NotSupportedException($"지원하지 않는 첨부 방식입니다. PidTagAttachMethod={method.Value}.");
+                    }
                     if (metadata.Find(AttachData) is not { Type: Binary } content)
                         throw new InvalidDataException(ost ? "이 OST 캐시에 첨부 데이터 속성(0x37010102)이 없습니다."
                             : "첨부 데이터 속성(0x37010102)이 없습니다.");

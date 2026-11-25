@@ -9,7 +9,7 @@ internal static partial class Program
 {
     private static void TestSharedFormatReaders(string root, string output)
     {
-        string fixtures = Path.Combine(root, "tests", "fixtures");
+        string fixtures = Path.Combine(root, "Mail-Viewer", "tests", "fixtures");
         string extras = Path.Combine(fixtures, "rust-local");
         string path = Path.Combine(output, "format-readers");
         Directory.CreateDirectory(path);

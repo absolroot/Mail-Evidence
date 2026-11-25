@@ -12,17 +12,20 @@ namespace MailViewer.FlowSmoke;
 
 public static partial class Program
 {
-    private static async Task RunExpandedOst(string workspace, string output, string? theme)
+    private static async Task RunExpandedOst(string workspace, string output, string? theme, bool useVersion21)
     {
-        var fixtures = Path.Combine(workspace, "tests", "fixtures");
+        var fixtures = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures");
         using var oracle = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(fixtures, "ost-expanded-oracle.json")));
         var sample = oracle.RootElement.GetProperty("samples").EnumerateArray()
             .Single(value => value.GetProperty("file").GetString() == "SampleOstFile.ost");
-        var path = Path.Combine(fixtures, "ost", sample.GetProperty("file").GetString()!);
+        var input = useVersion21 ? oracle.RootElement.GetProperty("controls").EnumerateArray()
+            .Single(value => value.GetProperty("file").GetString() == "generated-aspose-v21.ost") : sample;
+        int version = useVersion21 ? 21 : 23;
+        var path = Path.Combine(fixtures, "ost", input.GetProperty("file").GetString()!);
         var originalHash = Hash(path);
-        Require(originalHash == sample.GetProperty("sha256").GetString() &&
-            sample.GetProperty("version").GetInt32() == 23 && sample.GetProperty("encoding").GetInt32() == 1,
-            "출처가 고정된 Unicode 23 치환 인코딩 OST가 아닙니다.");
+        Require(originalHash == input.GetProperty("sha256").GetString() &&
+            input.GetProperty("version").GetInt32() == version && input.GetProperty("encoding").GetInt32() == 1,
+            "출처가 고정된 구형 치환 인코딩 OST가 아닙니다.");
 
         const string query = "newsletter copy";
         const string attachmentName = "image001.jpg";
@@ -37,6 +40,7 @@ public static partial class Program
         var window = new MainWindow([path]) { ShowInTaskbar = false };
         window.Show();
         await Idle();
+        ClickMenu(window, "KoreanLanguageMenuItem");
         if (theme is not null)
         {
             ClickMenu(window, theme == "--dark" ? "DarkThemeMenuItem" : "LightThemeMenuItem");
@@ -53,17 +57,16 @@ public static partial class Program
         var rawStatus = Field<TextBlock>(window, "RawStatus");
         var busy = Field<Button>(window, "CancelWorkButton");
         await WaitFor(() => workspaceTabs.SelectedItem == investigation && !busy.IsEnabled &&
-            grid.Items.Count == messages.Length, "실제 Unicode 23 치환 인코딩 OST 개방");
+            grid.Items.Count == messages.Length, "구형 치환 인코딩 OST 개방");
 
         workspaceTabs.SelectedItem = Field<TabItem>(window, "SourcesTab");
         await Idle();
         var report = Field<TextBox>(window, "SourcesReportBox").Text;
-        Require(report.Contains("Unicode v23", StringComparison.Ordinal) &&
+        Require(report.Contains($"Unicode v{version}", StringComparison.Ordinal) &&
             report.Contains("512 B", StringComparison.Ordinal) && report.Contains("0x01", StringComparison.Ordinal) &&
             report.Contains(originalHash, StringComparison.OrdinalIgnoreCase) &&
-            report.Contains("판독 범위 제한", StringComparison.Ordinal) &&
-            File.Exists(Path.Combine(output, "partial-read-dialog.json")),
-            "자료 화면에 OST 레이아웃과 원본 SHA-256, 판독 범위가 표시되지 않거나 일부 판독 확인을 검증하지 못했습니다.");
+            !report.Contains("판독 범위 제한", StringComparison.Ordinal),
+            "OST 레이아웃과 SHA-256이 표시되고 정상 첨부 개체는 원본 판독 제한으로 집계되지 않아야 합니다.");
         Capture(window, output, "01-ost-layout-and-coverage.png");
         workspaceTabs.SelectedItem = investigation;
         await Idle();
@@ -177,7 +180,7 @@ public static partial class Program
         {
             using var manifest = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(package, "manifest.json")));
             var layout = manifest.RootElement.GetProperty("sources")[0].GetProperty("storeLayout");
-            Require(layout.GetProperty("version").GetInt32() == 23 && layout.GetProperty("pageSize").GetInt32() == 512 &&
+            Require(layout.GetProperty("version").GetInt32() == version && layout.GetProperty("pageSize").GetInt32() == 512 &&
                 layout.GetProperty("blockEncoding").GetInt32() == 1, "내보낸 매니페스트에 OST 입력 레이아웃이 없습니다.");
         }
         var reopen = new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(grid),
@@ -196,12 +199,12 @@ public static partial class Program
         Require(Hash(path) == originalHash, "판독 이후 구형 OST 원본의 SHA-256이 바뀌었습니다.");
         File.WriteAllText(Path.Combine(output, "flow-result.json"), JsonSerializer.Serialize(new
         {
-            Theme = theme, Source = path, SourceSha256 = originalHash, Version = 23, PageSize = 512, BlockEncoding = 1,
+            Theme = theme, Source = path, SourceSha256 = originalHash, Version = version, PageSize = 512, BlockEncoding = 1,
             Messages = messages.Length, InboxCount = expectedInboxCount, SearchHits = expectedMatches.Count, Message = messageLocation,
             Header = new { header.PropertyTag, header.Length, Rows = expectedRows.Length, Sha256 = Hash(headerFile), Package = evidence },
             Attachment = new { attachment.Name, storage.AttachmentNodeId, storage.PropertyTag,
                 storage.Length, Sha256 = Hash(attachmentFile), Package = attachmentEvidence },
-            SearchReturnVerified = true, OriginalUnchanged = true, PartialReadAcknowledged = true,
+            SearchReturnVerified = true, OriginalUnchanged = true, OpenedWithoutPartialReadWarning = true,
             LanguageSwitchPreservedEvidence = true
         }, new JsonSerializerOptions { WriteIndented = true }));
         window.Close();

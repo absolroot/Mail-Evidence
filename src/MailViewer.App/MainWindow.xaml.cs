@@ -729,7 +729,7 @@ public partial class MainWindow : Window
 
     private string DescribeSearch(SearchRequest request)
     {
-        var values = new List<string> { $"검색 필드  {FieldName(request.Field)}", $"검색어  {request.Query}" };
+        var values = new List<string> { $"{L("검색 필드", "Search field")}  {FieldName(request.Field)}", $"{L("검색어", "Search query")}  {request.Query}" };
         if (request.SourceGroup is not null)
             values.Add($"{L("자료 범위", "Source scope")}  {PstScopeCaption(request, fullPath: true)}");
         if (PstSearchPath(request) is { } folder && request.PstFolderNodeId is { } nid)
@@ -739,12 +739,12 @@ public partial class MainWindow : Window
                 ? "" : $" · NID 0x{nid:X8}";
             values.Add($"{format} {L("폴더", "folder")}  {folder}{identity}");
         }
-        if (request.From is { } from) values.Add($"보낸 사람  {from}");
-        if (request.To is { } to) values.Add($"받는 사람  {to}");
-        if (request.Subject is { } subject) values.Add($"제목  {subject}");
-        if (request.FromDateInclusive is { } start) values.Add($"메시지 날짜 시작  {start:yyyy-MM-dd} (UTC)");
-        if (request.ToDateExclusive is { } end) values.Add($"메시지 날짜 종료  {end.AddDays(-1):yyyy-MM-dd} (UTC)");
-        if (request.HasAttachment.HasValue) values.Add(request.HasAttachment.Value ? "첨부 있음" : "첨부 없음");
+        if (request.From is { } from) values.Add($"{L("보낸 사람", "From")}  {from}");
+        if (request.To is { } to) values.Add($"{L("받는 사람", "To")}  {to}");
+        if (request.Subject is { } subject) values.Add($"{L("제목", "Subject")}  {subject}");
+        if (request.FromDateInclusive is { } start) values.Add($"{L("메시지 날짜 시작", "Start date")}  {start:yyyy-MM-dd} (UTC)");
+        if (request.ToDateExclusive is { } end) values.Add($"{L("메시지 날짜 종료", "End date")}  {end.AddDays(-1):yyyy-MM-dd} (UTC)");
+        if (request.HasAttachment.HasValue) values.Add(request.HasAttachment.Value ? L("첨부 있음", "With attachments") : L("첨부 없음", "Without attachments"));
         foreach (var (clue, _) in _investigationChoices)
             if ((request.Clues & clue) != 0) values.Add(ClueName(clue));
         if (request.AnomaliesOnly) values.Add(L("이상 징후가 있는 메일만", "Messages with anomalies only"));

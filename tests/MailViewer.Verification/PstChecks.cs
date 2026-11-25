@@ -7,13 +7,13 @@ internal static partial class Program
 {
     private static void AddPstChecks(List<(string Name, Action Test)> cases, string root, string output)
     {
-        var fixtures = Path.Combine(root, "tests", "fixtures");
+        var fixtures = Path.Combine(root, "Mail-Viewer", "tests", "fixtures");
         var oracle = JsonSerializer.Deserialize<PstOracle>(
             File.ReadAllText(Path.Combine(fixtures, "pst-oracle.json")), new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             }) ?? throw new InvalidDataException("Independent PST oracle is missing.");
-        var tikaPath = Path.Combine(root, "tests", "fixtures", "external", oracle.Tika.File);
+        var tikaPath = Path.Combine(root, "Mail-Viewer-Research", "fixtures", oracle.Tika.File);
         var attachmentPath = Path.Combine(fixtures, "pst", oracle.Attachment.File);
 
         cases.Add(("public Tika PST folders, duplicate ordered headers, exact properties and search",

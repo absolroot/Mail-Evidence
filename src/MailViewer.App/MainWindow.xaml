@@ -8,7 +8,7 @@
         FontFamily="Segoe UI, Malgun Gothic" PreviewKeyDown="OnWindowKeyDown"
         Closing="OnClosing" SizeChanged="OnMailboxViewportSizeChanged">
     <Window.Resources>
-        <Style x:Key="FilterDisclosure" TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
+        <Style x:Key="PanelDisclosure" TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
             <Setter Property="Focusable" Value="False"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -22,7 +22,7 @@
                                     <ControlTemplate TargetType="ToggleButton">
                                         <Border x:Name="DisclosureSurface" Background="{DynamicResource Viewer.Panel}"
                                                 BorderBrush="{DynamicResource Viewer.Rule}" BorderThickness="1" CornerRadius="4"
-                                                MinHeight="{StaticResource FormInputHeight}" Padding="8,3">
+                                                MinHeight="{StaticResource Desk.FormControlHeight}" Padding="8,3">
                                             <DockPanel LastChildFill="True">
                                                 <Path x:Name="DisclosureArrow" DockPanel.Dock="Right" Data="{StaticResource Lucide.ChevronDown}"
                                                       Width="10" Height="7" Margin="6,0,2,0" Stretch="Uniform" VerticalAlignment="Center"
@@ -47,7 +47,7 @@
                             <Border x:Name="Details" Visibility="Collapsed" Margin="0,3,0,0"
                                     BorderBrush="{DynamicResource Viewer.Rule}" BorderThickness="1" CornerRadius="4"
                                     Background="{DynamicResource Viewer.Panel}">
-                                <ContentPresenter/>
+                                <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"/>
                             </Border>
                         </StackPanel>
                         <ControlTemplate.Triggers>
@@ -295,7 +295,7 @@
                             <ColumnDefinition x:Name="MailboxReaderColumn" Width="*" MinWidth="430"/>
                         </Grid.ColumnDefinitions>
                         <Grid x:Name="MailboxFolderSurface">
-                        <Border x:Name="PstFolderPane" Visibility="Collapsed" Background="{DynamicResource Viewer.Panel}">
+                        <Border x:Name="PstFolderPane" Visibility="Collapsed" Style="{StaticResource MailboxWorkspacePane}">
                             <DockPanel>
                                 <Grid x:Name="AllMailboxRail" DockPanel.Dock="Top" Height="{StaticResource WorkspaceRailHeight}" Margin="2,0">
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="32"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
@@ -431,13 +431,15 @@
                             </DockPanel>
                         </Border>
                         </Grid>
-                        <GridSplitter x:Name="MailboxFolderSplitter" Grid.Column="1" Visibility="Collapsed"
-                                      Style="{StaticResource VerticalPaneSplitter}" ShowsPreview="True" KeyboardIncrement="12"
+                        <desk:PaneSplitter x:Name="MailboxFolderSplitter" Grid.Column="1" Visibility="Collapsed"
+                                      Style="{StaticResource Desk.PaneSplitter}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                      ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" ShowsPreview="True" KeyboardIncrement="12"
                                       DragCompleted="OnMailboxFolderDragCompleted" KeyUp="OnMailboxFolderSplitterKeyUp"
                                       ToolTipService.ShowsToolTipOnKeyboardFocus="True"
                                       AutomationProperties.AutomationId="MailboxFolderSplitter"
                                       ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(AutomationProperties.Name)}"/>
-                        <Grid x:Name="MailboxResultsPane" Grid.Column="2" Background="{DynamicResource Viewer.Panel}">
+                        <Border Grid.Column="2" Style="{StaticResource MailboxWorkspacePane}" Visibility="{Binding Visibility, ElementName=MailboxResultsPane}">
+                        <Grid x:Name="MailboxResultsPane">
                          <DockPanel>
                             <Border DockPanel.Dock="Top" BorderBrush="{DynamicResource Viewer.Rule}" BorderThickness="0,0,0,1">
                         <StackPanel x:Name="SearchPane">
@@ -522,7 +524,7 @@
                         </StackPanel>
                             </Border>
                             <Grid>
-                            <DataGrid x:Name="ResultsGrid" Style="{StaticResource EvidenceGrid}" RowHeight="NaN" MinRowHeight="65"
+                            <DataGrid x:Name="ResultsGrid" Style="{StaticResource EvidenceGrid}" BorderThickness="0" RowHeight="NaN" MinRowHeight="65"
                                       HeadersVisibility="None" HorizontalScrollBarVisibility="Disabled" CanUserResizeRows="False"
                                       VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
                                       VirtualizingPanel.ScrollUnit="Pixel" ScrollViewer.CanContentScroll="True"
@@ -717,11 +719,11 @@
                                         <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Text="검색 항목" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{DynamicResource Viewer.Muted}"/>
-                                        <local:SearchableComboBox x:Name="SearchFieldBox" Style="{StaticResource SearchableOptions}" Height="{StaticResource FormInputHeight}" MinHeight="0" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" AutomationProperties.AutomationId="SearchFieldBox"
+                                        <local:SearchableComboBox x:Name="SearchFieldBox" Style="{StaticResource SearchableOptions}" Height="{StaticResource Desk.FormControlHeight}" MinHeight="0" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" AutomationProperties.AutomationId="SearchFieldBox"
                                           AutomationProperties.Name="검색 항목" SelectedIndex="0"/>
                                         <TextBlock Grid.Row="1" Text="검색할 자료" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{DynamicResource Viewer.Muted}"/>
                                         <StackPanel Grid.Column="1" Grid.Row="1">
-                                        <local:SearchableComboBox x:Name="SearchSourceBox" Style="{StaticResource SearchableOptions}" Height="{StaticResource FormInputHeight}" MinHeight="0" Margin="0,0,0,5" AutomationProperties.AutomationId="SearchSourceBox"
+                                        <local:SearchableComboBox x:Name="SearchSourceBox" Style="{StaticResource SearchableOptions}" Height="{StaticResource Desk.FormControlHeight}" MinHeight="0" Margin="0,0,0,5" AutomationProperties.AutomationId="SearchSourceBox"
                                           AutomationProperties.Name="검색할 자료"
                                           ToolTip="{Binding SelectedItem.Description, RelativeSource={RelativeSource Self}}"
                                           ToolTipService.ShowsToolTipOnKeyboardFocus="True"
@@ -750,24 +752,24 @@
                                         </WrapPanel>
                                         </StackPanel>
                                         <TextBlock Grid.Row="2" Text="보낸 사람" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{DynamicResource Viewer.Muted}"/>
-                                        <TextBox x:Name="FromFilterBox" Height="{StaticResource FormInputHeight}" MinHeight="0" Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" AutomationProperties.Name="보낸 사람 조건" KeyDown="SearchFromKeyboard"/>
+                                        <TextBox x:Name="FromFilterBox" Height="{StaticResource Desk.FormControlHeight}" MinHeight="0" Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" AutomationProperties.Name="보낸 사람 조건" KeyDown="SearchFromKeyboard"/>
                                         <TextBlock Grid.Row="3" Text="받는 사람" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{DynamicResource Viewer.Muted}"/>
-                                        <TextBox x:Name="ToFilterBox" Height="{StaticResource FormInputHeight}" MinHeight="0" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" AutomationProperties.Name="받는 사람 조건" KeyDown="SearchFromKeyboard"/>
+                                        <TextBox x:Name="ToFilterBox" Height="{StaticResource Desk.FormControlHeight}" MinHeight="0" Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" AutomationProperties.Name="받는 사람 조건" KeyDown="SearchFromKeyboard"/>
                                         <TextBlock Grid.Row="4" Text="제목" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{DynamicResource Viewer.Muted}"/>
-                                        <TextBox x:Name="SubjectFilterBox" Height="{StaticResource FormInputHeight}" MinHeight="0" Grid.Column="1" Grid.Row="4" Margin="0,0,0,5" AutomationProperties.Name="제목 조건" KeyDown="SearchFromKeyboard"/>
+                                        <TextBox x:Name="SubjectFilterBox" Height="{StaticResource Desk.FormControlHeight}" MinHeight="0" Grid.Column="1" Grid.Row="4" Margin="0,0,0,5" AutomationProperties.Name="제목 조건" KeyDown="SearchFromKeyboard"/>
                                         <TextBlock x:Name="DateFilterLabel" Grid.Row="5" Text="시작일 UTC" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{DynamicResource Viewer.Muted}"/>
-                                        <DatePicker x:Name="SearchDateFrom" Height="{StaticResource FormInputHeight}" MinHeight="0" Grid.Column="1" Grid.Row="5" Margin="0,0,0,5" AutomationProperties.Name="시작일 UTC"
+                                        <DatePicker x:Name="SearchDateFrom" Height="{StaticResource Desk.FormControlHeight}" MinHeight="0" Grid.Column="1" Grid.Row="5" Margin="0,0,0,5" AutomationProperties.Name="시작일 UTC"
                                             AutomationProperties.AutomationId="SearchDateFrom"/>
                                         <TextBlock Grid.Row="6" Text="종료일 UTC" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{DynamicResource Viewer.Muted}"/>
-                                        <DatePicker x:Name="SearchDateTo" Height="{StaticResource FormInputHeight}" MinHeight="0" Grid.Column="1" Grid.Row="6" Margin="0,0,0,5" AutomationProperties.Name="종료일 UTC"
+                                        <DatePicker x:Name="SearchDateTo" Height="{StaticResource Desk.FormControlHeight}" MinHeight="0" Grid.Column="1" Grid.Row="6" Margin="0,0,0,5" AutomationProperties.Name="종료일 UTC"
                                             AutomationProperties.AutomationId="SearchDateTo"/>
                                         <TextBlock Grid.Row="7" Text="첨부 유무" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{DynamicResource Viewer.Muted}"/>
-                                        <ComboBox x:Name="SearchAttachmentBox" Style="{StaticResource ViewerComboBox}" Height="{StaticResource FormInputHeight}" MinHeight="0" Grid.Column="1" Grid.Row="7" Margin="0,0,0,5" AutomationProperties.Name="첨부 유무"
+                                        <local:SearchableComboBox x:Name="SearchAttachmentBox" Style="{StaticResource SearchableOptions}" Height="{StaticResource Desk.FormControlHeight}" MinHeight="0" Grid.Column="1" Grid.Row="7" Margin="0,0,0,5" AutomationProperties.Name="첨부 유무"
                                           AutomationProperties.AutomationId="SearchAttachmentBox"
                                           SelectedIndex="0"/>
                                         <TextBlock Grid.Row="8" Text="이상 징후" VerticalAlignment="Top" Margin="0,7,10,5" Foreground="{DynamicResource Viewer.Muted}"/>
                                         <Expander x:Name="InvestigationFilters" Grid.Row="8" Grid.Column="1" Margin="0,0,0,5"
-                                                  Style="{StaticResource FilterDisclosure}" Expanded="OnAnomalyFilterExpanded"
+                                                  Style="{StaticResource PanelDisclosure}" Expanded="OnAnomalyFilterExpanded"
                                                   AutomationProperties.AutomationId="InvestigationFilters" AutomationProperties.Name="이상 징후">
                                             <StackPanel Margin="8,2,8,7">
                                                 <DockPanel Margin="0,0,0,6">
@@ -782,7 +784,7 @@
                                             </StackPanel>
                                         </Expander>
                                         <TextBlock Grid.Row="9" Text="메일 정렬" VerticalAlignment="Center" Margin="0,0,10,5" Foreground="{DynamicResource Viewer.Muted}"/>
-                                        <local:SearchableComboBox x:Name="MailboxSortBox" Style="{StaticResource SearchableOptions}" Height="{StaticResource FormInputHeight}" MinHeight="0" Grid.Column="1" Grid.Row="9" Margin="0,0,0,5" AutomationProperties.AutomationId="MailboxSortBox"
+                                        <local:SearchableComboBox x:Name="MailboxSortBox" Style="{StaticResource SearchableOptions}" Height="{StaticResource Desk.FormControlHeight}" MinHeight="0" Grid.Column="1" Grid.Row="9" Margin="0,0,0,5" AutomationProperties.AutomationId="MailboxSortBox"
                                           AutomationProperties.Name="메일 정렬"
                                           SelectionChanged="OnMailboxSortChanged"/>
                                     </Grid>
@@ -791,10 +793,12 @@
                                 </DockPanel>
                             </Border>
                         </Grid>
-                        <GridSplitter x:Name="MailboxSplitter" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                      Background="{DynamicResource Viewer.Inset}" BorderBrush="{DynamicResource Viewer.Rule}" BorderThickness="0,0,1,0" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" DragCompleted="OnMailboxSplitterChanged"
+                        </Border>
+                        <desk:PaneSplitter x:Name="MailboxSplitter" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                      Style="{StaticResource Desk.PaneSplitter}" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" DragCompleted="OnMailboxSplitterChanged" KeyUp="OnMailboxSplitterKeyUp"
                                       AutomationProperties.Name="메일 목록과 읽기 창 너비 조절"/>
-                        <Grid x:Name="MailboxReaderPane" Grid.Column="4" Background="{DynamicResource Viewer.Canvas}">
+                        <Grid x:Name="MailboxReaderPane" Grid.Column="4">
+                            <Border Style="{StaticResource MailboxWorkspacePane}">
                             <DockPanel LastChildFill="True">
                                 <Button x:Name="ReaderBackButton" DockPanel.Dock="Top" HorizontalAlignment="Left"
                                         Margin="12,3,0,0" Style="{StaticResource QuietAction}" Tag="{StaticResource Lucide.Back}" Click="BackToMailboxList"
@@ -1043,7 +1047,7 @@
                                             <TextBlock x:Name="AttachmentEmpty" Grid.Row="1" Margin="12,8"
                                                        Style="{StaticResource Desk.StatusText}" HorizontalAlignment="Center"/>
                                         </Grid>
-                                        <GridSplitter x:Name="AttachmentPreviewSplitter" Grid.Column="1" Grid.RowSpan="2" Width="7"
+                                        <desk:PaneSplitter x:Name="AttachmentPreviewSplitter" Grid.Column="1" Grid.RowSpan="2" Width="7"
                                                       Style="{StaticResource VerticalPaneSplitter}" ShowsPreview="True" Visibility="Collapsed"
                                                       AutomationProperties.AutomationId="AttachmentPreviewSplitter"/>
                                         <Border x:Name="AttachmentPreviewPane" Grid.Column="2" Margin="5,0,0,0"
@@ -1095,7 +1099,7 @@
                                                     <ItemsControl x:Name="AttachmentDetailFields" Grid.IsSharedSizeScope="True"
                                                                   ItemTemplate="{StaticResource EvidenceFieldTemplate}"
                                                                   AutomationProperties.AutomationId="AttachmentDetailFields"/>
-                                                <Expander x:Name="AttachmentLocationExpander" Margin="0,3,0,0"
+                                                <Expander x:Name="AttachmentLocationExpander" Margin="0,3,0,0" Style="{StaticResource PanelDisclosure}" Expanded="OnAttachmentLocationExpanded"
                                                           AutomationProperties.AutomationId="AttachmentLocationExpander">
                                                         <ItemsControl x:Name="AttachmentLocationFields" Grid.IsSharedSizeScope="True"
                                                                       ItemTemplate="{StaticResource EvidenceFieldTemplate}"
@@ -1251,6 +1255,7 @@
                             </TabItem>
                         </TabControl>
                             </DockPanel>
+                            </Border>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -1276,20 +1281,20 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <ScrollViewer x:Name="IntakeScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
+                            <Border Style="{StaticResource Desk.SettingsScrollContent}">
                             <StackPanel>
                                 <StackPanel Margin="0,0,0,10">
-                                    <TextBlock Text="분석할 자료" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                                    <TextBlock Text="분석할 자료" Style="{StaticResource Desk.SettingsHeading}"/>
                                     <StackPanel x:Name="IntakeButtons">
-                                        <Border Padding="10,7" Background="{DynamicResource Viewer.Panel}" BorderBrush="{DynamicResource Viewer.Rule}"
-                                                BorderThickness="1" CornerRadius="4">
+                                        <Border Style="{StaticResource Desk.SettingsSurface}" Padding="{StaticResource Desk.FormRowPadding}">
                                             <StackPanel>
                                                 <WrapPanel>
                                                     <Button x:Name="OpenFilesButton" Content="파일 선택…" Tag="&#xE8E5;" Click="ChooseFiles"
-                                                            Style="{StaticResource Action}" AutomationProperties.AutomationId="OpenFilesButton" Margin="0,0,6,0"/>
-                                                    <Button Content="폴더 선택…" Tag="&#xE8B7;" Click="ChooseFolder" Style="{StaticResource Action}"
-                                                            AutomationProperties.AutomationId="OpenFolderButton" Margin="0,0,6,0"/>
+                                                            Style="{StaticResource FormAction}" AutomationProperties.AutomationId="OpenFilesButton" Margin="0,0,6,4"/>
+                                                    <Button Content="폴더 선택…" Tag="{StaticResource Lucide.Folder}" Click="ChooseFolder" Style="{StaticResource FormAction}"
+                                                            AutomationProperties.AutomationId="OpenFolderButton" Margin="0,0,6,4"/>
                                                     <Button x:Name="OpenDiskImageButton" Content="디스크 이미지…" Tag="&#xE958;" Click="ChooseDiskImage"
-                                                            Style="{StaticResource Action}" AutomationProperties.AutomationId="OpenDiskImageButton" Margin="0,0,6,0"/>
+                                                            Style="{StaticResource FormAction}" AutomationProperties.AutomationId="OpenDiskImageButton" Margin="0,0,6,4"/>
                                                 </WrapPanel>
                                                 <TextBlock Text="메일 파일, 폴더 또는 디스크 이미지를 끌어 놓을 수 있습니다."
                                                            TextWrapping="Wrap" Foreground="{DynamicResource Viewer.Muted}" FontSize="12" Margin="0,6,0,0"/>
@@ -1338,13 +1343,12 @@
                                              AutomationProperties.AutomationId="SourcesReportBox" AutomationProperties.Name="자료 경로, 분석 결과 및 SHA-256"/>
                                 </Expander>
                                 <StackPanel x:Name="DisplaySettingsSection" Margin="0,14,0,0">
-                                    <TextBlock Text="화면" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                                    <Border Background="{DynamicResource Viewer.Panel}" BorderBrush="{DynamicResource Viewer.Rule}"
-                                            BorderThickness="1" CornerRadius="4">
+                                    <TextBlock Text="화면" Style="{StaticResource Desk.SettingsHeading}"/>
+                                    <Border Style="{StaticResource Desk.SettingsSurface}">
                                         <StackPanel>
-                                            <Border Padding="12,4" BorderBrush="{DynamicResource Viewer.Rule}" BorderThickness="0,0,0,1">
+                                            <Border Style="{StaticResource Desk.SettingsRow}">
                                                 <DockPanel>
-                                                    <ComboBox x:Name="SettingsThemeBox" Style="{StaticResource ViewerComboBox}" DockPanel.Dock="Right" Width="165" AutomationProperties.Name="테마"
+                                                    <ComboBox x:Name="SettingsThemeBox" Style="{StaticResource ViewerComboBox}" DockPanel.Dock="Right" Width="180" MinHeight="{StaticResource Desk.FormControlHeight}" AutomationProperties.Name="테마"
                                                               SelectionChanged="ChangeSettingsTheme">
                                                         <ComboBoxItem Content="밝은 테마"/>
                                                         <ComboBoxItem Content="어두운 테마"/>
@@ -1352,24 +1356,26 @@
                                                     <TextBlock Text="테마" VerticalAlignment="Center"/>
                                                 </DockPanel>
                                             </Border>
-                                            <DockPanel Margin="12,4">
-                                                <ComboBox x:Name="SettingsLanguageBox" Style="{StaticResource ViewerComboBox}" DockPanel.Dock="Right" Width="172"
+                                            <Border Style="{StaticResource Desk.SettingsRow}" BorderThickness="0">
+                                                <DockPanel>
+                                                    <ComboBox x:Name="SettingsLanguageBox" Style="{StaticResource ViewerComboBox}" DockPanel.Dock="Right" Width="180" MinHeight="{StaticResource Desk.FormControlHeight}"
                                                           AutomationProperties.Name="표시 언어" DisplayMemberPath="Name"
                                                           SelectionChanged="ChangeSettingsLanguage"/>
-                                                <TextBlock Text="표시 언어" VerticalAlignment="Center"/>
-                                            </DockPanel>
+                                                    <TextBlock Text="표시 언어" VerticalAlignment="Center"/>
+                                                </DockPanel>
+                                            </Border>
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>
                             </StackPanel>
+                                </Border>
                         </ScrollViewer>
-                        <Border Grid.Row="1" Margin="0,12,0,0" Padding="0,10,0,0"
-                                BorderBrush="{DynamicResource Viewer.Rule}" BorderThickness="0,1,0,0">
+                        <Border Grid.Row="1" Margin="0,12,0,0" Padding="0,10,0,0">
                             <WrapPanel HorizontalAlignment="Right">
-                                <Button x:Name="CancelIntakeButton" Content="돌아가기" Style="{StaticResource Action}" Click="CancelIntake"
+                                <Button x:Name="CancelIntakeButton" Content="돌아가기" Style="{StaticResource FormAction}" Margin="0,0,8,0" Click="CancelIntake"
                                         Visibility="Collapsed" AutomationProperties.AutomationId="CancelIntakeButton"/>
                                 <Button x:Name="AnalyzeButton" Content="분석 시작" IsEnabled="False"
-                                        Style="{StaticResource PrimaryAction}" Click="Analyze" AutomationProperties.AutomationId="AnalyzeButton"/>
+                                        Style="{StaticResource PrimaryFormAction}" Click="Analyze" AutomationProperties.AutomationId="AnalyzeButton"/>
                             </WrapPanel>
                         </Border>
                     </Grid>
@@ -1396,7 +1402,7 @@
                         <TextBlock Text="형식" VerticalAlignment="Center" Margin="0,0,12,0" Foreground="{DynamicResource Viewer.Muted}"/>
                         <local:SearchableComboBox x:Name="ExportKindBox" Style="{StaticResource SearchableOptions}" Grid.Column="1" AutomationProperties.AutomationId="ExportKindBox"
                                   AutomationProperties.Name="내보내기 형식" MaxWidth="355" HorizontalAlignment="Left"
-                                  MinWidth="227" Height="{StaticResource FormInputHeight}" MinHeight="0"/>
+                                  MinWidth="227" Height="{StaticResource Desk.FormControlHeight}" MinHeight="0"/>
                     </Grid>
                     <Grid x:Name="DestinationPanel" Grid.Row="2" Margin="0,9,0,7">
                         <Grid.ColumnDefinitions>
@@ -1405,10 +1411,10 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="저장 폴더" VerticalAlignment="Center" Margin="0,0,12,0" Foreground="{DynamicResource Viewer.Muted}"/>
-                        <TextBox x:Name="DestinationBox" Grid.Column="1" Padding="7,3" Height="{StaticResource FormInputHeight}" MinHeight="0" AutomationProperties.AutomationId="DestinationBox"
+                        <TextBox x:Name="DestinationBox" Grid.Column="1" Style="{StaticResource Desk.FormPath}" AutomationProperties.AutomationId="DestinationBox"
                                  AutomationProperties.Name="저장할 기존 폴더"/>
-                        <Button Grid.Column="2" Content="찾아보기…" Tag="&#xE8B7;" Click="BrowseExportDestination"
-                                Style="{StaticResource Action}" Margin="5,0,0,0"/>
+                        <Button Grid.Column="2" Content="찾아보기…" Click="BrowseExportDestination"
+                                Style="{StaticResource Desk.FormBrowse}"/>
                     </Grid>
                     <DockPanel Grid.Row="3" VerticalAlignment="Top">
                         <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="0,8,0,0">
@@ -1418,13 +1424,12 @@
                             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                                 <Button x:Name="VerifyExportButton" Content="결과 다시 검증" Tag="&#xE72C;" Click="VerifyExport" Style="{StaticResource QuietAction}"
                                         AutomationProperties.AutomationId="VerifyExportButton" Visibility="Collapsed"/>
-                                <Button x:Name="SaveExportButton" Content="저장" Tag="&#xE74E;" Click="SaveExport" Style="{StaticResource PrimaryAction}"
+                                <Button x:Name="SaveExportButton" Content="저장" Tag="&#xE74E;" Click="SaveExport" Style="{StaticResource PrimaryFormAction}"
                                         AutomationProperties.AutomationId="SaveExportButton"/>
                             </StackPanel>
                         </DockPanel>
-                        <Border MaxHeight="424" MinHeight="104"
-                                Background="{DynamicResource Viewer.Panel}" BorderBrush="{DynamicResource Viewer.Rule}" BorderThickness="1">
-                            <desk:CopyText x:Name="ExportReportBox" Style="{StaticResource CopyField}" Padding="10,8"
+                        <Border MaxHeight="424" MinHeight="104" Style="{StaticResource Desk.SettingsSurface}">
+                            <desk:CopyText x:Name="ExportReportBox" Style="{StaticResource CopyField}" Template="{StaticResource Desk.CopyDocument}" Padding="10,8,16,8"
                                      AutomationProperties.AutomationId="ExportReportBox" AutomationProperties.Name="내보내기 대상 및 검증 결과"/>
                         </Border>
                     </DockPanel>

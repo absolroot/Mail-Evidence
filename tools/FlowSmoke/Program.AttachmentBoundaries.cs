@@ -13,7 +13,7 @@ public static partial class Program
 {
     private static async Task RunAttachmentBoundaries(string workspace, string output, string? theme)
     {
-        var fixtures = Path.Combine(workspace, "tests", "fixtures", "attachment-boundaries");
+        var fixtures = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "attachment-boundaries");
         string[] paths = Directory.GetFiles(fixtures, "*.eml").Order().ToArray();
         string[] hashes = paths.Select(Hash).ToArray();
         using var session = EvidenceSession.Open(paths);
@@ -39,7 +39,6 @@ public static partial class Program
         var window = new MainWindow(paths) { ShowInTaskbar = false, Width = 1190, Height = 795 };
         window.Show();
         await Idle();
-        ClickMenu(window, "KoreanLanguageMenuItem");
         if (theme is not null) ClickMenu(window, theme == "--dark" ? "DarkThemeMenuItem" : "LightThemeMenuItem");
         Click(window, "AnalyzeButton");
         var grid = Field<DataGrid>(window, "ResultsGrid");

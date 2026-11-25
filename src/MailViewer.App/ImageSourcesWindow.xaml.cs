@@ -29,7 +29,9 @@ public partial class ImageSourcesWindow : Window
         Language = JournalDesk.L.XmlLanguage;
         Appearance.ApplyToWindow(this);
         Heading.Text = Title = text("이미지에서 메일 찾기", "Find mail in a disk image");
-        ImageName.Text = imagePath;
+        ImageName.Text = Path.GetFileName(imagePath);
+        ImagePath.Text = imagePath;
+        System.Windows.Automation.AutomationProperties.SetName(ImagePath, text("이미지 원본 경로", "Disk image source path"));
         VolumeLabel.Content = text("볼륨", "Volume");
         WholeVolumeButton.Content = text("볼륨 전체 검색", "Search entire volume");
         CheckColumn.Header = text("포함", "Add");

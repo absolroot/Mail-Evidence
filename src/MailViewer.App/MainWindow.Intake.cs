@@ -156,7 +156,8 @@ public partial class MainWindow
         Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
         {
             if (WorkspaceTabs.SelectedItem != ActiveMailboxTab) return;
-            if (previous is FrameworkElement { IsVisible: true, IsEnabled: true } && !ReferenceEquals(previous, PstFoldersToggle) &&
+            if (previous is FrameworkElement { IsVisible: true, IsEnabled: true } and not GridSplitter &&
+                !ReferenceEquals(previous, PstFoldersToggle) &&
                 Keyboard.Focus(previous) == previous)
                 return;
             if (!ResultsGrid.Focus())
@@ -421,7 +422,7 @@ public partial class MainWindow
                         "No mail was read. See the read details below.");
                 return;
             }
-            if (candidate.Issues.Count > 0 && !ConfirmPartialSources(candidate))
+            if (previous is not null && candidate.Issues.Count > 0 && !ConfirmPartialSources(candidate))
             {
                 _unappliedSourceReport = (candidate.Sources, candidate.Issues);
                 RefreshSourceReport();

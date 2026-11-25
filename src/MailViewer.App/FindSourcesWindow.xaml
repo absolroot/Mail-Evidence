@@ -28,12 +28,15 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="ScanButton" Grid.Column="1" Style="{StaticResource PrimaryAction}"
+                    <Button x:Name="ScanButton" Grid.Column="1" Style="{StaticResource PrimaryFormAction}"
                             Tag="&#xE721;" Click="StartScan" VerticalAlignment="Top" Margin="8,0,0,0"
-                            Height="{StaticResource FormInputHeight}" AutomationProperties.AutomationId="FindScanButton"/>
-                    <Grid x:Name="OutlookLocationPanel">
+                            Height="{StaticResource Desk.FormControlHeight}" AutomationProperties.AutomationId="FindScanButton"/>
+                    <DockPanel x:Name="OutlookLocationPanel">
+                        <Button x:Name="CopyOutlookPathButton" DockPanel.Dock="Right" Style="{StaticResource IconAction}"
+                                Tag="&#xE8C8;" Click="CopyLocation" Margin="4,0,0,0" Visibility="Hidden"/>
+                        <Grid>
                         <ComboBox x:Name="OutlookScope" Style="{StaticResource ViewerComboBox}" MinHeight="0"
-                                  Height="{StaticResource FormInputHeight}" MaxDropDownHeight="180"
+                                  Height="{StaticResource Desk.FormControlHeight}" MaxDropDownHeight="180"
                                   HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                   SelectionChanged="ChangeOutlookLocation" DropDownOpened="SizeOutlookDropDown"
@@ -46,12 +49,13 @@
                         </ComboBox>
                         <TextBlock x:Name="SingleOutlookLocation" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                                    ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
-                    </Grid>
+                        </Grid>
+                    </DockPanel>
                     <Grid x:Name="ManualLocationPanel" Visibility="Collapsed">
                         <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
                         <DockPanel>
-                            <Button x:Name="ChooseLocationButton" DockPanel.Dock="Left" Style="{StaticResource Action}"
-                                    Tag="&#xE8B7;" Click="ChooseLocation" Margin="0,0,8,0"/>
+                            <Button x:Name="ChooseLocationButton" DockPanel.Dock="Left" Style="{StaticResource FormAction}"
+                                    Tag="{StaticResource Lucide.Folder}" Click="ChooseLocation" Margin="0,0,8,0"/>
                             <Button x:Name="CopyPathButton" DockPanel.Dock="Right" Style="{StaticResource IconAction}"
                                     Tag="&#xE8C8;" Click="CopyLocation"/>
                             <TextBlock x:Name="SelectedPath" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"
@@ -98,11 +102,26 @@
                     <TextBox x:Name="IssuesBox" Style="{StaticResource Copyable}" MaxHeight="74"/>
                 </Expander>
             </StackPanel>
-            <WrapPanel Grid.Row="5" HorizontalAlignment="Right" Margin="0,12,0,0">
-                <Button x:Name="CloseButton" Click="CloseWindow" Style="{StaticResource Action}" IsCancel="True"/>
-                <Button x:Name="AcceptButton" Click="AcceptSources" Style="{StaticResource PrimaryAction}"
-                        IsEnabled="False" AutomationProperties.AutomationId="AcceptFoundSourcesButton"/>
-            </WrapPanel>
+            <DockPanel Grid.Row="5" Margin="0,12,0,0">
+                <Button x:Name="CopyHitPathButton" DockPanel.Dock="Left" HorizontalAlignment="Left"
+                        Tag="&#xE8C8;" Click="CopyHitPath" Margin="0,0,8,0">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource FormAction}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItem, ElementName=HitsGrid}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <WrapPanel HorizontalAlignment="Right">
+                    <Button x:Name="CloseButton" Click="CloseWindow" Margin="0,0,8,0" Style="{StaticResource FormAction}" IsCancel="True"/>
+                    <Button x:Name="AcceptButton" Click="AcceptSources" Style="{StaticResource PrimaryFormAction}"
+                            IsEnabled="False" AutomationProperties.AutomationId="AcceptFoundSourcesButton"/>
+                </WrapPanel>
+            </DockPanel>
         </Grid>
     </Border>
 </Window>

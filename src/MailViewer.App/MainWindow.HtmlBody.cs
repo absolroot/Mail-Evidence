@@ -131,7 +131,7 @@ public partial class MainWindow
             }
             if (_htmlState == HtmlViewState.Loading) _htmlState = HtmlViewState.Ready;
             if (BodyBox.IsKeyboardFocusWithin && _htmlView?.Focus() != true && BodyBox.IsKeyboardFocusWithin)
-                ReaderSubject.Focus();
+                FocusReaderTab();
             BodyBox.Visibility = Visibility.Collapsed;
             RefreshHtmlBodyStatus();
         };

@@ -38,12 +38,14 @@ public static partial class Program
             Related evidence fields verification.
             """.ReplaceLineEndings("\r\n"));
 
-        var msg = Path.Combine(workspace, "tests", "fixtures", "external", "poi-attachment-msg-pdf.msg");
-        var ost = Path.Combine(workspace, "tests", "fixtures", "ost", "pstextractortest.ost");
+        var msg = Path.Combine(workspace, "Mail-Viewer-Research", "evidence", "followup", "inputs", "poi-attachment-msg-pdf.msg");
+        var ost = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "ost", "pstextractortest.ost");
         string[] paths = [first, second, msg, ost];
         string[] hashes = paths.Select(Hash).ToArray();
         var window = new MainWindow(paths) { ShowInTaskbar = false, Width = 1170, Height = 730 };
         window.Show();
+        await Idle();
+        ClickMenu(window, "KoreanLanguageMenuItem");
         await Idle();
         if (theme is not null) ClickMenu(window, theme == "--dark" ? "DarkThemeMenuItem" : "LightThemeMenuItem");
         Click(window, "AnalyzeButton");
@@ -98,7 +100,10 @@ public static partial class Program
             MailFieldText(row, "Value")?.Equals(hashes[0], StringComparison.OrdinalIgnoreCase) == true);
         await VerifyCopy(sourceFields, hashField, MailFieldText(hashField, "Value")!);
 
-        list.SelectedItem = list.Items.Cast<object>().Single(row => RecordFromRow(row).SourcePath == msg);
+        var msgRow = list.Items.Cast<object>().Single(row =>
+            RecordFromRow(row) is { Subject: "test email" } record && record.SourcePath == msg);
+        string msgId = RecordFromRow(msgRow).Id;
+        list.SelectedItem = msgRow;
         tabs.SelectedItem = info;
         await Idle();
         var smtp = fields.Items.Cast<object>().Single(row =>
@@ -106,8 +111,10 @@ public static partial class Program
         Require(MailFieldText(smtp, "Value") == "nick.booth@pof.com.au", "MSG reader should expose the typed SMTP property.");
         fields.SelectedItem = smtp;
         await UseEvidenceMenu(fields, "FindMailFieldValue");
-        await WaitFor(() => list.Items.Count == 1 && RecordAt(list, 0).SourcePath == msg &&
+        await WaitFor(() => Field<Button>(window, "InvestigationSearchBack").IsVisible &&
             !Field<Button>(window, "CancelWorkButton").IsEnabled, "MSG recipient SMTP search");
+        Require(list.Items.Cast<object>().Select(RecordFromRow).Any(record => record.Id == msgId),
+            "The exact SMTP search did not return the top-level MSG message.");
         Click(window, "InvestigationSearchBack");
         await WaitFor(() => list.Items.Count == originalCount && !Field<Button>(window, "CancelWorkButton").IsEnabled, "return from MSG exact search");
 

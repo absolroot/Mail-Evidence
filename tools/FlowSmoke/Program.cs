@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -26,7 +27,7 @@ public static partial class Program
     {
         if (args.Length is < 2 or > 4)
         {
-            Console.Error.WriteLine("FlowSmoke <Mail Evidence checkout> <new output folder> [--light|--dark] [--msg|--pst|--ost|--ost-expanded|--investigation|--mailbox-folders|--mailbox-marks|--reader-attachments|--readme-demo]");
+            Console.Error.WriteLine("FlowSmoke <Forensic workspace> <new output folder> [--light|--dark] [--msg|--pst|--ost|--ost-expanded|--investigation|--mailbox-folders|--mailbox-marks|--reader-attachments|--readme-demo]");
             return 2;
         }
         var workspace = Path.GetFullPath(args[0]);
@@ -40,20 +41,22 @@ public static partial class Program
         {
             try
             {
-                if (options.Contains("--languages"))
-                    await RunLanguages(workspace, output);
-                else if (options.Contains("--investigation"))
+                if (options.Contains("--investigation"))
                 {
                     await RunInvestigation(output, theme);
                     await RunAllFindings(workspace, output, theme);
                     await RunConversationHistory(workspace, output, theme);
                 }
-                else if (options.Contains("--ost-expanded"))
-                    await RunExpandedOst(workspace, output, theme);
+                else if (options.Contains("--mixed-fixtures"))
+                    await RunMixedFixtures(workspace, output, theme);
+                else if (options.Contains("--ost-expanded") || options.Contains("--ost-v21"))
+                    await RunExpandedOst(workspace, output, theme, useVersion21: options.Contains("--ost-v21"));
                 else if (options.Contains("--ost"))
                     await RunOst(workspace, output, theme);
                 else if (options.Contains("--pst"))
                     await RunPst(workspace, output, theme);
+                else if (options.Contains("--formats"))
+                    await RunFormats(output, theme);
                 else if (options.Contains("--msg"))
                     await RunMsg(workspace, output, theme);
                 else if (options.Contains("--mailbox-folders"))
@@ -62,8 +65,8 @@ public static partial class Program
                     await RunMailboxMarks(output, theme);
                 else if (options.Contains("--mail-fields"))
                     await RunMailFields(workspace, output, theme);
-                else if (options.Contains("--formats"))
-                    await RunFormats(output, theme);
+                else if (options.Contains("--languages"))
+                    await RunLanguages(workspace, output);
                 else if (options.Contains("--readme-demo"))
                     await RunReadmeDemo(workspace, output);
                 else if (options.Contains("--attachment-boundaries"))
@@ -95,12 +98,89 @@ public static partial class Program
         return exitCode;
     }
 
+    private static async Task RunMixedFixtures(string workspace, string output, string? theme)
+    {
+        var fixtures = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures");
+        var window = new MainWindow([fixtures]) { ShowInTaskbar = false };
+        window.Show();
+        await Idle();
+        ClickMenu(window, "EnglishLanguageMenuItem");
+        if (theme is not null)
+            ClickMenu(window, theme == "--dark" ? "DarkThemeMenuItem" : "LightThemeMenuItem");
+        var analyze = Field<Button>(window, "AnalyzeButton");
+        await WaitFor(() => analyze.IsEnabled, "recursive fixture discovery");
+        int sources = Field<DataGrid>(window, "CandidateGrid").Items.Count;
+        Click(window, "AnalyzeButton");
+        var tabs = Field<TabControl>(window, "WorkspaceTabs");
+        var investigation = Field<TabItem>(window, "InvestigationTab");
+        var coverage = Field<Button>(window, "CoverageButton");
+        var grid = Field<DataGrid>(window, "ResultsGrid");
+        await WaitFor(() => tabs.SelectedItem == investigation && coverage.IsEnabled, "partially readable fixtures");
+        Require(coverage.IsVisible && window.OwnedWindows.Count == 0, "Read issues must be available without a blocking prompt.");
+        Require(grid.Items.Count == 373, $"Expected 373 rows from {sources} sources, found {grid.Items.Count}.");
+        await Idle();
+        var folder = Field<GridSplitter>(window, "MailboxFolderSplitter");
+        var reader = Field<GridSplitter>(window, "MailboxSplitter");
+        Require(!folder.IsKeyboardFocused && !reader.IsKeyboardFocused, "Loading results must keep focus off the splitters.");
+        var anomalies = Field<TabItem>(window, "AnomalyMailboxTab");
+        var allSources = Field<ToggleButton>(window, "AllMailScopeButton");
+        tabs.SelectedItem = anomalies;
+        await WaitFor(() => MainWindow.GetMailboxCount(allSources) == "[13]" && grid.Items.Count == 13, "anomaly mailbox counts");
+        var sourceTree = Field<TreeView>(window, "PstFolderTree");
+        var ost = SourceNodes(sourceTree).Single(node =>
+            node.DataContext?.GetType().Name == "PstFileScope" &&
+            (node.ToolTip as string)?.EndsWith("generated-aspose-v21.ost", StringComparison.OrdinalIgnoreCase) == true);
+        Require(MainWindow.GetMailboxCount(ost) == "[0]", "The OST source must show its anomaly count instead of 81 total messages.");
+        var bookmarks = Field<TabItem>(window, "BookmarksMailboxTab");
+        tabs.SelectedItem = bookmarks;
+        await WaitFor(() => grid.Items.Count == 0, "empty bookmarks mailbox");
+        Require(!folder.IsKeyboardFocused && !reader.IsKeyboardFocused, "Switching mailboxes must keep focus off the splitters.");
+        var search = Field<TextBox>(window, "SearchQueryBox");
+        search.Focus();
+        foreach (var splitter in new[] { folder, reader })
+        {
+            Require(splitter.IsVisible && splitter.Focusable && splitter.IsTabStop && splitter.FocusVisualStyle is not null,
+                "Splitters must remain accessible via the keyboard.");
+            var rule = (Border)splitter.Template.FindName("ActiveRule", splitter);
+            splitter.Focus();
+            Require(!splitter.IsMouseOver && rule.Visibility == Visibility.Collapsed,
+                "Keyboard focus must use its outline without setting the active resize line.");
+            splitter.RaiseEvent(new DragStartedEventArgs(0, 0) { RoutedEvent = Thumb.DragStartedEvent });
+            splitter.RaiseEvent(new DragDeltaEventArgs(20, 0) { RoutedEvent = Thumb.DragDeltaEvent });
+            splitter.RaiseEvent(new DragCompletedEventArgs(20, 0, false) { RoutedEvent = Thumb.DragCompletedEvent });
+            await Idle();
+            Require(!splitter.IsKeyboardFocused && rule.Visibility == Visibility.Collapsed,
+                "After resizing the splitter must return to its idle appearance.");
+        }
+        var face = (Border)bookmarks.Template.FindName("Face", bookmarks);
+        var rail = Field<Border>(window, "MailboxSearchRail");
+        var folderPane = Field<Border>(window, "PstFolderPane");
+        Require(Equals(face.Background, rail.Background) && folderPane.BorderThickness.Top == 0 &&
+            folderPane.CornerRadius.TopLeft == 0, "The selected tab and workspace must share a continuous surface.");
+        Capture(window, output, "mixed-fixtures-bookmarks.png");
+        tabs.SelectedItem = investigation;
+        await WaitFor(() => grid.Items.Count == 373, "return to all mail");
+        Capture(window, output, "mixed-fixtures-results.png");
+        tabs.SelectedItem = Field<TabItem>(window, "SourcesTab");
+        await Idle();
+        var report = Field<TextBox>(window, "SourcesReportBox");
+        Require(!report.Text.Contains("(attachment-data)", StringComparison.Ordinal) &&
+            report.Text.Contains("tnef_mapi_property_list", StringComparison.Ordinal) &&
+            report.Text.Contains("Offline.dbx", StringComparison.Ordinal),
+            "The source report must retain genuine read issues without misclassifying OST object attachments.");
+        File.WriteAllText(Path.Combine(output, "mixed-fixtures-report.txt"), report.Text);
+        window.Close();
+
+        static IEnumerable<TreeViewItem> SourceNodes(ItemsControl parent) =>
+            parent.Items.OfType<TreeViewItem>().SelectMany(node => new[] { node }.Concat(SourceNodes(node)));
+    }
+
     private static async Task Run(string workspace, string output, string? theme)
     {
-        var eml = Path.Combine(workspace, "tests", "fixtures", "external",
+        var eml = Path.Combine(workspace, "Mail-Viewer-Research", "evidence", "followup", "inputs",
             "tika-multipart-attachments.eml");
-        var synthetic = Path.Combine(workspace, "tests", "fixtures", "synthetic", "synthetic.mbox");
-        var archive = Path.Combine(workspace, "tests", "fixtures", "external", "public-apache-tika.mbox");
+        var synthetic = Path.Combine(workspace, "Mail-Viewer-Research", "fixtures", "synthetic.mbox");
+        var archive = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "public-apache-tika.mbox");
         var inputs = new[] { eml, synthetic, archive };
         var originalHashes = inputs.ToDictionary(path => path, Hash);
         var log = new List<object>();

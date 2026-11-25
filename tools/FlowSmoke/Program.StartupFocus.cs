@@ -53,7 +53,7 @@ public static partial class Program
             "closing the dialog restores the normal settings panel");
         await CheckPointerFocus(window, Field<ComboBox>(window, "SettingsThemeBox"));
 
-        string path = Path.Combine(workspace, "tests", "fixtures", "conversation-history", "01-original.eml");
+        string path = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "conversation-history", "01-original.eml");
         var grid = Field<DataGrid>(window, "ResultsGrid");
         await WithOwnedDialog(() => CallIntake("ShowStartupIntake"), async dialog =>
         {

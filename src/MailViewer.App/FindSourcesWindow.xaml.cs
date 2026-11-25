@@ -41,7 +41,8 @@ public partial class FindSourcesWindow : Window
         AcceptButton.Content = text("선택한 자료 추가", "Add checked sources");
         AutomationProperties.SetName(HitsGrid, text("찾은 메일 파일", "Mail sources found"));
         InitializeOutlookScope();
-        CopyPathButton.Content = text("검색 경로 복사", "Copy search path");
+        CopyPathButton.Content = CopyOutlookPathButton.Content = text("검색 경로 복사", "Copy search path");
+        CopyHitPathButton.Content = text("선택한 파일 경로 복사", "Copy selected file path");
         RefreshScope();
         Loaded += (_, _) => KnownLocations.Focus();
     }
@@ -58,7 +59,7 @@ public partial class FindSourcesWindow : Window
         AutomationProperties.SetName(OutlookScope, text("Outlook 검색 위치", "Outlook search location"));
         OutlookScope.Visibility = count > 1 ? Visibility.Visible : Visibility.Collapsed;
         SingleOutlookLocation.Visibility = count > 1 ? Visibility.Collapsed : Visibility.Visible;
-        SingleOutlookLocation.Text = count == 1 ? outlook.Targets[0].Path :
+        SingleOutlookLocation.Text = count == 1 ? FormatLocation(outlook.Targets[0].Path) :
             text("확인할 로컬 Outlook 저장 위치가 없습니다.", "No local Outlook locations found.");
         if (count <= 1) return;
         LocationOption[] options = [
@@ -71,6 +72,9 @@ public partial class FindSourcesWindow : Window
 
     private static string FormatLocation(string path) =>
         Path.GetDirectoryName(path) is { } parent ? $"{Path.GetFileName(path)}  ·  {parent}" : path;
+
+    private string? SelectedOutlookPath =>
+        outlook.Targets.Count == 1 ? outlook.Targets[0].Path : (OutlookScope.SelectedItem as LocationOption)?.Path;
 
     private IReadOnlyList<FolderSearchTarget> SelectedOutlookTargets =>
         OutlookScope.SelectedItem is LocationOption { Target: { } target } ? [target] : outlook.Targets;
@@ -107,6 +111,7 @@ public partial class FindSourcesWindow : Window
             ? OutlookStatus(SelectedOutlookTargets.Count == 0)
             : "";
         CopyPathButton.Visibility = location is null ? Visibility.Collapsed : Visibility.Visible;
+        CopyOutlookPathButton.Visibility = known && SelectedOutlookPath is not null ? Visibility.Visible : Visibility.Hidden;
         SelectedPath.Text = location ?? text("아직 선택한 위치가 없습니다.", "Choose where to look.");
     }
 
@@ -121,10 +126,15 @@ public partial class FindSourcesWindow : Window
             : text("선택한 위치에서 PST·OST 파일을 검색합니다.", "Search the selected locations for PST and OST files.");
     }
 
-    private void CopyLocation(object sender, RoutedEventArgs e)
+    private void CopyLocation(object sender, RoutedEventArgs e) =>
+        CopyPath(KnownLocations.IsChecked == true ? SelectedOutlookPath : location);
+
+    private void CopyHitPath(object sender, RoutedEventArgs e) => CopyPath((HitsGrid.SelectedItem as FoundSource)?.Path);
+
+    private void CopyPath(string? path)
     {
-        if (location is null) return;
-        try { Clipboard.SetText(location); }
+        if (path is null) return;
+        try { Clipboard.SetText(path); }
         catch (System.Runtime.InteropServices.ExternalException)
         {
             ScanStatus.Text = text("경로를 클립보드에 복사하지 못했습니다.", "Could not copy the location.");

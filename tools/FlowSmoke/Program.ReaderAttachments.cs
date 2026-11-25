@@ -13,7 +13,7 @@ public static partial class Program
 {
     private static async Task RunReaderAttachments(string workspace, string output, string? theme)
     {
-        string folder = Path.Combine(workspace, "tests", "fixtures", "everyday");
+        string folder = Path.Combine(workspace, "Mail-Viewer", ".local", "samples", "everyday-mail", "messages");
         string[] inputs = ["15-long-subject.eml", "14-same-name-attachments.eml", "05-table-reservation.eml", "01-order-receipt.eml"];
         string[] paths = inputs.Select(name => Path.Combine(folder, name)).ToArray();
         var window = new MainWindow(paths, Path.Combine(output, "marks"))

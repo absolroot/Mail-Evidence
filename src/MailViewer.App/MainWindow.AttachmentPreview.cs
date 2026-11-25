@@ -272,6 +272,25 @@ public partial class MainWindow
             _attachmentInfoPreference = AttachmentInfoToggle.IsExpanded;
     }
 
+    private void OnAttachmentLocationExpanded(object sender, RoutedEventArgs e)
+    {
+        if (!ReferenceEquals(e.OriginalSource, AttachmentLocationExpander))
+            return;
+
+        var fields = AttachmentLocationFields.ItemsSource;
+        Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() =>
+        {
+            if (!AttachmentLocationExpander.IsExpanded || !AttachmentInfoToggle.IsExpanded ||
+                !AttachmentLocationFields.IsVisible || !ReferenceEquals(fields, AttachmentLocationFields.ItemsSource) ||
+                AttachmentLocationFields.ItemContainerGenerator.ContainerFromIndex(0) is not FrameworkElement { ActualHeight: > 0 } first)
+                return;
+
+            double height = Math.Min(first.ActualHeight, AttachmentInfoScroll.ViewportHeight);
+            if (height > 0 && first.ActualWidth > 0)
+                first.BringIntoView(new Rect(0, 0, first.ActualWidth, height));
+        }));
+    }
+
     private void OnAttachmentPreviewViewportChanged(object sender, ScrollChangedEventArgs e)
     {
         if (e.ViewportWidthChange != 0 || e.ViewportHeightChange != 0) FitAttachmentPreviewImage();

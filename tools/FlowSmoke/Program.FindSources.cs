@@ -37,7 +37,7 @@ public static partial class Program
         string olk = Directory.CreateDirectory(Path.Combine(local, "Microsoft", "Olk")).FullName;
         string webCache = Directory.CreateDirectory(Path.Combine(olk, "EBWebView")).FullName;
         string profile = Directory.CreateDirectory(Path.Combine(output, "Profile Archive")).FullName;
-        string fixture = Path.Combine(workspace, "tests", "fixtures", "pst", "libyal-outlook.pst");
+        string fixture = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "pst", "libyal-outlook.pst");
         string archive = Path.Combine(profile, "등록된 사서함.pst");
         string classicFile = Path.Combine(classic, "classic.PST");
         File.Copy(fixture, archive);

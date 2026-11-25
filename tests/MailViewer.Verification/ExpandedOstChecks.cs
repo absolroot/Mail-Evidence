@@ -12,7 +12,7 @@ internal static partial class Program
     private static void AddExpandedOstChecks(List<(string Name, Action Test)> cases, string root, string output,
         bool requireFixtures)
     {
-        var fixtures = Path.Combine(root, "tests", "fixtures");
+        var fixtures = Path.Combine(root, "Mail-Viewer", "tests", "fixtures");
         var oracle = JsonSerializer.Deserialize<ExpandedOstOracle>(
             File.ReadAllText(Path.Combine(fixtures, "ost-expanded-oracle.json")),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ??
@@ -43,6 +43,14 @@ internal static partial class Program
     {
         using var session = EvidenceSession.Open(samples.Keys.ToArray());
         Equal(samples.Count, session.Sources.Count, "all genuine and generated expanded inputs loaded");
+        var unicode21 = session.Sources.Single(source => Path.GetFileName(source.Path) == "generated-aspose-v21.ost");
+        var attachments = session.Records.Where(record => record.SourceId == unicode21.Id).SelectMany(record => record.Attachments).ToArray();
+        Equal(1, attachments.Count(attachment => attachment.PstObject == PstObjectAttachment.EmbeddedMessage), "embedded message classified by attachment method");
+        Equal(12, attachments.Count(attachment => attachment.PstObject == PstObjectAttachment.ApplicationObject), "application objects classified by attachment method");
+        Equal(22, attachments.Count(attachment => attachment.Sha256 is not null), "ordinary attachments retain their hashes");
+        Require(!session.Issues.Any(issue => issue.SourceId == unicode21.Id && issue.Code == "attachment-data"),
+            "valid object attachments do not produce a source read issue");
+
         foreach (var (path, expected) in samples)
         {
             var source = ValidateExpandedOstSource(session, path, expected);

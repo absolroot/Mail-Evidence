@@ -21,36 +21,33 @@ internal static partial class Program
     private static int Main(string[] args)
     {
         var root = FindRoot();
-        var fixtures = Path.Combine(root, "tests", "fixtures", "synthetic");
+        var fixtures = Path.Combine(root, "Mail-Viewer-Research", "fixtures");
         var syntheticEml = Path.Combine(fixtures, "01-original.eml");
         var syntheticMbox = Path.Combine(fixtures, "synthetic.mbox");
-        var tikaEml = Path.Combine(root, "tests", "fixtures", "external",
+        var tikaEml = Path.Combine(root, "Mail-Viewer-Research", "evidence", "followup", "inputs",
             "tika-multipart-attachments.eml");
-        var apacheMbox = Path.Combine(root, "tests", "fixtures", "external", "public-apache-tika.mbox");
+        var apacheMbox = Path.Combine(root, "Mail-Viewer", "tests", "fixtures", "public-apache-tika.mbox");
         using var work = new TemporaryDirectory();
         var cases = new List<(string Name, Action Test)>
         {
             ("synthetic EML headers, original bytes, MIME search and attachment", () => TestSyntheticEml(syntheticEml)),
             ("synthetic MBOX boundaries, duplicate Message-ID and date filter", () => TestSyntheticMbox(syntheticMbox)),
+            ("public Apache Tika EML attachment names, source and decoding", () => TestTikaEml(tikaEml)),
+            ("public Apache mailing list MBOX count, query and original ranges", () => TestApacheMbox(apacheMbox)),
             ("selected EML and MBOX exports, manifest, same-size tamper and missing output",
                 () => TestMessageExport(syntheticEml, syntheticMbox, work.Path)),
+            ("public EML attachment export and verification", () => TestAttachmentExport(tikaEml, work.Path)),
+            ("public MBOX query scope, CSV and record order", () => TestSearchExport(apacheMbox, work.Path)),
             ("CSV spreadsheet protection and source path retention", () => TestCsvNeutralization(work.Path)),
             ("cancellation, missing source, no overwrite and Windows original lock",
                 () => TestFailureAndSourceReplacement(syntheticEml, work.Path)),
         };
         cases.Add(("investigation filters, exact keys, evidence ranges and export", () => TestInvestigation(work.Path)));
         cases.Add(("conversation references, Reply-To history, append and verification", () => TestConversation(root, work.Path)));
-        if (!args.Contains("--synthetic-only", StringComparer.Ordinal))
-        {
-            cases.Add(("public Apache Tika EML attachment names, source and decoding", () => TestTikaEml(tikaEml)));
-            cases.Add(("public Apache mailing list MBOX count, query and original ranges", () => TestApacheMbox(apacheMbox)));
-            cases.Add(("public EML attachment export and verification", () => TestAttachmentExport(tikaEml, work.Path)));
-            cases.Add(("public MBOX query scope, CSV and record order", () => TestSearchExport(apacheMbox, work.Path)));
-            AddMsgChecks(cases, root, work.Path);
-            AddPstChecks(cases, root, work.Path);
-            AddOstChecks(cases, root, work.Path, args.Contains("--ost", StringComparer.Ordinal));
-            AddExpandedOstChecks(cases, root, work.Path, args.Contains("--ost-expanded", StringComparer.Ordinal));
-        }
+        AddMsgChecks(cases, root, work.Path);
+        AddPstChecks(cases, root, work.Path);
+        AddOstChecks(cases, root, work.Path, args.Contains("--ost", StringComparer.Ordinal));
+        AddExpandedOstChecks(cases, root, work.Path, args.Contains("--ost-expanded", StringComparer.Ordinal));
         if (args.Contains("--formats", StringComparer.Ordinal))
             cases.Add(("shared Rust mail formats and original evidence", () => TestSharedFormatReaders(root, work.Path)));
         if (args.Contains("--large", StringComparer.Ordinal))
@@ -400,9 +397,9 @@ internal static partial class Program
     private static string FindRoot()
     {
         for (DirectoryInfo? dir = new(AppContext.BaseDirectory); dir is not null; dir = dir.Parent)
-            if (File.Exists(Path.Combine(dir.FullName, "MailViewer.slnx")))
+            if (Directory.Exists(Path.Combine(dir.FullName, "Mail-Viewer-Research", "fixtures")))
                 return dir.FullName;
-        throw new DirectoryNotFoundException("Run from the Mail Evidence checkout.");
+        throw new DirectoryNotFoundException("Run from the Forensic workspace checkout.");
     }
 
     private static string Hash(ReadOnlySpan<byte> bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));

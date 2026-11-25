@@ -39,6 +39,7 @@ public partial class MainWindow
                 : L("현재 열린 자료의 이상 징후를 집계하는 중입니다.", "Counting anomalies across open sources.");
         }
         AllMailScopeButton.Content = ActiveMailboxTab == InvestigationTab ? L("전체 메일", "All messages") : L("전체 자료", "All sources");
+        RefreshMailboxCounts();
     }
 
     private async void CountMailboxAnomalies(EvidenceSession session)

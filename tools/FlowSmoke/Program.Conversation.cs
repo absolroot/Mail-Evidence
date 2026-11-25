@@ -13,7 +13,7 @@ public static partial class Program
 {
     private static async Task RunConversationHistory(string workspace, string output, string? theme)
     {
-        string folder = Path.Combine(workspace, "tests", "fixtures", "conversation-history");
+        string folder = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "conversation-history");
         string[] inputs = Directory.GetFiles(folder, "*.eml").Order(StringComparer.Ordinal).ToArray();
         string marks = Path.Combine(output, "conversation-marks");
         var window = new MainWindow(inputs, marks) { ShowInTaskbar = false };
@@ -111,6 +111,8 @@ public static partial class Program
                 { RoutedEvent = Keyboard.PreviewKeyDownEvent });
             await Idle();
         }
+        Require(!Field<TextBox>(window, "ReaderSubject").IsKeyboardFocusWithin,
+            "Opening the narrow reader should not focus the selectable title.");
         details.SelectedItem = relatedTab;
         Require(Equals(relatedTab.Header, "Related mail (2)"), "the related-count title uses the display language");
         await OpenHistory("conversation-05-history-narrow-en.png", inKorean: false, openEarlier: false);

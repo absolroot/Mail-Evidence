@@ -8,7 +8,7 @@ internal static partial class Program
 {
     private static void TestConversation(string root, string work)
     {
-        var samples = Path.Combine(root, "tests", "fixtures", "conversation-history");
+        var samples = Path.Combine(root, "Mail-Viewer", "tests", "fixtures", "conversation-history");
         string[] paths = Directory.GetFiles(samples, "*.eml").Order(StringComparer.Ordinal).ToArray();
         string folder = Directory.CreateDirectory(Path.Combine(work, "conversation")).FullName;
         using var session = EvidenceSession.Open(paths);

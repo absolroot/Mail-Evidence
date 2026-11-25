@@ -40,7 +40,6 @@ public static partial class Program
         var window = new MainWindow([current, related], Path.Combine(output, "marks")) { ShowInTaskbar = false };
         window.Show();
         await Idle();
-        ClickMenu(window, "KoreanLanguageMenuItem");
         if (theme is not null) ClickMenu(window, theme == "--dark" ? "DarkThemeMenuItem" : "LightThemeMenuItem");
         Click(window, "AnalyzeButton");
         var list = Field<DataGrid>(window, "ResultsGrid");

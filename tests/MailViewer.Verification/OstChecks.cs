@@ -14,7 +14,7 @@ internal static partial class Program
     private static void AddOstChecks(List<(string Name, Action Test)> cases, string root, string output,
         bool requireFixtures)
     {
-        var fixtures = Path.Combine(root, "tests", "fixtures");
+        var fixtures = Path.Combine(root, "Mail-Viewer", "tests", "fixtures");
         var oracle = JsonSerializer.Deserialize<OstOracle>(File.ReadAllText(Path.Combine(fixtures, "ost-oracle.json")),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ??
             throw new InvalidDataException("Independent OST oracle is missing.");
@@ -22,7 +22,7 @@ internal static partial class Program
         var secondary = Path.Combine(fixtures, "ost", oracle.Secondary.File);
         if (!File.Exists(primary) || !File.Exists(secondary))
         {
-            const string acquisition = "Run python tests/fixtures/make-ost-oracle.py --fetch-only.";
+            const string acquisition = "Run python Mail-Viewer/tests/fixtures/make-ost-oracle.py --fetch-only.";
             if (requireFixtures)
                 cases.Add(("public OST fixtures available", () => throw new FileNotFoundException(acquisition)));
             else

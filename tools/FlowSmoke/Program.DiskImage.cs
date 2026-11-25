@@ -19,8 +19,8 @@ public static partial class Program
     private static async Task RunDiskImage(string workspace, string output, string? theme)
     {
         string image = Path.Combine(output, "mail-fixture.raw");
-        string eml = Path.Combine(workspace, "tests", "fixtures", "conversation-history", "01-original.eml");
-        string pst = Path.Combine(workspace, "tests", "fixtures", "pst", "libyal-outlook.pst");
+        string eml = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "conversation-history", "01-original.eml");
+        string pst = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "pst", "libyal-outlook.pst");
         const string inbox = @"\Users\Analyst\AppData\Local\Microsoft\Outlook\Inbox.pst";
         const string archive = @"\Archive\사건 메일.eml";
         const long capacity = 32 * 1024 * 1024;

@@ -12,7 +12,7 @@ public static partial class Program
 {
     private static async Task RunLanguages(string workspace, string output)
     {
-        var path = Path.Combine(workspace, "tests", "fixtures", "attachment-boundaries", "02-mixed.eml");
+        var path = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "attachment-boundaries", "02-mixed.eml");
         var window = new MainWindow([path], Path.Combine(output, "marks")) { ShowInTaskbar = false, Width = 1030 };
         window.Show();
         try

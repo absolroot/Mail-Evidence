@@ -131,7 +131,19 @@ public partial class MainWindow
 
     private void OnMailboxSplitterChanged(object sender, DragCompletedEventArgs e)
     {
-        if (!_readerIsNarrow)
+        if (!e.Canceled)
+            KeepMailboxResultsWidth();
+    }
+
+    private void OnMailboxSplitterKeyUp(object sender, KeyEventArgs e)
+    {
+        if (e.Key is Key.Left or Key.Right)
+            KeepMailboxResultsWidth();
+    }
+
+    private void KeepMailboxResultsWidth()
+    {
+        if (MailboxSplitter.IsVisible)
             _readerListWidth = MailboxResultsColumn.Width;
     }
 
@@ -207,9 +219,11 @@ public partial class MainWindow
             _readerExpanded = true;
             SynchronizeNarrowReader();
         }
-        Keyboard.Focus(ReaderHeader.IsVisible ? ReaderSubject : DetailTabs.SelectedItem as IInputElement);
+        FocusReaderTab();
         if (markViewed) MarkVisibleMessageViewed();
     }
+
+    private void FocusReaderTab() => (DetailTabs.SelectedItem as TabItem)?.Focus();
 
     private void OnReviewClicked(object sender, MouseButtonEventArgs e) => MarkVisibleMessageViewed();
 

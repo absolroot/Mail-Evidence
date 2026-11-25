@@ -15,11 +15,11 @@ public static partial class Program
 {
     private static async Task RunMsg(string workspace, string output, string? theme)
     {
-        var inputsDirectory = Path.Combine(workspace, "tests", "fixtures", "external");
+        var inputsDirectory = Path.Combine(workspace, "Mail-Viewer-Research", "evidence", "followup", "inputs");
         var mail = Path.Combine(inputsDirectory, "tika-test-outlook.msg");
         var attachments = Path.Combine(inputsDirectory, "poi-attachment-msg-pdf.msg");
         var originalHashes = new[] { mail, attachments }.ToDictionary(path => path, Hash);
-        var oraclePath = Path.Combine(workspace, "tests", "fixtures", "msg-oracle.json");
+        var oraclePath = Path.Combine(workspace, "Mail-Viewer", "tests", "fixtures", "msg-oracle.json");
         using var oracle = JsonDocument.Parse(File.ReadAllBytes(oraclePath));
         var ansiOracle = oracle.RootElement.GetProperty("tikaAnsi").GetProperty("header");
         var poiOracle = oracle.RootElement.GetProperty("poiUnicode");
@@ -30,6 +30,7 @@ public static partial class Program
         window.Show();
         await Idle();
         ClickMenu(window, "KoreanLanguageMenuItem");
+        await Idle();
         if (theme is not null)
         {
             ClickMenu(window, theme == "--dark" ? "DarkThemeMenuItem" : "LightThemeMenuItem");
@@ -113,7 +114,9 @@ public static partial class Program
         var fileView = DisplayedBytes(raw.Text, 0);
         Require(Field<TextBlock>(window, "RawStatus").Text.Contains("파일 오프셋", StringComparison.Ordinal) &&
             fileView.AsSpan(0, 4).SequenceEqual(new byte[] { 0xD0, 0xCF, 0x11, 0xE0 }) &&
-            !Field<Expander>(window, "RawLocationExpander").IsVisible,
+            Field<Expander>(window, "RawLocationExpander").IsVisible &&
+            EvidenceFields(window, "RawLocationFields").Any(field => field.Value == attachments) &&
+            EvidenceFields(window, "RawLocationFields").All(field => field.Value != pdf.CompoundStream!.TagHex),
             "MSG 전체 파일 주소와 첨부 스트림 주소를 구분하지 못했습니다.");
         PressEscape(window);
         await Idle();
