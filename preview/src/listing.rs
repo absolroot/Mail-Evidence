@@ -117,58 +117,6 @@ pub fn seven_zip(data: &[u8]) -> Result<Listing> {
     Ok(listing)
 }
 
-pub fn office(data: Vec<u8>, format: office_oxide::DocumentFormat) -> Result<Listing> {
-    let mut options = office_oxide::options::ParseOptions::default();
-    options.limits.package_bytes = crate::MAX_ZIP_DATA;
-    options.limits.part_bytes = 24 * 1024 * 1024;
-    options.limits.memory_bytes = 64 * 1024 * 1024;
-    options.limits.embedded_depth = 0;
-    options.limits.embedded_packages = 0;
-    let document = office_oxide::Document::from_reader_with(Cursor::new(data), format, &options)
-        .map_err(|error| match error {
-            office_oxide::OfficeError::Doc(office_oxide::doc::DocError::Encrypted)
-            | office_oxide::OfficeError::Ppt(office_oxide::ppt::PptError::Encrypted)
-            | office_oxide::OfficeError::Xls(office_oxide::xls::XlsError::Encrypted) => {
-                Status::PasswordRequired
-            }
-            _ => Status::Unreadable,
-        })?;
-    let mut output = LimitedText::default();
-    if document.write_plain_text(&mut output).is_err() && !output.truncated {
-        return Err(Status::Unreadable);
-    }
-    if let Err(error) = std::str::from_utf8(&output.bytes) {
-        if !output.truncated || error.error_len().is_some() {
-            return Err(Status::Unreadable);
-        }
-        output.bytes.truncate(error.valid_up_to());
-    }
-    Ok(Listing {
-        text: String::from_utf8(output.bytes).map_err(|_| Status::Unreadable)?,
-        truncated: output.truncated,
-        ..Listing::default()
-    })
-}
-
-#[derive(Default)]
-struct LimitedText {
-    bytes: Vec<u8>,
-    truncated: bool,
-}
-
-impl Write for LimitedText {
-    fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
-        let count = bytes.len().min(MAX_TEXT - self.bytes.len());
-        self.truncated |= count < bytes.len();
-        self.bytes.extend_from_slice(&bytes[..count]);
-        Ok(count)
-    }
-
-    fn flush(&mut self) -> io::Result<()> {
-        Ok(())
-    }
-}
-
 pub fn write(output: &mut impl Write, result: Result<Listing>) -> io::Result<()> {
     match result {
         Ok(listing) => {

@@ -114,7 +114,7 @@ public partial class MainWindow
         var preview = _bodyAttachmentContent;
         string status = preview.State == PreviewState.Ready && (preview.Text is { Kind: AttachmentTextKind.Plain, Text.Length: > 0 } ||
             preview.Image is not null && !preview.IsDocument) ? "" :
-            AttachmentPreviewStatusText(preview.State, preview.Text, preview.IsDocument);
+            AttachmentPreviewStatusText(preview.State, preview.Text, preview.VisualKind);
         BodyAttachmentPreviewStatus.Text = status;
         BodyAttachmentPreviewStatus.Visibility = status.Length == 0 ? Visibility.Collapsed : Visibility.Visible;
     }

@@ -3,14 +3,14 @@ using System.Text;
 
 namespace MailViewer.App;
 
-internal enum AttachmentTextKind { Plain, Office, Archive }
+internal enum AttachmentTextKind { Plain, Archive }
 
 internal sealed record AttachmentTextPreview(string Text, string? EncodingName, int BytesShown, bool Truncated,
     AttachmentTextKind Kind = AttachmentTextKind.Plain, bool Encrypted = false)
 {
-    public static AttachmentTextPreview CreateListing(string text, bool archive, bool encrypted, bool truncated) =>
+    public static AttachmentTextPreview CreateArchiveListing(string text, bool encrypted, bool truncated) =>
         new(EscapeControls(text), null, 0, truncated,
-            archive ? AttachmentTextKind.Archive : AttachmentTextKind.Office, encrypted);
+            AttachmentTextKind.Archive, encrypted);
 
     public static AttachmentTextPreview Create(byte[] source)
     {

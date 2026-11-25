@@ -5,6 +5,7 @@ use image::{ImageFormat, ImageReader, Limits};
 use resvg::{tiny_skia, usvg};
 
 mod listing;
+mod office;
 
 const MAX_INPUT: u64 = 24 * 1024 * 1024;
 const MAX_EDGE: u32 = 1600;
@@ -31,10 +32,18 @@ enum Status {
 }
 type Result<T> = std::result::Result<T, Status>;
 
+#[derive(Clone, Copy)]
+enum VisualKind {
+    Image = 0,
+    Page = 1,
+    Slide = 2,
+    Sheet = 3,
+}
+
 struct Frame {
     width: u32,
     height: u32,
-    document: bool,
+    kind: VisualKind,
     pixels: Vec<u8>,
 }
 
@@ -119,7 +128,7 @@ fn scale(width: f32, height: f32) -> Result<f32> {
     Ok((MAX_EDGE as f32 / width.max(height)).min(2.0))
 }
 
-fn decode_image(data: &[u8], format: ImageFormat, document: bool) -> Result<Frame> {
+fn decode_image(data: &[u8], format: ImageFormat, kind: VisualKind) -> Result<Frame> {
     let mut reader = ImageReader::with_format(Cursor::new(data), format);
     let mut limits = Limits::default();
     limits.max_image_width = Some(8192);
@@ -144,7 +153,7 @@ fn decode_image(data: &[u8], format: ImageFormat, document: bool) -> Result<Fram
     Ok(Frame {
         width,
         height,
-        document,
+        kind,
         pixels: image.into_raw(),
     })
 }
@@ -177,7 +186,7 @@ fn render_pdf(data: Vec<u8>) -> Result<Frame> {
     Ok(Frame {
         width: u32::from(image.width()),
         height: u32::from(image.height()),
-        document: true,
+        kind: VisualKind::Page,
         pixels: image.data_as_u8_slice().to_vec(),
     })
 }
@@ -187,6 +196,10 @@ fn render_hwp(data: &[u8]) -> Result<Frame> {
     let svg = doc
         .render_page_svg_native(0)
         .map_err(|_| Status::Unreadable)?;
+    render_svg(&svg, VisualKind::Page)
+}
+
+fn render_svg(svg: &str, kind: VisualKind) -> Result<Frame> {
     let mut options = usvg::Options::default();
     options.image_href_resolver.resolve_string = Box::new(|_, _| None);
     let fonts = options.fontdb_mut();
@@ -206,7 +219,7 @@ fn render_hwp(data: &[u8]) -> Result<Frame> {
     }
     fonts.set_sans_serif_family("Malgun Gothic");
     fonts.set_serif_family("Batang");
-    let tree = usvg::Tree::from_str(&svg, &options).map_err(|_| Status::Unreadable)?;
+    let tree = usvg::Tree::from_str(svg, &options).map_err(|_| Status::Unreadable)?;
     let factor = scale(tree.size().width(), tree.size().height())?;
     let width = (tree.size().width() * factor).ceil() as u32;
     let height = (tree.size().height() * factor).ceil() as u32;
@@ -220,39 +233,42 @@ fn render_hwp(data: &[u8]) -> Result<Frame> {
     Ok(Frame {
         width,
         height,
-        document: true,
+        kind,
         pixels: image.take(),
     })
 }
 
+fn render_docx(data: &[u8]) -> Result<Frame> {
+    let doc = rdocx::Document::from_bytes(data).map_err(|_| Status::Unreadable)?;
+    let malgun = std::env::var_os("SystemRoot").and_then(|windows| {
+        let font = std::path::PathBuf::from(windows).join("Fonts/malgun.ttf");
+        std::fs::read(font).ok()
+    });
+    let fonts: Vec<_> = malgun
+        .as_deref()
+        .into_iter()
+        .map(|bytes| ("malgun.ttf", bytes))
+        .collect();
+    let png = doc
+        .render_page_to_png_with_fonts_and_options(
+            0,
+            110.0,
+            &fonts,
+            rdocx::RenderOptions::default(),
+        )
+        .map_err(|_| Status::Unreadable)?
+        .ok_or(Status::Unreadable)?;
+    decode_image(&png, ImageFormat::Png, VisualKind::Page)
+}
+
 fn render(format: Format, data: Vec<u8>) -> Result<Frame> {
     match format {
-        Format::Png => decode_image(&data, ImageFormat::Png, false),
-        Format::Jpeg => decode_image(&data, ImageFormat::Jpeg, false),
+        Format::Png => decode_image(&data, ImageFormat::Png, VisualKind::Image),
+        Format::Jpeg => decode_image(&data, ImageFormat::Jpeg, VisualKind::Image),
         Format::Pdf => render_pdf(data),
         Format::Hwp => render_hwp(&data),
-        Format::Docx => {
-            let doc = rdocx::Document::from_bytes(&data).map_err(|_| Status::Unreadable)?;
-            let malgun = std::env::var_os("SystemRoot").and_then(|windows| {
-                let font = std::path::PathBuf::from(windows).join("Fonts/malgun.ttf");
-                std::fs::read(font).ok()
-            });
-            let fonts: Vec<_> = malgun
-                .as_deref()
-                .into_iter()
-                .map(|bytes| ("malgun.ttf", bytes))
-                .collect();
-            let png = doc
-                .render_page_to_png_with_fonts_and_options(
-                    0,
-                    110.0,
-                    &fonts,
-                    rdocx::RenderOptions::default(),
-                )
-                .map_err(|_| Status::Unreadable)?
-                .ok_or(Status::Unreadable)?;
-            decode_image(&png, ImageFormat::Png, true)
-        }
+        Format::Docx => render_docx(&data),
+        Format::Office(format) => office::render(data, format),
         _ => unreachable!("text previews are sent separately"),
     }
 }
@@ -270,9 +286,6 @@ fn main() -> io::Result<()> {
     };
     let mut output = io::BufWriter::new(io::stdout().lock());
     let result = match format {
-        Ok(Format::Office(format)) => {
-            return listing::write(&mut output, listing::office(data, format));
-        }
         Ok(Format::Zip) => return listing::write(&mut output, listing::zip(&data)),
         Ok(Format::Tar) => return listing::write(&mut output, listing::tar(&data)),
         Ok(Format::SevenZip) => return listing::write(&mut output, listing::seven_zip(&data)),
@@ -283,7 +296,7 @@ fn main() -> io::Result<()> {
         Ok(mut frame)
             if (1..=MAX_EDGE).contains(&frame.width) && (1..=MAX_EDGE).contains(&frame.height) =>
         {
-            output.write_all(&[0, u8::from(frame.document)])?;
+            output.write_all(&[0, frame.kind as u8])?;
             output.write_all(&frame.width.to_le_bytes())?;
             output.write_all(&frame.height.to_le_bytes())?;
             for pixel in frame.pixels.as_chunks_mut::<4>().0 {

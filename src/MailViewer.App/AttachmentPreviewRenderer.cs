@@ -13,7 +13,12 @@ namespace MailViewer.App;
 
 internal enum PreviewState { Empty, Loading, Ready, Unsupported, Unreadable, Limit, Unavailable, TimedOut, PasswordRequired }
 
-internal sealed record PreviewFrame(int Width, int Height, bool IsDocument, byte[] Pixels);
+internal enum PreviewVisualKind { Image, Page, Slide, Sheet }
+
+internal sealed record PreviewFrame(int Width, int Height, PreviewVisualKind Kind, byte[] Pixels)
+{
+    public bool IsDocument => Kind != PreviewVisualKind.Image;
+}
 internal sealed record PreviewResult(PreviewState State, PreviewFrame? Frame = null, AttachmentTextPreview? Text = null);
 
 internal sealed class AttachmentPreviewRenderer : IDisposable
@@ -56,13 +61,13 @@ internal sealed class AttachmentPreviewRenderer : IDisposable
                 await output.ReadExactlyAsync(header.AsMemory(1, 5), timeout.Token).ConfigureAwait(false);
                 int flags = header[1];
                 int length = BinaryPrimitives.ReadInt32LittleEndian(header.AsSpan(2, 4));
-                if ((flags & ~7) != 0 || length is < 0 or > 64 * 1024)
+                if ((flags & ~7) != 0 || (flags & 1) == 0 || length is < 0 or > 64 * 1024)
                     return new(PreviewState.Unreadable);
                 var utf8 = new byte[length];
                 await output.ReadExactlyAsync(utf8, timeout.Token).ConfigureAwait(false);
                 timeout.Token.ThrowIfCancellationRequested();
-                return new(PreviewState.Ready, Text: AttachmentTextPreview.CreateListing(
-                    Encoding.UTF8.GetString(utf8), archive: (flags & 1) != 0,
+                return new(PreviewState.Ready, Text: AttachmentTextPreview.CreateArchiveListing(
+                    Encoding.UTF8.GetString(utf8),
                     encrypted: (flags & 2) != 0, truncated: (flags & 4) != 0));
             }
             if (header[0] != 0)
@@ -80,12 +85,12 @@ internal sealed class AttachmentPreviewRenderer : IDisposable
             await output.ReadExactlyAsync(header.AsMemory(1), timeout.Token).ConfigureAwait(false);
             int width = BinaryPrimitives.ReadInt32LittleEndian(header.AsSpan(2, 4));
             int height = BinaryPrimitives.ReadInt32LittleEndian(header.AsSpan(6, 4));
-            if (header[1] > 1 || width is < 1 or > MaxEdge || height is < 1 or > MaxEdge)
+            if (header[1] > (byte)PreviewVisualKind.Sheet || width is < 1 or > MaxEdge || height is < 1 or > MaxEdge)
                 return new(PreviewState.Unreadable);
             var buffer = new byte[width * height * 4];
             await output.ReadExactlyAsync(buffer, timeout.Token).ConfigureAwait(false);
             timeout.Token.ThrowIfCancellationRequested();
-            return new(PreviewState.Ready, new(width, height, header[1] == 1, buffer));
+            return new(PreviewState.Ready, new(width, height, (PreviewVisualKind)header[1], buffer));
         }
         catch (Exception error) when (error is OperationCanceledException or IOException && timeout.IsCancellationRequested)
         {

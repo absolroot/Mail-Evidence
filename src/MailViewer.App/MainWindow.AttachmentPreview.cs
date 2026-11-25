@@ -13,7 +13,10 @@ public partial class MainWindow
 {
     private enum AttachmentLayout { List, Docked, WidePreview }
     private sealed record PreparedAttachmentPreview(PreviewState State, BitmapSource? Image = null,
-        AttachmentTextPreview? Text = null, bool IsDocument = false);
+        AttachmentTextPreview? Text = null, PreviewVisualKind VisualKind = PreviewVisualKind.Image)
+    {
+        public bool IsDocument => VisualKind != PreviewVisualKind.Image;
+    }
 
     private const double AttachmentDockWidth = 570;
     private readonly AttachmentPreviewRenderer _attachmentRenderer = new();
@@ -21,12 +24,19 @@ public partial class MainWindow
     private (EvidenceSession Session, string Record, string Attachment)? _previewKey;
     private ((EvidenceSession Session, string Record, string Attachment) Key, PreparedAttachmentPreview Preview)? _lastPreparedPreview;
     private PreviewState _previewState;
-    private bool _previewIsDocument;
+    private PreviewVisualKind _previewVisualKind;
     private AttachmentTextPreview? _previewText;
     private bool _reserveAttachmentPreview;
     private bool _expandAttachmentPreview;
     private bool _fitDocumentWidth = true;
     private bool _fitImageWidth;
+    private bool _fitSlideWidth;
+    private bool FitPreviewWidth => _previewVisualKind switch
+    {
+        PreviewVisualKind.Slide => _fitSlideWidth,
+        PreviewVisualKind.Image => _fitImageWidth,
+        _ => _fitDocumentWidth
+    };
     private bool? _attachmentInfoPreference;
     private bool _updatingAttachmentInfo;
     private AttachmentLayout _attachmentLayout;
@@ -134,7 +144,7 @@ public partial class MainWindow
                     null, frame.Pixels, frame.Width * 4);
                 image.Freeze();
             }
-            var preview = new PreparedAttachmentPreview(result.State, image, result.Text, result.Frame?.IsDocument == true);
+            var preview = new PreparedAttachmentPreview(result.State, image, result.Text, result.Frame?.Kind ?? PreviewVisualKind.Image);
             if (preview.State == PreviewState.Ready) _lastPreparedPreview = (key, preview);
             return preview;
         }
@@ -152,7 +162,7 @@ public partial class MainWindow
         {
             PreparedAttachmentPreview preview = await PrepareAttachmentPreviewAsync(session, recordId, attachment, work.Token);
             if (!ReferenceEquals(_previewWork, work) || !AttachmentSurface.IsVisible) return;
-            _previewIsDocument = preview.IsDocument;
+            _previewVisualKind = preview.VisualKind;
             if (preview.Image is not null) AutomationProperties.SetName(AttachmentPreviewImage, attachment.Name);
             SetAttachmentPreview(preview.State, preview.Image, preview.Text);
         }
@@ -273,7 +283,7 @@ public partial class MainWindow
         double width = AttachmentPreviewScroll.ViewportWidth;
         double height = AttachmentPreviewScroll.ViewportHeight;
         if (width <= 0 || height <= 0) return;
-        bool fitWidth = _previewIsDocument ? _fitDocumentWidth : _fitImageWidth;
+        bool fitWidth = FitPreviewWidth;
         double scale = Math.Min(width / image.Width, 2);
         if (!fitWidth) scale = Math.Min(scale, height / image.Height);
         AttachmentPreviewImage.Width = Math.Floor(image.Width * scale);
@@ -282,8 +292,18 @@ public partial class MainWindow
 
     private void ChangeAttachmentPreviewFit(object sender, RoutedEventArgs e)
     {
-        if (_previewIsDocument) _fitDocumentWidth = !_fitDocumentWidth;
-        else _fitImageWidth = !_fitImageWidth;
+        switch (_previewVisualKind)
+        {
+            case PreviewVisualKind.Slide:
+                _fitSlideWidth = !_fitSlideWidth;
+                break;
+            case PreviewVisualKind.Image:
+                _fitImageWidth = !_fitImageWidth;
+                break;
+            default:
+                _fitDocumentWidth = !_fitDocumentWidth;
+                break;
+        }
         AttachmentPreviewScroll.ScrollToHome();
         FitAttachmentPreviewImage();
         RefreshAttachmentPreviewText();
@@ -318,25 +338,27 @@ public partial class MainWindow
         AutomationProperties.SetName(AttachmentPicker, L("첨부파일 선택", "Choose attachment"));
         AutomationProperties.SetName(AttachmentPreviewSplitter, L("첨부 목록과 미리보기 너비 조절", "Resize the attachment preview"));
         AttachmentPreviewFitButton.Visibility = AttachmentPreviewImage.Source is null ? Visibility.Collapsed : Visibility.Visible;
-        bool fitWidth = _previewIsDocument ? _fitDocumentWidth : _fitImageWidth;
+        bool fitWidth = FitPreviewWidth;
         AttachmentPreviewFitButton.Content = fitWidth
-            ? (_previewIsDocument ? L("페이지 맞춤", "Fit page") : L("이미지 맞춤", "Fit image"))
+            ? (_previewVisualKind == PreviewVisualKind.Page ? L("페이지 맞춤", "Fit page") : L("이미지 맞춤", "Fit image"))
             : L("너비 맞춤", "Fit width");
         AttachmentPreviewFitButton.Tag = FindResource(fitWidth ? "Preview.FitWhole" : "Preview.FitWidth");
         AttachmentPreviewExpandButton.Content = _expandAttachmentPreview
             ? L("목록과 함께 보기 (Esc)", "Show list (Esc)") : L("크게 보기", "Expand preview");
         AttachmentPreviewExpandButton.Tag = FindResource(_expandAttachmentPreview ? "Lucide.Minimize" : "Lucide.Maximize");
-        AttachmentListStatus.Text = AttachmentPreviewStatus.Text = AttachmentPreviewStatusText(_previewState, _previewText, _previewIsDocument);
+        AttachmentListStatus.Text = AttachmentPreviewStatus.Text = AttachmentPreviewStatusText(_previewState, _previewText, _previewVisualKind);
         AttachmentListStatus.Visibility = _attachmentLayout == AttachmentLayout.List && _previewState != PreviewState.Empty
             ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private static string AttachmentPreviewStatusText(PreviewState state, AttachmentTextPreview? previewText,
-        bool document) => state switch
+        PreviewVisualKind visualKind) => state switch
         {
             PreviewState.Loading => L("미리보기를 불러오는 중…", "Loading preview…"),
             PreviewState.Ready when previewText is { } text => AttachmentTextStatus(text),
-            PreviewState.Ready when document => L("미리보기 · 첫 페이지", "Preview · first page"),
+            PreviewState.Ready when visualKind == PreviewVisualKind.Slide => L("미리보기 · 첫 슬라이드", "Preview · first slide"),
+            PreviewState.Ready when visualKind == PreviewVisualKind.Sheet => L("미리보기 · 첫 워크시트 일부", "Preview · first worksheet excerpt"),
+            PreviewState.Ready when visualKind == PreviewVisualKind.Page => L("미리보기 · 첫 페이지", "Preview · first page"),
             PreviewState.Ready => L("미리보기", "Preview"),
             PreviewState.Unsupported => L("이 첨부파일 형식은 미리보기를 지원하지 않습니다.", "Preview is unavailable for this file format."),
             PreviewState.Unreadable => L("첨부파일을 미리보기로 표시하지 못했습니다.", "This attachment could not be rendered."),
@@ -349,11 +371,9 @@ public partial class MainWindow
 
     private static string AttachmentTextStatus(AttachmentTextPreview text)
     {
-        if (text.Kind != AttachmentTextKind.Plain)
+        if (text.Kind == AttachmentTextKind.Archive)
         {
-            string label = text.Kind == AttachmentTextKind.Archive
-                ? (text.Text.Length == 0 ? L("빈 압축 파일", "Empty archive") : L("압축 파일 목록", "Archive contents"))
-                : (text.Text.Length == 0 ? L("표시할 텍스트가 없습니다.", "No text to display.") : L("문서 텍스트", "Document text"));
+            string label = text.Text.Length == 0 ? L("빈 압축 파일", "Empty archive") : L("압축 파일 목록", "Archive contents");
             if (text.Encrypted) label += L(" · 암호로 보호됨", " · Password protected");
             if (text.Truncated) label += L(" · 일부만 표시", " · Partial preview");
             return label;

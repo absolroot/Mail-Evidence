@@ -79,14 +79,13 @@ On readable NTFS volumes the app finds supported formats including EML, MBOX, MS
 
 | Type | Preview |
 | --- | --- |
-| Documents | First page of `.pdf`, `.hwp`, `.hwpx`, and `.docx` |
-| Other Office documents | Text from `.doc`, `.ppt`, and `.pptx`, and cell values from `.xls` and `.xlsx` |
+| Documents | First page of `.pdf`, `.hwp`, `.hwpx`, `.doc`, and `.docx`. First slide of `.ppt` and `.pptx`. First worksheet excerpt of `.xls` and `.xlsx`. |
 | Archives | File and folder names in `.zip`, `.tar`, and `.7z`, with password protection indicated when detected |
 | Images | `.jpg`, `.jpeg`, `.png` |
 | Text | Excerpts from `.txt`, `.log`, `.csv`, `.tsv`, `.json`, `.xml`, `.md`, `.ini`, `.cfg`, `.yaml`, `.yml`, and `text/*` attachments |
 | Binary data | Excerpts from `.bin` and `.dat`, with printable ASCII where text decoding is not available |
 
-Office text and archive listings are limited to 64 KiB of preview output. The archive preview lists names without extracting files. Encrypted ZIP and 7z files show a password-protection notice alongside readable names. If the 7z file names are encrypted too, the preview shows that a password is required.
+Archive listings are limited to 64 KiB of preview output. The archive preview lists names without extracting files. Encrypted ZIP and 7z files show a password-protection notice alongside readable names. If the 7z file names are encrypted too, the preview shows that a password is required.
 
 [Preview limits](preview/README.md)
 
