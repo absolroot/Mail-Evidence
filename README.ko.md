@@ -107,6 +107,8 @@ Windows 앱은 읽을 수 있는 NTFS 볼륨에서 EML·MBOX·MSG·PST·OST와 D
 
 [![PNG에 기록된 길이와 실제 남은 바이트를 대조하는 이상 징후 화면](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
 
+[합성 메일 샘플 목록](tests/fixtures/README.md#mail-test-fixtures)에서 일상 메일과 대화 이력을 확인할 수 있습니다.
+
 ## 빌드와 검증
 
 Windows 앱에는 .NET 10 SDK가 필요합니다. 첨부 미리보기 워커와 CLI는 Rust로 빌드합니다.

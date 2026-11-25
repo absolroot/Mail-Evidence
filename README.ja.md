@@ -107,6 +107,8 @@ PST・OST は 1 ファイルあたり最大 **2 GiB** です。512 バイトペ�
 
 [![PNG チャンクに記録された長さと残りのバイト数を表示する画面](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
 
+[テスト用の合成メール一覧](tests/fixtures/README.md#mail-test-fixtures)には、日常のメールや会話履歴のサンプルもあります。
+
 ## ビルドとテスト
 
 Windows アプリのビルドには .NET 10 SDK が必要です。添付ファイルのプレビュー用プログラムと CLI は Rust でビルドします。

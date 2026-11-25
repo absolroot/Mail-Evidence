@@ -107,6 +107,8 @@ Open the [attachment sample](tests/fixtures/attachment-boundaries/02-mixed.eml) 
 
 [![PNG chunk length and available bytes shown in the Anomalies tab](docs/media/anomaly-evidence-dark.png)](docs/media/anomaly-evidence-dark.png)
 
+The [synthetic mail samples](tests/fixtures/README.md#mail-test-fixtures) also include everyday messages and conversation history.
+
 ## Build and test
 
 Build the Windows app with the .NET 10 SDK. The attachment preview worker and CLI use Rust.
