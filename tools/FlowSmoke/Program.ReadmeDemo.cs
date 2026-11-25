@@ -27,7 +27,7 @@ public static partial class Program
         string[] paths = [Path.Combine(fixtures, "Inbox.mbox"), Path.Combine(fixtures, "Sent.mbox")];
         var window = new MainWindow(paths, Path.Combine(output, "marks"))
         {
-            Width = 1280,
+            Width = 1440,
             Height = 770,
             ShowInTaskbar = false
         };
@@ -92,9 +92,7 @@ public static partial class Program
             await WaitFor(() => attachments.Items.Count == 3 && ShowsImage(previewImage, posterName, 960, 485),
                 "README attachment poster");
             var map = attachments.Items.Cast<MailAttachment>().Single(attachment => attachment.Name == mapName);
-            attachments.ScrollIntoView(map);
-            await Idle();
-            Mark("preview", (DataGridRow)attachments.ItemContainerGenerator.ContainerFromItem(map), 55);
+            Mark("preview", await ReadmeDemoRow(attachments, map, "README booth map row"), 55);
             Capture(window, output, "04-attachments.png");
             attachments.SelectedItem = map;
             bool MapReady() => ShowsImage(previewImage, mapName, 960, 545);
@@ -134,8 +132,7 @@ public static partial class Program
 
             var pngFinding = findings.Items.Cast<object>().Single(finding =>
                 Equals(finding.GetType().GetProperty("Target")!.GetValue(finding), "invalid-idat.png"));
-            await Idle();
-            Mark("png-length", (DataGridRow)findings.ItemContainerGenerator.ContainerFromItem(pngFinding), 72);
+            Mark("png-length", await ReadmeDemoRow(findings, pngFinding, "README PNG finding row"), 72);
             findings.SelectedItem = pngFinding;
             await WaitFor(() => Field<TextBlock>(window, "FindingOutcome").Text.Contains("declared length of IDAT", StringComparison.Ordinal)
                 && Field<TextBlock>(window, "FindingBytePosition").Text.Contains("0x21", StringComparison.Ordinal),
@@ -168,6 +165,16 @@ public static partial class Program
         {
             window.Close();
         }
+    }
+
+    private static async Task<DataGridRow> ReadmeDemoRow(DataGrid grid, object item, string description)
+    {
+        await WaitFor(() => grid.IsVisible && grid.ActualWidth > 0, description + " grid");
+        grid.ScrollIntoView(item);
+        DataGridRow? row = null;
+        await WaitFor(() => (row = grid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow)
+            is { IsVisible: true, ActualWidth: > 0, ActualHeight: > 0 }, description);
+        return row!;
     }
 
     private static bool ShowsImage(Image view, string name, int width, int height) =>
