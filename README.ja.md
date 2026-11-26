@@ -38,6 +38,8 @@
 2. **メールデータを開く**画面でファイルかフォルダーを選び、**分析を開始**を押します。Outlook の保存先を調べるには **この PC でメールファイルを探す…** を使います。[ディスクイメージからメールを開く](docs/disk-image-mail.md)
 3. **すべてのメール**で検索するか、**異常の兆候**に表示されたメールを選びます。[サンプルメール](tests/fixtures/README.md)でも試せます。
 
+GIF と同じ手順を試すには、[デモ用メールボックス](tests/fixtures/readme-demo/README.md)から `Inbox.mbox` と `Sent.mbox` をダウンロードします。2 つのファイルをまとめて選択して分析すると、24 通のメールを確認できます。
+
 HTML 本文では外部画像、スクリプト、リンク先への移動が既定でブロックされます。HTML 表示には [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution) を使います。
 
 ## 対応形式

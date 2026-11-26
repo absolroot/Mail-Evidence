@@ -38,6 +38,8 @@ Open the [24-message sample mailbox](tests/fixtures/readme-demo/) to try the ima
 2. Choose files or a folder in **Open mail sources**, then select **Analyze**. Use **Find mail files on this PC…** to look in Outlook storage locations. [Open mail from a disk image](docs/disk-image-mail.md)
 3. Search in **All mail**, or review findings in **Anomalies**. Try the [sample messages](tests/fixtures/README.md) to see the workflow.
 
+To follow the GIF, download `Inbox.mbox` and `Sent.mbox` from the [24-message demo mailbox](tests/fixtures/readme-demo/README.md). Select both files in **Open mail sources** and choose **Analyze**.
+
 HTML messages block external images, scripts, and link navigation by default. HTML rendering uses [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution).
 
 ## Supported inputs

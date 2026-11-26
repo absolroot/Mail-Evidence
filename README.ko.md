@@ -38,6 +38,8 @@
 2. **메일 자료 열기**에서 파일이나 폴더를 추가하고 **분석 시작**을 누릅니다. Outlook 파일의 위치를 모르면 **이 PC에서 메일 파일 찾기…** 메뉴를 사용하세요. [디스크 이미지에서 메일 찾기](docs/disk-image-mail.md)
 3. **전체**에서 메일을 검색하거나 **이상 징후**에서 확인할 메일을 고릅니다. 바로 시험하려면 [합성 샘플](tests/fixtures/README.md)을 열어 보세요.
 
+GIF와 같은 자료로 따라 하려면 [샘플 메일함](tests/fixtures/readme-demo/README.md)에서 `Inbox.mbox`와 `Sent.mbox`를 내려받으세요. **메일 자료 열기**에서 두 파일을 함께 선택하고 **분석 시작**을 누르면 메일 24통을 볼 수 있습니다.
+
 HTML 본문은 외부 이미지, 스크립트와 링크 이동을 기본 차단합니다. HTML 표시에 [Microsoft Edge WebView2 Runtime](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution)을 사용합니다.
 
 ## 어떤 자료를 열 수 있나요?
