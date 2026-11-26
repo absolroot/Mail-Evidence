@@ -10,7 +10,7 @@
     <AssemblyName>MailEvidence</AssemblyName>
     <AssemblyTitle>Absolroot Mail Evidence</AssemblyTitle>
     <Product>Absolroot Mail Evidence</Product>
-    <Version>1.6.2</Version>
+    <Version>1.6.3</Version>
     <ApplicationIcon Condition="Exists('../../assets/MailViewer.ico')">../../assets/MailViewer.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>

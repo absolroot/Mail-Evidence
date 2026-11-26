@@ -134,6 +134,7 @@ def main():
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=root / "docs/media")
+    parser.add_argument("--frames-output", type=Path, help="Save the individual demo scenes as PNGs.")
     args = parser.parse_args()
     if sys.platform != "win32":
         parser.error("README media capture requires Windows.")
@@ -149,7 +150,7 @@ def main():
         run = subprocess.run(
             [sys.executable, str(root / "tools/run-flow-smoke.py"), str(captures),
              "--scenario", "readme-demo", "--executable",
-             str(artifacts / "bin/FlowSmoke/release/FlowSmoke.exe")],
+             str(artifacts / "bin/FlowSmoke/release/FlowSmoke.exe"), "--theme", "dark"],
             cwd=root, env=env
         )
         if run.returncode:
@@ -158,6 +159,11 @@ def main():
                 print(failure.read_text(encoding="utf-8"), file=sys.stderr)
             run.check_returncode()
         render(captures, args.output.resolve())
+        if args.frames_output is not None:
+            args.frames_output.mkdir(parents=True, exist_ok=True)
+            for name, _, _ in SCENES:
+                with Image.open(captures / name) as scene:
+                    scene.save(args.frames_output / name, optimize=True)
 
 
 if __name__ == "__main__":
