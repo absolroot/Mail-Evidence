@@ -119,10 +119,10 @@ public partial class MainWindow : Window
         }
     }
 
-    private async void ClearSearch(object sender, RoutedEventArgs e)
+    private void ClearSearchQuery(object sender, RoutedEventArgs e)
     {
-        ResetSearchInputs();
-        await SearchAsync();
+        SearchQueryBox.Clear();
+        SearchQueryBox.Focus();
     }
 
     private Window? _filterDialog;

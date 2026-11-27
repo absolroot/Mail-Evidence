@@ -28,6 +28,7 @@ public static partial class Program
         var window = new MainWindow([root, outside]) { ShowInTaskbar = false, Width = 1190, Height = 795 };
         window.Show();
         await Idle();
+        ClickMenu(window, "KoreanLanguageMenuItem");
         if (theme is not null) ClickMenu(window, theme == "--dark" ? "DarkThemeMenuItem" : "LightThemeMenuItem");
         var grid = Field<DataGrid>(window, "ResultsGrid");
         var tree = Field<TreeView>(window, "PstFolderTree");
@@ -73,6 +74,20 @@ public static partial class Program
         Require(grid.Items.Cast<object>().All(item => RecordFromRow(item).SourcePath.StartsWith(branch, StringComparison.OrdinalIgnoreCase)),
             "The middle folder's list contains mail outside its subtree.");
         Capture(window, output, "folder-counts.png");
+
+        var query = Field<TextBox>(window, "SearchQueryBox");
+        var clear = Field<Button>(window, "ClearSearchButton");
+        Require(!clear.IsVisible, "The clear button is visible with an empty query.");
+        query.Text = "November first";
+        await WaitFor(() => clear.IsVisible && grid.Items.Count == 1, "live search within the selected folder");
+        Require(clear.Focusable && clear.IsTabStop, "The clear button must support keyboard focus.");
+        Capture(window, output, "search-clear.png");
+        var clearPeer = new ButtonAutomationPeer(clear);
+        ((IInvokeProvider)clearPeer.GetPattern(PatternInterface.Invoke)).Invoke();
+        await WaitFor(() => query.Text.Length == 0 && !clear.IsVisible && middle.IsSelected &&
+            grid.Items.Count == 2 && System.Windows.Input.FocusManager.GetFocusedElement(window) == query,
+            "clearing search restores folder results and input focus");
+
 
         var exported = await Export(window, "ExportSearchButton", output, ExportKind.Csv);
         Require(File.ReadAllLines(Path.Combine(exported, "messages.csv")).Length == 3,

@@ -74,6 +74,7 @@ public partial class MainWindow
         ["검색 결과"] = "Search results",
         ["선택"] = "Check",
         ["이 메일 선택"] = "Select this message",
+        ["검색어 지우기"] = "Clear search text",
         ["첨부"] = "Files",
         ["일치 위치"] = "Matched field",
         ["원본 경로"] = "Source path",

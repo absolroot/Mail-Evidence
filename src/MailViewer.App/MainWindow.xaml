@@ -457,11 +457,25 @@
                                               Style="{StaticResource FolderPaneToggleStyle}"/>
                                 <Grid>
                                     <TextBox x:Name="SearchQueryBox" AutomationProperties.Name="메일 검색"
-                                             AutomationProperties.AutomationId="SearchQueryBox" Height="28" MinHeight="0" MinWidth="98" Padding="30,2,6,2"
+                                             AutomationProperties.AutomationId="SearchQueryBox" Height="28" MinHeight="0" MinWidth="98" Padding="30,2,30,2"
                                              VerticalContentAlignment="Center" KeyDown="SearchFromKeyboard"/>
                                     <Button x:Name="SearchButton" Content="검색" Click="RunSearch" Focusable="False" IsTabStop="False"
                                             Width="25" Height="24" HorizontalAlignment="Left" Margin="2,0,0,0"
                                             AutomationProperties.AutomationId="SearchButton" Style="{StaticResource IconAction}" Tag="{StaticResource Lucide.Search}"/>
+                                    <Button x:Name="ClearSearchButton" Click="ClearSearchQuery" Content="검색어 지우기"
+                                            Width="25" Height="24" HorizontalAlignment="Right" Margin="0,0,2,0"
+                                            AutomationProperties.Name="검색어 지우기" ToolTip="검색어 지우기"
+                                            Tag="{StaticResource Lucide.Close}">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource IconAction}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=SearchQueryBox}" Value="">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
                                     <TextBlock x:Name="ReaderSearchHint" Text="메일 검색" IsHitTestVisible="False"
                                                Foreground="{DynamicResource Viewer.Muted}" VerticalAlignment="Center" Margin="32,0,6,0">
                                         <TextBlock.Style>
