@@ -112,6 +112,14 @@ public partial class MainWindow : Window
 
     private async void SearchFromKeyboard(object sender, KeyEventArgs e)
     {
+        if (e.Key == Key.Escape && Keyboard.Modifiers == ModifierKeys.None &&
+            !_composingSearch && SearchQueryBox.Text.Length > 0)
+        {
+            e.Handled = true;
+            ClearSearchQuery(sender, e);
+            return;
+        }
+
         if (e.Key == Key.Enter && !_composingSearch)
         {
             e.Handled = true;

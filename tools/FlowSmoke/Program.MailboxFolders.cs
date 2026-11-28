@@ -89,6 +89,14 @@ public static partial class Program
             "clearing search restores folder results and input focus");
 
 
+        query.Text = "November second";
+        await WaitFor(() => grid.Items.Count == 1, "second live search within the selected folder");
+        query.RaiseEvent(new System.Windows.Input.KeyEventArgs(System.Windows.Input.Keyboard.PrimaryDevice,
+            PresentationSource.FromVisual(query), 0, System.Windows.Input.Key.Escape)
+            { RoutedEvent = System.Windows.Input.Keyboard.KeyDownEvent });
+        await WaitFor(() => query.Text.Length == 0 && middle.IsSelected && grid.Items.Count == 2,
+            "Escape clears the query without changing folder scope");
+
         var exported = await Export(window, "ExportSearchButton", output, ExportKind.Csv);
         Require(File.ReadAllLines(Path.Combine(exported, "messages.csv")).Length == 3,
             "The saved results include mail outside the folder.");
